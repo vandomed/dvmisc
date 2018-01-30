@@ -2,6 +2,7 @@
 
 export(cov_i)
 export(inside)
+export(interval.groups)
 export(list.override)
 import(Rcpp)
 importFrom(Rcpp,evalCpp)

@@ -34,6 +34,7 @@ endpoints.
 \examples{
 # Check whether 2 is inside [0, 2.5]
 inside(1, c(0, 2.5))
+
 # Check whether 2 and 3 are inside (0, 3)
 inside(c(2, 3), c(0, 3), inclusive = FALSE)
 
