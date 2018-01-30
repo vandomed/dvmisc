@@ -17,7 +17,8 @@
 #' The following functions are included: 
 #' 
 #' \code{\link{list.override}} \cr
-#' \code{\link{cov_i}}
+#' \code{\link{cov_i}} \cr
+#' \code{\link{inside}}
 #' 
 #' @author Dane R. Van Domelen \cr \email{vandomed@@gmail.com}
 #' 
