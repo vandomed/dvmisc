@@ -26,7 +26,8 @@ The following functions are included:
 \code{\link{list.override}} \cr
 \code{\link{cov_i}} \cr
 \code{\link{inside}} \cr
-\code{\link{interval.groups}}
+\code{\link{interval.groups}} \cr
+\code{\link{quant.groups}}
 }
 \references{
 Acknowledgment: This material is based upon work supported by the 

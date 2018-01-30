@@ -19,7 +19,8 @@
 #' \code{\link{list.override}} \cr
 #' \code{\link{cov_i}} \cr
 #' \code{\link{inside}} \cr
-#' \code{\link{interval.groups}} 
+#' \code{\link{interval.groups}} \cr
+#' \code{\link{quant.groups}}
 #' 
 #' @author Dane R. Van Domelen \cr \email{vandomed@@gmail.com}
 #' 
