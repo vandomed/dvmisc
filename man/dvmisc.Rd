@@ -21,13 +21,8 @@ Date: \tab 2018-01-30 \cr
 License: \tab GPL-2 \cr
 }
 
-The following functions are included:
-
-\code{\link{list.override}} \cr
-\code{\link{cov_i}} \cr
-\code{\link{inside}} \cr
-\code{\link{interval.groups}} \cr
-\code{\link{quant.groups}}
+See \href{https://cran.r-project.org/web/packages/dvmisc/index.html}{CRAN 
+documentation} for full list of functions.
 }
 \references{
 Acknowledgment: This material is based upon work supported by the 

@@ -17,9 +17,70 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// cov_n
+double cov_n(NumericVector x, NumericVector y);
+RcppExport SEXP _dvmisc_cov_n(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(cov_n(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mean_i
+double mean_i(IntegerVector x);
+RcppExport SEXP _dvmisc_mean_i(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(mean_i(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// sum_i
+int sum_i(IntegerVector x);
+RcppExport SEXP _dvmisc_sum_i(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(sum_i(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// var_i
+double var_i(IntegerVector x);
+RcppExport SEXP _dvmisc_var_i(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(var_i(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// var_n
+double var_n(NumericVector x);
+RcppExport SEXP _dvmisc_var_n(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(var_n(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_dvmisc_cov_i", (DL_FUNC) &_dvmisc_cov_i, 2},
+    {"_dvmisc_cov_n", (DL_FUNC) &_dvmisc_cov_n, 2},
+    {"_dvmisc_mean_i", (DL_FUNC) &_dvmisc_mean_i, 1},
+    {"_dvmisc_sum_i", (DL_FUNC) &_dvmisc_sum_i, 1},
+    {"_dvmisc_var_i", (DL_FUNC) &_dvmisc_var_i, 1},
+    {"_dvmisc_var_n", (DL_FUNC) &_dvmisc_var_n, 1},
     {NULL, NULL, 0}
 };
 

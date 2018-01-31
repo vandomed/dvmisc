@@ -24,3 +24,124 @@ cov_i <- function(x, y) {
     .Call(`_dvmisc_cov_i`, x, y)
 }
 
+#' Sample Covariance for Numeric Vectors
+#' 
+#' Written in C++, this function should always run faster than 
+#' \code{\link[stats]{cov}} for numeric vectors. For integer vectors, 
+#' \code{\link{cov_i}} should run even faster.
+#' 
+#' @param x,y Numeric vector.
+#' 
+#' @return Numeric value.
+#' 
+#' @examples 
+#' # In general, cov_n is much faster than cov
+#' x <- rnorm(1000)
+#' y <- rnorm(1000)
+#' all.equal(cov(x, y), cov_n(x, y))
+#' benchmark(cov(x, y), cov_n(x, y), replications = 5000)
+#' 
+#' # For integer vectors, cov_i should be even faster.
+#' x <- rpois(1000, lambda = 5)
+#' y <- rpois(1000, lambda = 5)
+#' all.equal(cov(x, y), cov_i(x, y))
+#' benchmark(cov(x, y), cov_n(x, y), cov_i(x, y), replications = 5000)
+#' 
+#' @export
+cov_n <- function(x, y) {
+    .Call(`_dvmisc_cov_n`, x, y)
+}
+
+#' Mean of Integer Values
+#' 
+#' Written in C++, this function should always run faster than 
+#' \code{\link[base]{mean}} for integer vectors/matrices. Not valid for 
+#' non-integer objects.
+#' 
+#' @param x Integer vector or matrix.
+#' 
+#' @return Numeric value.
+#' 
+#' @examples 
+#' # For integer objects, mean_i is typically much faster than mean.
+#' x <- rpois(100, lambda = 5)
+#' mean(x) == mean_i(x)
+#' benchmark(mean(x), mean_i(x), replications = 10000)
+#' 
+#' @export
+mean_i <- function(x) {
+    .Call(`_dvmisc_mean_i`, x)
+}
+
+#' Sum of Integer Values
+#' 
+#' Written in C++, this function runs faster than \code{\link[base]{sum}} for 
+#' large integer vectors/matrices. 
+#' 
+#' @param x Integer vector or matrix.
+#' 
+#' @return Numeric value.
+#' 
+#' @examples
+#' # For very large integer objects, sum_i is faster than sum
+#' x <- rpois(100000, lambda = 5)
+#' sum(x) == sum_i(x)
+#' benchmark(sum(x), sum_i(x), replications = 1000)
+#' 
+#' # For smaller integer objects, sum_i is slower than sum 
+#' x <- rpois(1000, lambda = 5)
+#' sum(x) == sum_i(x)
+#' benchmark(sum(x), sum_i(x), replications = 1000)
+#' 
+#' @export
+sum_i <- function(x) {
+    .Call(`_dvmisc_sum_i`, x)
+}
+
+#' Sample Variance for Integer Values
+#' 
+#' Written in C++, this function should always run faster than 
+#' \code{\link[stats]{var}} for integer vectors. Not valid for non-integer 
+#' input vectors.
+#' 
+#' @param x Integer vector.
+#' 
+#' @return Numeric value.
+#' 
+#' @examples 
+#' # For integer vectors, var_i is typically much faster than var.
+#' x <- rpois(1000, lambda = 5)
+#' all.equal(var(x), var_i(x))
+#' benchmark(var(x), var_i(x), replications = 5000)
+#' 
+#' @export
+var_i <- function(x) {
+    .Call(`_dvmisc_var_i`, x)
+}
+
+#' Sample Variance for Numeric Values
+#' 
+#' Written in C++, this function should always run faster than 
+#' \code{\link[stats]{var}} for numeric vectors. For integer vectors, 
+#' \code{\link{var_i}} should run even faster.
+#' 
+#' @param x Numeric vector.
+#' 
+#' @return Numeric value.
+#' 
+#' @examples 
+#' # In general, var_n is much faster than var.
+#' x <- rnorm(1000)
+#' all.equal(var(x), var_n(x))
+#' benchmark(var(x), var_n(x), replications = 1000)
+#' 
+#' # For integer vectors, var_i should be even faster.
+#' x <- rpois(1000, lambda = 5)
+#' all.equal(var(x), var_i(x))
+#' benchmark(var(x), var_n(x), var_i(x), replications = 1000)
+#' 
+#' @export
+var_n <- function(x) {
+    .Call(`_dvmisc_var_n`, x)
+}
+

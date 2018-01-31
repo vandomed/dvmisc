@@ -14,13 +14,8 @@
 #' License: \tab GPL-2 \cr
 #' }
 #' 
-#' The following functions are included: 
-#' 
-#' \code{\link{list.override}} \cr
-#' \code{\link{cov_i}} \cr
-#' \code{\link{inside}} \cr
-#' \code{\link{interval.groups}} \cr
-#' \code{\link{quant.groups}}
+#' See \href{https://cran.r-project.org/web/packages/dvmisc/index.html}{CRAN 
+#' documentation} for full list of functions. 
 #' 
 #' @author Dane R. Van Domelen \cr \email{vandomed@@gmail.com}
 #' 
@@ -31,6 +26,8 @@
 #' @docType package
 #' @import Rcpp
 #' @importFrom Rcpp evalCpp
+#' @import stats
+#' @import graphics
 #' @importFrom rbenchmark benchmark
 #' @useDynLib dvmisc, .registration=TRUE
 #' @name dvmisc
