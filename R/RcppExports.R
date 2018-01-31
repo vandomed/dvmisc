@@ -52,6 +52,130 @@ cov_n <- function(x, y) {
     .Call(`_dvmisc_cov_n`, x, y)
 }
 
+#' Lagged Differences for Integer Values
+#' 
+#' Written in C++, this function should always run faster than 
+#' \code{\link[base]{diff}} for calculating lagged differences for an integer 
+#' vector.
+#' 
+#' @param x Integer vector.
+#' @param lag Integer value.
+#' 
+#' @return Integer vector.
+#' 
+#' @examples 
+#' # diff_i is typically much faster than diff
+#' x <- rpois(1000, lambda = 5)
+#' all.equal(diff(x, 2), diff_i(x, 2))
+#' benchmark(diff(x, 2), diff_i(x, 2), replications = 2000)
+#' 
+#' @export
+diff_i <- function(x, lag = 1L) {
+    .Call(`_dvmisc_diff_i`, x, lag)
+}
+
+#' Lagged Differences for Numeric Values
+#' 
+#' Written in C++, this function should always run faster than 
+#' \code{\link[base]{diff}} for calculating lagged differences for a numeric 
+#' vector. For integer vectors, \code{\link{diff_i}} should run even faster. 
+#' even faster. 
+#' 
+#' @param x Numeric vector.
+#' @param lag Integer value.
+#' 
+#' @return Numeric vector.
+#' 
+#' @examples 
+#' # In general, diff_n is much faster than diff
+#' x <- rnorm(1000)
+#' all.equal(diff(x, 2), diff_n(x, 2))
+#' benchmark(diff(x, 2), diff_n(x, 2), replications = 2000)
+#' 
+#' # For integer vectors, diff_i should be even faster
+#' x <- rpois(1000, lambda = 5)
+#' all.equal(diff(x, 2), diff_i(x, 2))
+#' benchmark(diff(x, 2), diff_n(x, 2), diff_i(x, 2), replications = 2000)
+#' 
+#' @export
+diff_n <- function(x, lag = 1L) {
+    .Call(`_dvmisc_diff_n`, x, lag)
+}
+
+#' 1-Unit Lagged Differences for Integer Values
+#' 
+#' Written in C++, this function should always run faster than 
+#' \code{\link[base]{diff}} for calculating differences between adjacent values 
+#' of an integer vector.
+#' 
+#' @param x Integer vector.
+#' 
+#' @return Integer vector.
+#' 
+#' @examples 
+#' # diff1_i is typically much faster than diff
+#' x <- rpois(1000, lambda = 5)
+#' all.equal(diff(x), diff1_i(x))
+#' benchmark(diff(x), diff1_i(x), replications = 2000)
+#' 
+#' @export
+diff1_i <- function(x) {
+    .Call(`_dvmisc_diff1_i`, x)
+}
+
+#' 1-Unit Lagged Differences for Numeric Values
+#' 
+#' Written in C++, this function should always run faster than 
+#' \code{\link[base]{diff}} for calculating differences between adjacent values 
+#' of a numeric vector. For integer vectors, \code{\link{diff1_i}} should run 
+#' even faster. 
+#' 
+#' @param x Numeric vector.
+#' 
+#' @return Numeric vector.
+#' 
+#' @examples 
+#' # In general, diff1_n is much faster than diff
+#' x <- rnorm(1000)
+#' all.equal(diff(x), diff1_n(x))
+#' benchmark(diff(x), diff1_n(x), replications = 3000)
+#' 
+#' # For integer vectors, diff1_i should be even faster
+#' x <- rpois(1000, lambda = 5)
+#' all.equal(diff(x), diff1_i(x))
+#' benchmark(diff(x), diff1_n(x), diff1_i(x), replications = 3000)
+#' 
+#' @export
+diff1_n <- function(x) {
+    .Call(`_dvmisc_diff1_n`, x)
+}
+
+#' Maximum of Numeric Values
+#' 
+#' Written in C++, this function tends to run faster than 
+#' \code{\link[base]{max}} for large numeric vectors/matrices. For integer 
+#' objects, \code{\link{max_i}} should run even faster.
+#' 
+#' @param x Numeric vector.
+#' 
+#' @return Numeric value.
+#' 
+#' @examples
+#' # For large objects, max_n is faster than max
+#' x <- rnorm(100000)
+#' max(x) == max_n(x)
+#' benchmark(max(x), max_n(x), replications = 1000)
+#' 
+#' # For smaller objects, max_n is slower than max
+#' x <- rnorm(100)
+#' max(x) == max_n(x)
+#' benchmark(max(x), max_n(x), replications = 1000)
+#' 
+#' @export
+max_n <- function(x) {
+    .Call(`_dvmisc_max_n`, x)
+}
+
 #' Mean of Integer Values
 #' 
 #' Written in C++, this function should always run faster than 
@@ -71,6 +195,79 @@ cov_n <- function(x, y) {
 #' @export
 mean_i <- function(x) {
     .Call(`_dvmisc_mean_i`, x)
+}
+
+#' Minimum of Numeric Values
+#' 
+#' Written in C++, this function tends to run faster than 
+#' \code{\link[base]{min}} for large numeric vectors/matrices. For integer 
+#' objects, \code{\link{min_i}} should run even faster.
+#' 
+#' @param x Numeric vector.
+#' 
+#' @return Numeric value.
+#' 
+#' @examples
+#' # For large objects, min_n is faster than min
+#' x <- rnorm(100000)
+#' min(x) == min_n(x)
+#' benchmark(min(x), min_n(x), replications = 1000)
+#' 
+#' # For smaller objects, min_n is slower than min
+#' x <- rnorm(100)
+#' min(x) == min_n(x)
+#' benchmark(min(x), min_n(x), replications = 20000)
+#' 
+#' @export
+min_n <- function(x) {
+    .Call(`_dvmisc_min_n`, x)
+}
+
+#' Range (Actually Minimum and Maximum) of Integer Values
+#' 
+#' Written in C++, this function should always run faster than 
+#' \code{\link[base]{range}} for integer vectors/matrices. Not valid for 
+#' non-integer objects.
+#' 
+#' @param x Integer vector or matrix.
+#' 
+#' @return Integer vector.
+#' 
+#' @examples 
+#' # In general, range_i is much faster than range
+#' x <- rpois(1000, lambda = 5) 
+#' all.equal(range(x), range_i(x))
+#' benchmark(range(x), range_i(x), replications = 10000)
+#' 
+#' @export
+range_i <- function(x) {
+    .Call(`_dvmisc_range_i`, x)
+}
+
+#' Range (Actually Minimum and Maximum) of Numeric Values
+#' 
+#' Written in C++, this function should always run faster than 
+#' \code{\link[base]{range}} for numeric vectors/matrices. For integer objects, 
+#' \code{\link{range_i}} should run even faster. 
+#' 
+#' @param x Numeric vector or matrix.
+#' 
+#' @return Numeric vector.
+#' 
+#' @examples 
+#' # In general, range_n is much faster than range
+#' x <- rnorm(1000)
+#' all.equal(range(x), range_n(x))
+#' benchmark(range(x), range_n(x), replications = 5000)
+#' 
+#' # For integer vectors, range_i should be even faster
+#' x <- rpois(1000, lambda = 5) 
+#' all.equal(range(x), range_i(x))
+#' benchmark(range(x), range_n(x), range_i(x), replications = 10000)
+#' 
+#' @export
+range_n <- function(x) {
+    .Call(`_dvmisc_range_n`, x)
 }
 
 #' Sum of Integer Values
@@ -96,6 +293,53 @@ mean_i <- function(x) {
 #' @export
 sum_i <- function(x) {
     .Call(`_dvmisc_sum_i`, x)
+}
+
+#' True Range of Integer Values
+#' 
+#' Defined as the difference between the maximum and the minimum. Equivalent to 
+#' base R code \code{diff(range(x))}, but much faster.
+#' 
+#' @param x Integer vector or matrix.
+#' 
+#' @return Integer value.
+#' 
+#' @examples 
+#' # In general, true_range_i is much faster than diff(range(x))
+#' x <- rpois(1000, lambda = 5)
+#' all.equal(diff(range(x)), true_range_i(x))
+#' benchmark(diff(range(x)), true_range_i(x), replications = 5000)
+#' 
+#' @export
+true_range_i <- function(x) {
+    .Call(`_dvmisc_true_range_i`, x)
+}
+
+#' True Range of Numeric Values
+#' 
+#' Defined as the difference between the maximum and the minimum. Equivalent to 
+#' base R code \code{diff(range(x))}, but much faster. For integer objects, 
+#' \code{\link{true_range_i}} should run even faster.
+#' 
+#' @param x Numeric vector or matrix.
+#' 
+#' @return Numeric value.
+#' 
+#' @examples 
+#' # In general, true_range_n is much faster than diff(range(x))
+#' x <- rnorm(1000)
+#' all.equal(diff(range(x)), true_range_n(x))
+#' benchmark(diff(range(x)), true_range_n(x), replications = 5000)
+#' 
+#' # For integer vectors, true_range_i should be even faster
+#' x <- rpois(1000, lambda = 5)
+#' all.equal(diff(range(x)), true_range_i(x))
+#' benchmark(diff(range(x)), true_range_n(x), true_range_i(x), 
+#'           replications = 5000)
+#' 
+#' @export
+true_range_n <- function(x) {
+    .Call(`_dvmisc_true_range_n`, x)
 }
 
 #' Sample Variance for Integer Values
@@ -143,5 +387,261 @@ var_i <- function(x) {
 #' @export
 var_n <- function(x) {
     .Call(`_dvmisc_var_n`, x)
+}
+
+#' Return (Row, Column) Index of (First) Maximum of an Integer Matrix
+#' 
+#' Written in C++, this function tends to run much faster than the equivalent 
+#' (if maximum is unique) base R solution 
+#' \code{which(x == max(x), arr.ind = TRUE)}.
+#' 
+#' For optimal speed, choose the version of this function that matches the 
+#' class of your \code{x}:
+#' 
+#' \code{\link{which_max_nv}} for numeric vector. \cr
+#' \code{\link{which_max_iv}} for integer vector. \cr
+#' \code{\link{which_max_nm}} for numeric matrix. \cr
+#' \code{\link{which_max_im}} for integer matrix.
+#' 
+#' @param x Integer matrix.
+#' 
+#' @return Integer vector.
+#' 
+#' @examples 
+#' # which_max_im is typically much faster than 
+#' which(x == max(x), arr.ind = TRUE)
+#' x <- matrix(rpois(100, lambda = 15), ncol = 10)
+#' all(which(x == max(x), arr.ind = TRUE) == which_max_im(x))
+#' benchmark(which(x == max(x), arr.ind = TRUE), which_max_im(x), 
+#'           replications = 1000)
+#' 
+#' @export
+which_max_im <- function(x) {
+    .Call(`_dvmisc_which_max_im`, x)
+}
+
+#' Return Index of (First) Maximum of an Integer Vector
+#' 
+#' Written in C++, this function tends to run faster than 
+#' \code{\link[base]{which.max}} for large integer vectors.
+#' 
+#' For optimal speed, choose the version of this function that matches the 
+#' class of your \code{x}:
+#' 
+#' \code{\link{which_max_nv}} for numeric vector. \cr
+#' \code{\link{which_max_iv}} for integer vector. \cr
+#' \code{\link{which_max_nm}} for numeric matrix. \cr
+#' \code{\link{which_max_im}} for integer matrix.
+#' 
+#' @param x Integer vector.
+#' 
+#' @return Integer value.
+#' 
+#' @examples 
+#' # For long vectors, which_max_iv is faster than which.max
+#' x <- rpois(10000, lambda = 15)
+#' which.max(x) == which_max_iv(x)
+#' benchmark(which.max(x), which_max_iv(x), replications = 5000)
+#' 
+#' # For shorter vectors, which_max_iv is slower than which.max
+#' x <- rpois(100, lambda = 15)
+#' which.max(x) == which_max_iv(x)
+#' benchmark(which.max(x), which_max_iv(x), replications = 20000)
+#' 
+#' @export
+which_max_iv <- function(x) {
+    .Call(`_dvmisc_which_max_iv`, x)
+}
+
+#'Return (Row, Column) Index of (First) Maximum of a Numeric Matrix
+#' 
+#' Written in C++, this function tends to run much faster than the equivalent 
+#' (if maximum is unique) base R solution 
+#' \code{which(x == max(x), arr.ind = TRUE)}.
+#' 
+#' For optimal speed, choose the version of this function that matches the 
+#' class of your \code{x}:
+#' 
+#' \code{\link{which_max_nv}} for numeric vector. \cr
+#' \code{\link{which_max_iv}} for integer vector. \cr
+#' \code{\link{which_max_nm}} for numeric matrix. \cr
+#' \code{\link{which_max_im}} for integer matrix.
+#' 
+#' @param x Numeric matrix.
+#' 
+#' @return Integer vector.
+#' 
+#' @examples 
+#' # which_max_nm is typically much faster than 
+#' which(x == max(x), arr.ind = TRUE)
+#' x <- matrix(rnorm(100), ncol = 10)
+#' all(which(x == max(x), arr.ind = TRUE) == which_max_nm(x))
+#' benchmark(which(x == max(x), arr.ind = TRUE), which_max_nm(x),
+#'           replications = 5000)
+#' 
+#' @export
+which_max_nm <- function(x) {
+    .Call(`_dvmisc_which_max_nm`, x)
+}
+
+#' Return Index of (First) Maximum of a Numeric Vector
+#' 
+#' Written in C++, this function tends to run faster than 
+#' \code{\link[base]{which.max}} for large numeric vectors.
+#' 
+#' For optimal speed, choose the version of this function that matches the 
+#' class of your \code{x}:
+#' 
+#' \code{\link{which_max_nv}} for numeric vector. \cr
+#' \code{\link{which_max_iv}} for integer vector. \cr
+#' \code{\link{which_max_nm}} for numeric matrix. \cr
+#' \code{\link{which_max_im}} for integer matrix.
+#' 
+#' @param x Numeric vector.
+#' 
+#' @return Integer value.
+#' 
+#' @examples 
+#' # For long vectors, which_max_nv is faster than which.max
+#' x <- rnorm(100000)
+#' which.max(x) == which_max_nv(x)
+#' benchmark(which.max(x), which_max_nv(x), replications = 1000)
+#' 
+#' # For shorter vectors, which_max_nv is slower than which.max
+#' x <- rnorm(100)
+#' which.max(x) == which_max_nv(x)
+#' benchmark(which.max(x), which_max_nv(x), replications = 10000)
+#' 
+#' @export
+which_max_nv <- function(x) {
+    .Call(`_dvmisc_which_max_nv`, x)
+}
+
+#' Return (Row, Column) Index of (First) Minimum of an Integer Matrix
+#' 
+#' Written in C++, this function tends to run much faster than the equivalent 
+#' (if minimum is unique) base R solution 
+#' \code{which(x == min(x), arr.ind = TRUE)}.
+#' 
+#' For optimal speed, choose the version of this function that matches the 
+#' class of your \code{x}:
+#' 
+#' \code{\link{which_min_nv}} for numeric vector. \cr
+#' \code{\link{which_min_iv}} for integer vector. \cr
+#' \code{\link{which_min_nm}} for numeric matrix. \cr
+#' \code{\link{which_min_im}} for integer matrix.
+#' 
+#' @param x Integer matrix.
+#' 
+#' @return Integer vector.
+#' 
+#' @examples 
+#' # which_min_im is typically much faster than 
+#' # which(x == min(x), arr.ind = TRUE)
+#' x <- matrix(rpois(100, lambda = 10), ncol = 10)
+#' all(which(x == min(x), arr.ind = TRUE) == which_min_im(x))
+#' benchmark(which(x == min(x), arr.ind = TRUE), which_min_im(x),
+#'           replications = 5000)
+#' 
+#' @export
+which_min_im <- function(x) {
+    .Call(`_dvmisc_which_min_im`, x)
+}
+
+#' Return Index of (First) Minimum of an Integer Vector
+#' 
+#' Written in C++, this function tends to run faster than 
+#' \code{\link{which.min}} for large integer vectors.
+#' 
+#' For optimal speed, choose the version of this function that matches the 
+#' class of your \code{x}:
+#' 
+#' \code{\link{which_min_nv}} for numeric vector. \cr
+#' \code{\link{which_min_iv}} for integer vector. \cr
+#' \code{\link{which_min_nm}} for numeric matrix. \cr
+#' \code{\link{which_min_im}} for integer matrix.
+#' 
+#' @param x Integer vector.
+#' 
+#' @return Integer value.
+#' 
+#' @examples 
+#' # For long vectors, which_min_iv is faster than which.min 
+#' x <- rpois(10000, lambda = 15)
+#' which.min(x) == which_min_iv(x)
+#' benchmark(which.min(x), which_min_iv(x), replications = 5000)
+#' 
+#' # For shorter vectors, which_min_iv is slower than which.min
+#' x <- rpois(100, lambda = 15)
+#' which.min(x) == which_min_iv(x)
+#' benchmark(which.min(x), which_min_iv(x), replications = 20000)
+#' 
+#' @export
+which_min_iv <- function(x) {
+    .Call(`_dvmisc_which_min_iv`, x)
+}
+
+#' Return (Row, Column) Index of (First) Minimum of a Numeric Matrix
+#' 
+#' Written in C++, this function tends to run much faster than the equivalent 
+#' (if minimum is unique) base R solution 
+#' \code{which(x == min(x), arr.ind = TRUE)}.
+#' 
+#' For optimal speed, choose the version of this function that matches the 
+#' class of your \code{x}:
+#' 
+#' \code{\link{which_min_nv}} for numeric vector. \cr
+#' \code{\link{which_min_iv}} for integer vector. \cr
+#' \code{\link{which_min_nm}} for numeric matrix. \cr
+#' \code{\link{which_min_im}} for integer matrix.
+#' 
+#' @param x Numeric matrix.
+#' 
+#' @return Integer vector.
+#' 
+#' @examples 
+#' # which_min_nm is typically much faster than 
+#' # which(x == min(x), arr.ind = TRUE)
+#' x <- matrix(rnorm(100), ncol = 10)
+#' all(which(x == min(x), arr.ind = TRUE) == which_min_nm(x))
+#' benchmark(which(x == min(x), arr.ind = TRUE), which_min_nm(x), 
+#'           replications = 5000)
+#' 
+#' @export
+which_min_nm <- function(x) {
+    .Call(`_dvmisc_which_min_nm`, x)
+}
+
+#' Return Index of (First) Minimum of a Numeric Vector
+#' 
+#' Written in C++, this function tends to run faster than 
+#' \code{\link[base]{which.min}} for large numeric vectors.
+#' 
+#' For optimal speed, choose the version of this function that matches the 
+#' class of your \code{x}:
+#' 
+#' \code{\link{which_min_nv}} for numeric vector. \cr
+#' \code{\link{which_min_iv}} for integer vector. \cr
+#' \code{\link{which_min_nm}} for numeric matrix. \cr
+#' \code{\link{which_min_im}} for integer matrix.
+#' 
+#' @param x Numeric vector.
+#' 
+#' @return Integer value.
+#' 
+#' @examples 
+#' # For long vectors, which_min_nv is faster than which.min
+#' x <- rnorm(100000)
+#' which.min(x) == which_min_nv(x)
+#' benchmark(which.min(x), which_min_nv(x), replications = 1000)
+#' 
+#' # For shorter vectors, which_min_nv is slower than which.min
+#' x <- rnorm(100)
+#' which.min(x) == which_min_nv(x)
+#' benchmark(which.min(x), which_min_nv(x), replications = 10000)
+#' 
+#' @export
+which_min_nv <- function(x) {
+    .Call(`_dvmisc_which_min_nv`, x)
 }
 
