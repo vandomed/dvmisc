@@ -21,8 +21,8 @@ Date: \tab 2018-01-31 \cr
 License: \tab GPL-2 \cr
 }
 
-See \href{https://cran.r-project.org/web/packages/dvmisc/index.html}{CRAN 
-documentation} for full list of functions.
+See \href{https://cran.r-project.org/package=dvmisc}{CRAN documentation} for 
+full list of functions.
 }
 \references{
 Acknowledgment: This material is based upon work supported by the 

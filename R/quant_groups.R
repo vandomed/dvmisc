@@ -14,11 +14,11 @@
 #' @examples 
 #' # Convert values from N(0, 1) into quintiles (i.e. 5 groups)
 #' x <- rnorm(1000)
-#' groups <- quant.groups(x, 5)
+#' groups <- quant_groups(x, 5)
 #' table(groups)
 #' 
 #' @export
-quant.groups <- function(x, groups = 5, ...) {
+quant_groups <- function(x, groups = 5, ...) {
   
   # Calculate quantiles
   quantiles <- quantile(x, probs = seq(0, 1, 1 / groups), na.rm = TRUE, ...)

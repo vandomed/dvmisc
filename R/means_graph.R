@@ -33,7 +33,7 @@
 #' @return Plot showing mean of \code{y} across levels of \code{group}.
 #' 
 #' @export
-means.graph <- function(y, group, error.bars = "t.ci", alpha = 0.05,
+means_graph <- function(y, group, error.bars = "t.ci", alpha = 0.05,
                         p.legend = TRUE,
                         plot.list = NULL,
                         lines.list = NULL,
@@ -116,7 +116,7 @@ means.graph <- function(y, group, error.bars = "t.ci", alpha = 0.05,
   
   # Figure out features of graph, based on user inputs where available
   plot.list <-
-    list.override(list1 = list(x = means, type = "p", pch = 16, xaxt = "n",
+    list_override(list1 = list(x = means, type = "p", pch = 16, xaxt = "n",
                                main = paste("Mean ", y.varname, " by ",
                                             group.varname, sep = ""),
                                cex.main = 1.25,
@@ -125,7 +125,7 @@ means.graph <- function(y, group, error.bars = "t.ci", alpha = 0.05,
                                ylim = c(y1, y2)),
                   list2 = plot.list)
   axis.list <-
-    list.override(list1 = list(side = 1, at = 1: length(group.levels),
+    list_override(list1 = list(side = 1, at = 1: length(group.levels),
                                labels = group.levels),
                   list2 = axis.list)
   
@@ -171,7 +171,7 @@ means.graph <- function(y, group, error.bars = "t.ci", alpha = 0.05,
     }
     
     # Add user inputs to legend, if any
-    legend.list <- list.override(list1 = list(x = "topleft",
+    legend.list <- list_override(list1 = list(x = "topleft",
                                               legend = pval.text),
                                  list2 = legend.list)
     

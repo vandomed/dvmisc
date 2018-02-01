@@ -39,7 +39,7 @@
 #' dat <- cbind(rnorm(100, 2), rnorm(100, 2.5), rnorm(100, 1.75))
 #' means <- apply(dat, 2, mean)
 #' sds <- apply(dat, 2, sd)
-#' fig1 <- dots.bars(y = means, bars = sds, main = "Mean +/- SD by Group",
+#' fig1 <- dots_bars(y = means, bars = sds, main = "Mean +/- SD by Group",
 #'                   ylab = "Mean +/- SD")
 #'                   
 #' # Simulate BMI values for males and females in 3 different age groups, and 
@@ -54,13 +54,13 @@
 #'                    function(x) t.test(x)$conf.int[1])
 #' ci.upper <- tapply(dat$bmi, dat[, c("sex", "age")],
 #'                    function(x) t.test(x)$conf.int[2])
-#' fig2 <- dots.bars(y = means, bars.lower = ci.lower, bars.upper = ci.upper,
+#' fig2 <- dots_bars(y = means, bars.lower = ci.lower, bars.upper = ci.upper,
 #'                   main = "BMI by Sex and Age",
 #'                   ylab = "BMI (mean +/- CI)",
 #'                   xlab = "Age group")
 #'
 #' @export
-dots.bars <- function(y = NULL,
+dots_bars <- function(y = NULL,
                       bars = NULL,
                       bars.lower = y - bars,
                       bars.upper = y + bars,
@@ -123,7 +123,7 @@ dots.bars <- function(y = NULL,
     
     # Add points and error bars
     do.call(points, c(list(x = xvals, y = y), points.list))
-    arrows.list <- list.override(list1 = list(length = 0.05, angle = 90,
+    arrows.list <- list_override(list1 = list(length = 0.05, angle = 90,
                                               code = 3),
                                  list2 = arrows.list)
     do.call(arrows, c(list(x0 = xvals, y0 = bars.lower,
@@ -131,7 +131,7 @@ dots.bars <- function(y = NULL,
                       arrows.list))
     
     # Add group labels on x-axis
-    axis.list <- list.override(list1 = list(side = 1, at = xvals,
+    axis.list <- list_override(list1 = list(side = 1, at = xvals,
                                             labels = group.labels),
                                list2 = axis.list)
     do.call(axis, axis.list)
@@ -209,7 +209,7 @@ dots.bars <- function(y = NULL,
     x.steps <- seq(-0.15, 0.15, 0.3 / (subgroup.n - 1))
     
     # Loop through and add points and bars
-    arrows.list <- list.override(list1 = list(length = 0.05, angle = 90,
+    arrows.list <- list_override(list1 = list(length = 0.05, angle = 90,
                                               code = 3),
                                  list2 = arrows.list)
     for (ii in 1: subgroup.n) {
@@ -222,13 +222,13 @@ dots.bars <- function(y = NULL,
     }
     
     # Add group labels on x-axis
-    axis.list <- list.override(list1 = list(side = 1, at = xvals,
+    axis.list <- list_override(list1 = list(side = 1, at = xvals,
                                             labels = group.labels),
                                list2 = axis.list)
     do.call(axis, axis.list)
     
     # Add legend
-    legend.list <- list.override(list1 = list(x = "bottomleft",
+    legend.list <- list_override(list1 = list(x = "bottomleft",
                                               pch = subgroup.pch,
                                               legend = subgroup.labels),
                                  list2 = legend.list)

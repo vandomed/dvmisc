@@ -30,11 +30,11 @@
 #' glm.fit <- glm(y ~ x)
 #' 
 #' # Extract MSE from lm.fit and glm.fit
-#' get.mse(lm.fit)
-#' get.mse(glm.fit)
+#' get_mse(lm.fit)
+#' get_mse(glm.fit)
 #' 
 #' @export
-get.mse <- function(model.fit, var.estimate = FALSE) {
+get_mse <- function(model.fit, var.estimate = FALSE) {
   
   # Extract MSE from model.fit
   class_model.fit <- class(model.fit)[1]

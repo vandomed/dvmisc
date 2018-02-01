@@ -25,13 +25,13 @@
 #' list.user <- list(main = "A Straight Line", lty = 2, lwd = 1.25)
 #' 
 #' # Combine the two lists into one, giving priority to list.user
-#' list.combined <- list.override(list.defaults, list.user)
+#' list.combined <- list_override(list.defaults, list.user)
 #' 
 #' # Plot data using do.call
 #' do.call(plot, list.combined)
 #' 
 #' @export
-list.override <- function(list1, list2) {
+list_override <- function(list1, list2) {
   
   # Get names of elements of list1 and list2
   names.list1 <- names(list1)

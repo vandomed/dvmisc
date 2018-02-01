@@ -36,7 +36,7 @@
 #' @return Plot showing log-odds of \code{y} across levels of \code{group}.
 #' 
 #' @export
-logodds.graph <- function(y, group, error.bars = "none", alpha = 0.05, 
+logodds_graph <- function(y, group, error.bars = "none", alpha = 0.05, 
                           p.legend = "chi", 
                           plot.list = NULL, 
                           lines.list = NULL,
@@ -118,7 +118,7 @@ logodds.graph <- function(y, group, error.bars = "none", alpha = 0.05,
   
   # Figure out features of graph, based on user inputs where available
   plot.list <-
-    list.override(list1 = list(x = x, y = logodds,
+    list_override(list1 = list(x = x, y = logodds,
                                type = "p", pch = 16, xaxt = "n",
                                main = paste("Log-odds ", y.varname, " by ",
                                             group.varname, sep = ""),
@@ -131,7 +131,7 @@ logodds.graph <- function(y, group, error.bars = "none", alpha = 0.05,
                            ifelse(length(group.levels) >= 8, 0.5,
                                   1 - 0.1 * (length(group.levels) - 3)))
   axis.list <-
-    list.override(list1 = list(side = 1, at = 1: length(group.levels),
+    list_override(list1 = list(side = 1, at = 1: length(group.levels),
                                labels = group.levels,
                                cex.axis = cex.axis.value),
                   list2 = axis.list)
@@ -187,7 +187,7 @@ logodds.graph <- function(y, group, error.bars = "none", alpha = 0.05,
     
     # Add user inputs to legend, if any
     legend.list <-
-      list.override(list1 = list(x = "topleft", legend = pval.text),
+      list_override(list1 = list(x = "topleft", legend = pval.text),
                     list2 = legend.list)
     
     # Add legend

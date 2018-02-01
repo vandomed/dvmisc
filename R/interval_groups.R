@@ -14,17 +14,17 @@
 #' @examples 
 #' # Convert values from N(0, 1) into 6 equal-width groups
 #' x <- rnorm(1000)
-#' groups <- interval.groups(x, 6)
+#' groups <- interval_groups(x, 6)
 #' table(groups)
 #' 
-#' # Use interval.groups to detect non-linearity
+#' # Use interval_groups to detect non-linearity
 #' set.seed(123)
 #' x <- rnorm(1000)
 #' y <- 1.5 + 1.25 * x + 0.25 * x^2 + rnorm(1000)
-#' plot(tapply(y, interval.groups(x), mean))
+#' plot(tapply(y, interval_groups(x), mean))
 #' 
 #' @export
-interval.groups <- function(x, groups = 5, ...) {
+interval_groups <- function(x, groups = 5, ...) {
   
   # Figure out break points to split x into even intervals spanning its range
   x.range <- range(x, na.rm = TRUE)

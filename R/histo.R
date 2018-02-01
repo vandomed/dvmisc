@@ -275,7 +275,7 @@ histo <- function(x,
     }
     
     # Add overlaying curve
-    points.list <- list.override(list1 = list(type = "l"),
+    points.list <- list_override(list1 = list(type = "l"),
                                  list2 = points.list)
     do.call(points, c(list(x = x.vals + dis.shift, y = y.vals),
                       points.list))

@@ -14,8 +14,8 @@
 #' License: \tab GPL-2 \cr
 #' }
 #' 
-#' See \href{https://cran.r-project.org/web/packages/dvmisc/index.html}{CRAN 
-#' documentation} for full list of functions. 
+#' See \href{https://cran.r-project.org/package=dvmisc}{CRAN documentation} for 
+#' full list of functions. 
 #' 
 #' @author Dane R. Van Domelen \cr \email{vandomed@@gmail.com}
 #' 
