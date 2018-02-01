@@ -14,8 +14,7 @@ Numeric value.
 }
 \description{
 Written in C++, this function tends to run faster than 
-\code{\link[base]{min}} for large numeric vectors/matrices. For integer 
-objects, \code{\link{min_i}} should run even faster.
+\code{\link[base]{min}} for large numeric vectors/matrices.
 }
 \examples{
 # For large objects, min_n is faster than min

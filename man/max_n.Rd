@@ -14,8 +14,7 @@ Numeric value.
 }
 \description{
 Written in C++, this function tends to run faster than 
-\code{\link[base]{max}} for large numeric vectors/matrices. For integer 
-objects, \code{\link{max_i}} should run even faster.
+\code{\link[base]{max}} for large numeric vectors/matrices.
 }
 \examples{
 # For large objects, max_n is faster than max

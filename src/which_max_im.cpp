@@ -21,7 +21,7 @@ using namespace Rcpp;
 //' 
 //' @examples 
 //' # which_max_im is typically much faster than 
-//' which(x == max(x), arr.ind = TRUE)
+//' # which(x == max(x), arr.ind = TRUE)
 //' x <- matrix(rpois(100, lambda = 15), ncol = 10)
 //' all(which(x == max(x), arr.ind = TRUE) == which_max_im(x))
 //' benchmark(which(x == max(x), arr.ind = TRUE), which_max_im(x), 

@@ -29,7 +29,7 @@ class of your \code{x}:
 # For long vectors, which_max_nv is faster than which.max
 x <- rnorm(100000)
 which.max(x) == which_max_nv(x)
-benchmark(which.max(x), which_max_nv(x), replications = 1000)
+benchmark(which.max(x), which_max_nv(x), replications = 500)
 
 # For shorter vectors, which_max_nv is slower than which.max
 x <- rnorm(100)

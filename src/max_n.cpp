@@ -4,8 +4,7 @@ using namespace Rcpp;
 //' Maximum of Numeric Values
 //' 
 //' Written in C++, this function tends to run faster than 
-//' \code{\link[base]{max}} for large numeric vectors/matrices. For integer 
-//' objects, \code{\link{max_i}} should run even faster.
+//' \code{\link[base]{max}} for large numeric vectors/matrices.
 //' 
 //' @param x Numeric vector.
 //' 

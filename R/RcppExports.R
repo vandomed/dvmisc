@@ -153,8 +153,7 @@ diff1_n <- function(x) {
 #' Maximum of Numeric Values
 #' 
 #' Written in C++, this function tends to run faster than 
-#' \code{\link[base]{max}} for large numeric vectors/matrices. For integer 
-#' objects, \code{\link{max_i}} should run even faster.
+#' \code{\link[base]{max}} for large numeric vectors/matrices.
 #' 
 #' @param x Numeric vector.
 #' 
@@ -200,8 +199,7 @@ mean_i <- function(x) {
 #' Minimum of Numeric Values
 #' 
 #' Written in C++, this function tends to run faster than 
-#' \code{\link[base]{min}} for large numeric vectors/matrices. For integer 
-#' objects, \code{\link{min_i}} should run even faster.
+#' \code{\link[base]{min}} for large numeric vectors/matrices.
 #' 
 #' @param x Numeric vector.
 #' 
@@ -389,6 +387,142 @@ var_n <- function(x) {
     .Call(`_dvmisc_var_n`, x)
 }
 
+#' Weighted Arithmetic Mean for Integer Values and Integer Weights
+#' 
+#' Written in C++, this function should always run faster than 
+#' \code{\link{weighted.mean}}.
+#' 
+#' For optimal speed, choose the version of this function that matches the 
+#' class of your \code{x} and \code{w}: 
+#' \code{\link{weighted_mean_nn}} for numeric \code{x}, numeric \code{w} \cr 
+#' \code{\link{weighted_mean_ni}} for numeric \code{x}, integer \code{w} \cr 
+#' \code{\link{weighted_mean_in}} for integer \code{x}, numeric \code{w} \cr 
+#' \code{\link{weighted_mean_ii}} for integer \code{x}, integer \code{w} \cr
+#' 
+#' These functions typically execute several times faster than the base R 
+#' function \code{\link[stats]{weighted.mean}} and weighted average functions 
+#' in other packages (e.g. \code{wtd.mean} in \pkg{Hmisc} and \code{wt.mean} in 
+#' \pkg{SDMTools}).
+#' 
+#' @param x Integer vector of values.
+#' @param w Integer vector of weights.
+#' 
+#' @return Numeric value.
+#' 
+#' @examples 
+#' # weighted_mean_ii is typically much faster than weighted.mean
+#' x <- rpois(1000, lambda = 5)
+#' w <- rpois(1000, lambda = 5)
+#' all.equal(weighted.mean(x, w), weighted_mean_ii(x, w))
+#' benchmark(weighted.mean(x, w), weighted_mean_ii(x, w), replications = 2000)
+#' 
+#' @export
+weighted_mean_ii <- function(x, w) {
+    .Call(`_dvmisc_weighted_mean_ii`, x, w)
+}
+
+#' Weighted Arithmetic Mean for Integer Values and Numeric Weights
+#' 
+#' Written in C++, this function should always run faster than 
+#' \code{\link[stats]{weighted.mean}}.
+#' 
+#' For optimal speed, choose the version of this function that matches the 
+#' class of your \code{x} and \code{w}: 
+#' \code{\link{weighted_mean_nn}} for numeric \code{x}, numeric \code{w} \cr 
+#' \code{\link{weighted_mean_ni}} for numeric \code{x}, integer \code{w} \cr 
+#' \code{\link{weighted_mean_in}} for integer \code{x}, numeric \code{w} \cr 
+#' \code{\link{weighted_mean_ii}} for integer \code{x}, integer \code{w} \cr
+#' 
+#' These functions typically execute several times faster than the base R 
+#' function \code{\link[stats]{weighted.mean}} and weighted average functions 
+#' in other packages (e.g. \code{wtd.mean} in \pkg{Hmisc} and \code{wt.mean} in 
+#' \pkg{SDMTools}).
+#' 
+#' @param x Integer vector of values.
+#' @param w Numeric vector of weights.
+#' 
+#' @return Numeric value.
+#' 
+#' @examples 
+#' # weighted_mean_in is typically much faster than weighted.mean
+#' x <- rpois(1000, lambda = 5)
+#' w <- runif(1000)
+#' all.equal(weighted.mean(x, w), weighted_mean_in(x, w))
+#' benchmark(weighted.mean(x, w), weighted_mean_in(x, w), replications = 2000)
+#' 
+#' @export
+weighted_mean_in <- function(x, w) {
+    .Call(`_dvmisc_weighted_mean_in`, x, w)
+}
+
+#' Weighted Arithmetic Mean for Numeric Values and Integer Weights
+#' 
+#' Written in C++, this function should always run faster than 
+#' \code{\link[stats]{weighted.mean}}.
+#' 
+#' For optimal speed, choose the version of this function that matches the 
+#' class of your \code{x} and \code{w}: 
+#' \code{\link{weighted_mean_nn}} for numeric \code{x}, numeric \code{w} \cr 
+#' \code{\link{weighted_mean_ni}} for numeric \code{x}, integer \code{w} \cr 
+#' \code{\link{weighted_mean_in}} for integer \code{x}, numeric \code{w} \cr 
+#' \code{\link{weighted_mean_ii}} for integer \code{x}, integer \code{w} \cr
+#' 
+#' These functions typically execute several times faster than the base R 
+#' function \code{\link[stats]{weighted.mean}} and weighted average functions 
+#' in other packages (e.g. \code{wtd.mean} in \pkg{Hmisc} and \code{wt.mean} in 
+#' \pkg{SDMTools}).
+#' 
+#' @param x Numeric vector of values.
+#' @param w Integer vector of weights.
+#' 
+#' @return Numeric value.
+#' 
+#' @examples 
+#' # weighted_mean_ni is typically much faster than weighted.mean 
+#' x <- rnorm(1000)
+#' w <- rpois(1000, lambda = 5)
+#' all.equal(weighted.mean(x, w), weighted_mean_ni(x, w))
+#' benchmark(weighted.mean(x, w), weighted_mean_ni(x, w), replications = 2000)
+#' 
+#' @export
+weighted_mean_ni <- function(x, w) {
+    .Call(`_dvmisc_weighted_mean_ni`, x, w)
+}
+
+#' Weighted Arithmetic Mean for Numeric Values and Numeric Weights
+#' 
+#' Written in C++, this function should always run faster than 
+#' \code{\link[stats]{weighted.mean}}.
+#' 
+#' For optimal speed, choose the version of this function that matches the 
+#' class of your \code{x} and \code{w}: 
+#' \code{\link{weighted_mean_nn}} for numeric \code{x}, numeric \code{w} \cr 
+#' \code{\link{weighted_mean_ni}} for numeric \code{x}, integer \code{w} \cr 
+#' \code{\link{weighted_mean_in}} for integer \code{x}, numeric \code{w} \cr 
+#' \code{\link{weighted_mean_ii}} for integer \code{x}, integer \code{w} \cr
+#' 
+#' These functions typically execute several times faster than the base R 
+#' function \code{\link[stats]{weighted.mean}} and weighted average functions 
+#' in other packages (e.g. \code{wtd.mean} in \pkg{Hmisc} and \code{wt.mean} in 
+#' \pkg{SDMTools}).
+#' 
+#' @param x Numeric vector of values.
+#' @param w Numeric vector of weights.
+#' 
+#' @return Numeric value.
+#' 
+#' @examples 
+#' # weighted_mean_nn is typically much faster than weighted.mean
+#' x <- rnorm(1000)
+#' w <- runif(1000)
+#' all.equal(weighted.mean(x, w), weighted_mean_nn(x, w))
+#' benchmark(weighted.mean(x, w), weighted_mean_nn(x, w), replications = 2000)
+#' 
+#' @export
+weighted_mean_nn <- function(x, w) {
+    .Call(`_dvmisc_weighted_mean_nn`, x, w)
+}
+
 #' Return (Row, Column) Index of (First) Maximum of an Integer Matrix
 #' 
 #' Written in C++, this function tends to run much faster than the equivalent 
@@ -409,11 +543,11 @@ var_n <- function(x) {
 #' 
 #' @examples 
 #' # which_max_im is typically much faster than 
-#' which(x == max(x), arr.ind = TRUE)
+#' # which(x == max(x), arr.ind = TRUE)
 #' x <- matrix(rpois(100, lambda = 15), ncol = 10)
 #' all(which(x == max(x), arr.ind = TRUE) == which_max_im(x))
 #' benchmark(which(x == max(x), arr.ind = TRUE), which_max_im(x), 
-#'           replications = 1000)
+#'           replications = 5000)
 #' 
 #' @export
 which_max_im <- function(x) {
@@ -505,7 +639,7 @@ which_max_nm <- function(x) {
 #' # For long vectors, which_max_nv is faster than which.max
 #' x <- rnorm(100000)
 #' which.max(x) == which_max_nv(x)
-#' benchmark(which.max(x), which_max_nv(x), replications = 1000)
+#' benchmark(which.max(x), which_max_nv(x), replications = 500)
 #' 
 #' # For shorter vectors, which_max_nv is slower than which.max
 #' x <- rnorm(100)

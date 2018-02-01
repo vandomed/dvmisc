@@ -31,9 +31,10 @@ discrete distributions that don't take on too many unique values.}
 PDF/PMF.}
 
 \item{axis.list}{Optional list of inputs to pass to 
-\code{\link[graphics]{axis}} function.
-... May include arguments to pass to \code{\link[graphics]{hist}} and/or 
-parameter values needed for certain distributions (\code{size} if 
+\code{\link[graphics]{axis}} function.}
+
+\item{...}{May include arguments to pass to \code{\link[graphics]{hist}} 
+and/or parameter values needed for certain distributions (\code{size} if 
 \code{dis = "binom"} or \code{dis = "nbinom"}, \code{N} and \code{k} if 
 \code{dis = "hyper"}).}
 }
@@ -85,7 +86,7 @@ histo(x, "lnorm", main = "Log-normal curve")
 histo(x, "norm", main = "Normal curve")
 
 # Generate 10,000 Binomial(8, 0.25) values. Create histogram, specifying 
-size = 5, with blue line/points showing fitted PMF.
+# size = 5, with blue line/points showing fitted PMF.
 set.seed(123)
 x <- rbinom(n = 10000, size = 5, prob = 0.25)
 par(mfrow = c(1, 1))

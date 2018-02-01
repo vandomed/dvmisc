@@ -1,7 +1,7 @@
 #' Mean of Numeric Values
 #' 
 #' Defined simply as \code{sum(x) / length(x)}, this function seems to always 
-#' run faster than \code{\link[stats]{mean}} for numeric, non-integer 
+#' run faster than \code{\link[base]{mean}} for numeric, non-integer 
 #' vectors/matrices. For integer objects, \code{\link{mean_i}} should run even 
 #' faster.
 #' 

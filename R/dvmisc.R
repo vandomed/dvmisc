@@ -10,7 +10,7 @@
 #' Package: \tab dvmisc \cr
 #' Type: \tab Package \cr
 #' Version: \tab 1.1.2 \cr
-#' Date: \tab 2018-01-30 \cr
+#' Date: \tab 2018-01-31 \cr
 #' License: \tab GPL-2 \cr
 #' }
 #' 
@@ -24,11 +24,13 @@
 #' DGE-0940903.
 #' 
 #' @docType package
+#' @import graphics
+#' @importFrom MASS fitdistr
 #' @import Rcpp
 #' @importFrom Rcpp evalCpp
-#' @import stats
-#' @import graphics
 #' @importFrom rbenchmark benchmark
+#' @import stats
+#' @importFrom utils head tail
 #' @useDynLib dvmisc, .registration=TRUE
 #' @name dvmisc
 NULL
