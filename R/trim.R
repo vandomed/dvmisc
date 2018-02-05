@@ -45,7 +45,7 @@ trim <- function(x, p = NULL, tails = "both", cutpoints = NULL,
   }
   
   # Trim tails
-  x.trimmed <- x[inside(x = x, ends = cutpoints, include.lower = keep.edge)]
+  x.trimmed <- x[inside(x = x, ends = cutpoints, inclusive = keep.edge)]
   return(x.trimmed)
   
 }

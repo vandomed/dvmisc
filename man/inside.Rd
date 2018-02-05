@@ -4,8 +4,7 @@
 \alias{inside}
 \title{Check Whether Numeric Value Falls Inside Two Other Numeric Values}
 \usage{
-inside(x, ends, inclusive = TRUE, include.lower = inclusive,
-  include.upper = inclusive)
+inside(x, ends, inclusive = TRUE)
 }
 \arguments{
 \item{x}{Numeric value or vector of numeric values.}
@@ -16,12 +15,6 @@ endpoints.}
 
 \item{inclusive}{Logical value indicating whether endpoints should be 
 included.}
-
-\item{include.lower}{Logical value indicating whether the lower endpoint 
-should be included.}
-
-\item{include.upper}{Logical value indicating whether the lower endpoint 
-should be included.}
 }
 \value{
 Logical value or vector.

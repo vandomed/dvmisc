@@ -10,10 +10,6 @@
 #' endpoints.
 #' @param inclusive Logical value indicating whether endpoints should be 
 #' included.
-#' @param include.lower Logical value indicating whether the lower endpoint 
-#' should be included.
-#' @param include.upper Logical value indicating whether the lower endpoint 
-#' should be included.
 #' 
 #' @return Logical value or vector.
 #' 
@@ -28,25 +24,25 @@
 #' inside(1, rbind(c(1, 2), c(3, 4)))
 #' 
 #' @export
-inside <- function(x, ends, inclusive = TRUE, include.lower = inclusive,
-                   include.upper = inclusive) {
-  
-  # Get >=/> and <=/< depending on values of include.lower and include.upper
-  sign1 <- ifelse(include.lower, ">=", ">")
-  sign2 <- ifelse(include.upper, "<=", "<")
+inside <- function(x, ends, inclusive = TRUE) {
   
   # Check whether x is inside specified interval(s)
   if (! is.matrix(ends)) {
     
-    out <- sapply(x, function(x)
-      eval(parse(text = paste(x, sign1, ends[1], "&", x, sign2, ends[2]))))
+    if (inclusive) {
+      out <- x >= ends[1] & x <= ends[2]
+    } else {
+      out <- x > ends[1] & x < ends[2]
+    }
     
   } else {
     
     mat <- cbind(x, ends)
-    out <- apply(mat, 1, function(x) {
-      eval(parse(text = paste(x[1], sign1, x[2], "&", x[1], sign2, x[3])))
-    })
+    if (inclusive) {
+      out <- apply(mat, 1, function(x) x[1] >= x[2] & x[1] <= x[3])
+    } else {
+      out <- apply(mat, 1, function(x) x[1] > x[2] & x[1] < x[3])
+    }
     
   }
   
