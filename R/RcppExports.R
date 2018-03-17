@@ -132,23 +132,6 @@ max_n <- function(x) {
     .Call(`_dvmisc_max_n`, x)
 }
 
-#' Mean of Integer Values
-#' 
-#' Written in C++, this function should always run faster than 
-#' \code{\link[base]{mean}} for integer vectors/matrices. Not valid for 
-#' non-integer objects.
-#' 
-#' @param x Integer vector or matrix.
-#' 
-#' @return Numeric value.
-#' 
-#' @examples 
-#' # For integer objects, mean_i is typically much faster than mean.
-#' x <- rpois(100, lambda = 5)
-#' mean(x) == mean_i(x)
-#' benchmark(mean(x), mean_i(x), replications = 10000)
-#' 
-#' @export
 mean_i <- function(x) {
     .Call(`_dvmisc_mean_i`, x)
 }

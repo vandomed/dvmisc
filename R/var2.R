@@ -15,13 +15,13 @@
 #' @examples
 #' # var2 vs. var for integer vector
 #' x <- rpois(1000, lambda = 5)
-#' all.equal(var(x), var_i(x))
-#' benchmark(var(x), var_i(x), replications = 5000)
+#' all.equal(var(x), var2(x, TRUE))
+#' benchmark(var(x), var2(x, TRUE), replications = 1000)
 #' 
 #' # var2 vs. var for numeric vector
 #' x <- rnorm(1000)
-#' all.equal(var(x), var_n(x))
-#' benchmark(var(x), var_n(x), replications = 1000)
+#' all.equal(var(x), var2(x))
+#' benchmark(var(x), var2(x), replications = 1000)
 #' 
 #' 
 #' @export
