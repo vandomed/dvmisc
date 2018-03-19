@@ -1,16 +1,15 @@
-#' Faster Computation of Common Statistics and Miscellaneous Functions
+#' Convenience Functions, Moving Window Statistics, and Graphics
 #' 
-#' Faster versions of base R functions (e.g. mean, standard deviation, 
-#' covariance, weighted mean), mostly written in C++, along with miscellaneous 
-#' functions for various purposes (e.g. create histogram with fitted probability 
-#' density function or probability mass function curve, create body mass index 
-#' groups, assess linearity assumption in logistic regression).
+#' Contains functions that do something convenient (e.g. create BMI categories), 
+#' functions for calculating moving-window statistics efficiently, and functions 
+#' for generating various figures (e.g. histograms with fitted probability 
+#' mass/density function).
 #' 
 #' \tabular{ll}{
 #' Package: \tab dvmisc \cr
 #' Type: \tab Package \cr
 #' Version: \tab 1.1.3 \cr
-#' Date: \tab 2018-03-17 \cr
+#' Date: \tab 2018-03-18 \cr
 #' License: \tab GPL-3 \cr
 #' }
 #' 
@@ -36,6 +35,7 @@
 #' DGE-0940903.
 #' 
 #' @docType package
+#' @importFrom crowdopt var2
 #' @import graphics
 #' @importFrom MASS fitdistr
 #' @import Rcpp
