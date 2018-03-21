@@ -76,6 +76,22 @@ min_n <- function(x) {
     .Call(`_dvmisc_min_n`, x)
 }
 
+moving_mean_i <- function(x, window) {
+    .Call(`_dvmisc_moving_mean_i`, x, window)
+}
+
+moving_mean_i_max <- function(x, window) {
+    .Call(`_dvmisc_moving_mean_i_max`, x, window)
+}
+
+moving_mean_n <- function(x, window) {
+    .Call(`_dvmisc_moving_mean_n`, x, window)
+}
+
+moving_mean_n_max <- function(x, window) {
+    .Call(`_dvmisc_moving_mean_n_max`, x, window)
+}
+
 #' Sum of Integer Values
 #' 
 #' Written in C++, this function runs faster than \code{\link[base]{sum}} for 

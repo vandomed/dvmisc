@@ -38,6 +38,54 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// moving_mean_i
+NumericVector moving_mean_i(IntegerVector x, double window);
+RcppExport SEXP _dvmisc_moving_mean_i(SEXP xSEXP, SEXP windowSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type window(windowSEXP);
+    rcpp_result_gen = Rcpp::wrap(moving_mean_i(x, window));
+    return rcpp_result_gen;
+END_RCPP
+}
+// moving_mean_i_max
+double moving_mean_i_max(IntegerVector x, double window);
+RcppExport SEXP _dvmisc_moving_mean_i_max(SEXP xSEXP, SEXP windowSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type window(windowSEXP);
+    rcpp_result_gen = Rcpp::wrap(moving_mean_i_max(x, window));
+    return rcpp_result_gen;
+END_RCPP
+}
+// moving_mean_n
+NumericVector moving_mean_n(NumericVector x, double window);
+RcppExport SEXP _dvmisc_moving_mean_n(SEXP xSEXP, SEXP windowSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type window(windowSEXP);
+    rcpp_result_gen = Rcpp::wrap(moving_mean_n(x, window));
+    return rcpp_result_gen;
+END_RCPP
+}
+// moving_mean_n_max
+double moving_mean_n_max(NumericVector x, double window);
+RcppExport SEXP _dvmisc_moving_mean_n_max(SEXP xSEXP, SEXP windowSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type window(windowSEXP);
+    rcpp_result_gen = Rcpp::wrap(moving_mean_n_max(x, window));
+    return rcpp_result_gen;
+END_RCPP
+}
 // sum_i
 int sum_i(IntegerVector x);
 RcppExport SEXP _dvmisc_sum_i(SEXP xSEXP) {
@@ -164,6 +212,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_dvmisc_max_n", (DL_FUNC) &_dvmisc_max_n, 1},
     {"_dvmisc_mean_i", (DL_FUNC) &_dvmisc_mean_i, 1},
     {"_dvmisc_min_n", (DL_FUNC) &_dvmisc_min_n, 1},
+    {"_dvmisc_moving_mean_i", (DL_FUNC) &_dvmisc_moving_mean_i, 2},
+    {"_dvmisc_moving_mean_i_max", (DL_FUNC) &_dvmisc_moving_mean_i_max, 2},
+    {"_dvmisc_moving_mean_n", (DL_FUNC) &_dvmisc_moving_mean_n, 2},
+    {"_dvmisc_moving_mean_n_max", (DL_FUNC) &_dvmisc_moving_mean_n_max, 2},
     {"_dvmisc_sum_i", (DL_FUNC) &_dvmisc_sum_i, 1},
     {"_dvmisc_truerange_i", (DL_FUNC) &_dvmisc_truerange_i, 1},
     {"_dvmisc_truerange_n", (DL_FUNC) &_dvmisc_truerange_n, 1},

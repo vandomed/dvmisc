@@ -1,8 +1,10 @@
 #' Range of a Vector (Not Min/Max!)
 #' 
-#' Defined as the difference between the maximum and the minimum. Equivalent to 
-#' base R code \code{diff(range(x))}, but much faster.
-#' 
+#' The base R function \code{\link[base]{range}} returns the minimum and maximum 
+#' of a vector, but the "range" is actually defined as the difference between 
+#' the minimum and maximum. This function calculates the actual range. It is 
+#' equivalent to the base R code \code{diff(range(x))}, but a bit simpler and 
+#' much faster.
 #' 
 #' 
 #' @param x Integer or numeric vector.
