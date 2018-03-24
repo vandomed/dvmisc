@@ -6,9 +6,8 @@
 \usage{
 histo(x, dis = "none", dis_shift = NULL, integer_breaks = NULL,
   colors = rep("black", length(dis)), lty = 1:length(dis),
-  legend_form = ifelse(dis[1] == "none", 0, ifelse(length(dis) == 1, 1, 2)),
-  aic_decimals = 2, points_list = NULL, axis_list = NULL,
-  legend_list = NULL, ...)
+  legend_form = ifelse(length(dis) == 1, 0, 1), aic_decimals = 1,
+  points_list = NULL, axis_list = NULL, legend_list = NULL, ...)
 }
 \arguments{
 \item{x}{Numeric vector of values.}

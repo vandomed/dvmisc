@@ -129,9 +129,8 @@ histo <- function(x,
                   integer_breaks = NULL,
                   colors = rep("black", length(dis)),
                   lty = 1: length(dis),
-                  legend_form = ifelse(dis[1] == "none", 0,
-                                       ifelse(length(dis) == 1, 1, 2)),
-                  aic_decimals = 2,
+                  legend_form = ifelse(length(dis) == 1, 0, 1),
+                  aic_decimals = 1,
                   points_list = NULL,
                   axis_list = NULL,
                   legend_list = NULL,
@@ -558,17 +557,18 @@ histo <- function(x,
           legend.text[ii] <-
             paste("Uniform (AIC = ", sprintf(spf.val, aic.ii), ")", sep = "")
         }
-
+        
       }
-
-      # Add legend if requested
-      if (legend_form %in% c(1, 2)) {
-        legend_list <- list_override(list1 = list(x = "topright"),
-                                     list2 = legend_list)
-        do.call(legend, c(list(lty = lty, col = colors, legend = legend.text),
-                          legend_list))
-      }
-
+      
     }
+    
+    # Add legend if requested
+    if (legend_form %in% c(1, 2)) {
+      legend_list <- list_override(list1 = list(x = "topright"),
+                                   list2 = legend_list)
+      do.call(legend, c(list(lty = lty, col = colors, legend = legend.text),
+                        legend_list))
+    }
+    
   }
 }

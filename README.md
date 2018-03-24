@@ -28,15 +28,15 @@ all.equal(diff(range(x)), truerange(x))
 #> [1] TRUE
 as.data.frame(print(microbenchmark(diff(range(x)), truerange(x), times = 500)))
 #> Unit: microseconds
-#>            expr    min     lq      mean  median     uq    max neval
-#>  diff(range(x)) 18.158 19.737 21.795814 20.7245 22.501 78.948   500
-#>    truerange(x)  2.763  3.553  4.531534  4.3430  4.738 86.844   500
+#>            expr    min     lq     mean median     uq    max neval
+#>  diff(range(x)) 17.369 18.159 20.79006 19.343 21.711 81.712   500
+#>    truerange(x)  2.763  3.159  4.26633  4.342  4.737 28.027   500
 ```
 
-| expr           |     min|      lq|       mean|   median|      uq|     max|  neval|
-|:---------------|-------:|-------:|----------:|--------:|-------:|-------:|------:|
-| diff(range(x)) |  18.158|  19.737|  21.795814|  20.7245|  22.501|  78.948|    500|
-| truerange(x)   |   2.763|   3.553|   4.531534|   4.3430|   4.738|  86.844|    500|
+| expr           |     min|      lq|      mean|  median|      uq|     max|  neval|
+|:---------------|-------:|-------:|---------:|-------:|-------:|-------:|------:|
+| diff(range(x)) |  17.369|  18.159|  20.79006|  19.343|  21.711|  81.712|    500|
+| truerange(x)   |   2.763|   3.159|   4.26633|   4.342|   4.737|  28.027|    500|
 
 ### bmi3, bmi4
 
