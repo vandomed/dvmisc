@@ -14,7 +14,8 @@
 #' be calculated. Possible values are \code{"mean"}, \code{"median"}, 
 #' \code{"mean_bias"}, \code{"median_bias"}, \code{"sd"}, \code{"iqr"}, 
 #' \code{"mean_se"} (for mean standard error), \code{"mse"} (for mean squared 
-#' error), and \code{"coverage"} (for confidence interval coverage).
+#' error), \code{"coverage"} (for confidence interval coverage), and 
+#' \code{"ci_width"} for median confidence interval width.
 #' @param alpha Numeric value specifying alpha for confidence interval. Set to 
 #' \code{0.05} for the usual 95\% CI, \code{0.1} for a 90\% CI, and so forth.
 #' @param digits Numeric value or vector specifying the number of decimal places 
@@ -68,7 +69,7 @@ sumsim <- function(estimates, ses = NULL,
   }
   
   # If CI coverage requested, get z value
-  if ("coverage" %in% statistics) {
+  if ("coverage" %in% statistics || "ci_width" %in% statistics) {
     zval <- qnorm(1 - (alpha / 2))
   }
   
@@ -111,6 +112,13 @@ sumsim <- function(estimates, ses = NULL,
                 digits[ii])
       }
       mat.colnames[ii] <- "Coverage"
+    } else if (statistic.ii == "ci_width") {
+      for (jj in 1: ncol(estimates)) {
+        mat[jj, index] <- round(median((estimates[, jj] + zval * ses[, jj]) - 
+                                         (estimates[, jj] - zval * ses[, jj])), 
+                                digits[ii])
+      }
+      mat.colnames[ii] <- "Median CI Width"
     }
   }
   

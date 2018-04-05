@@ -21,7 +21,8 @@ being estimated.}
 be calculated. Possible values are \code{"mean"}, \code{"median"}, 
 \code{"mean_bias"}, \code{"median_bias"}, \code{"sd"}, \code{"iqr"}, 
 \code{"mean_se"} (for mean standard error), \code{"mse"} (for mean squared 
-error), and \code{"coverage"} (for confidence interval coverage).}
+error), \code{"coverage"} (for confidence interval coverage), and 
+\code{"ci_width"} for median confidence interval width.}
 
 \item{alpha}{Numeric value specifying alpha for confidence interval. Set to 
 \code{0.05} for the usual 95\% CI, \code{0.1} for a 90\% CI, and so forth.}
