@@ -136,6 +136,9 @@ histo <- function(x,
                   legend_list = NULL,
                   ...) {
 
+  # Drop missing values 
+  x <- x[! is.na(x)]
+  
   # Create list with ... arguments
   extra.args <- list(...)
 
