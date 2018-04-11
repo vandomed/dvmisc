@@ -122,7 +122,7 @@ sumsim <- function(estimates, ses = NULL,
       mat.colnames[ii] <- "Median Bias"
     } else if (statistic.ii == "sd") {
       mat[, index] <- round(apply(estimates, 2, function(x) 
-        mean(x, na.rm = TRUE)), digits[ii])
+        sd(x, na.rm = TRUE)), digits[ii])
       mat.colnames[ii] <- "SD"
     } else if (statistic.ii == "iqr") {
       mat[, index] <- round(apply(estimates, 2, function(x) 
