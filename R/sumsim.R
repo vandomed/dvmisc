@@ -53,7 +53,7 @@ sumsim <- function(estimates, ses = NULL,
       n.locs <- length(locs)
       if (n.locs > 0) {
         message(paste("Excluded", n.locs, "trial(s) due to missing value(s)"))
-        estimates <- estimates[-n.locs, ]
+        estimates <- estimates[-locs, ]
       }
     } else {
       locs <- which(apply(estimates, 1, function(x) sum(is.na(x))) > 0 | 
@@ -61,8 +61,8 @@ sumsim <- function(estimates, ses = NULL,
       n.locs <- length(locs)
       if (n.locs > 0) {
         message(paste("Excluded", n.locs, "trial(s) due to missing value(s)"))
-        estimates <- estimates[-n.locs, ]
-        ses <- ses[-n.locs, ]
+        estimates <- estimates[-locs, ]
+        ses <- ses[-locs, ]
       }
     }
   }
