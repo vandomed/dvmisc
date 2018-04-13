@@ -2,4 +2,4 @@
 ^\.Rproj\.user$
 ^LICENSE$
 ^README.*$
-
+^logreg_table.$

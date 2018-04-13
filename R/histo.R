@@ -135,8 +135,11 @@ histo <- function(x,
                   axis_list = NULL,
                   legend_list = NULL,
                   ...) {
-
-  # Drop missing values 
+  
+  # Get x name for labels
+  xname <- deparse(substitute(x))
+  
+  # Drop missing values
   x <- x[! is.na(x)]
   
   # Create list with ... arguments
@@ -185,10 +188,10 @@ histo <- function(x,
 
   # If xlab/main not specified, set
   if (! "xlab" %in% names(extra.args)) {
-    extra.args$xlab <- deparse(substitute(x))
+    extra.args$xlab <- xname
   }
   if (! "main" %in% names(extra.args)) {
-    extra.args$main <- paste("Histogram of ", deparse(substitute(x)), sep = "")
+    extra.args$main <- paste("Histogram of ", xname, sep = "")
   }
 
   # Create histogram
