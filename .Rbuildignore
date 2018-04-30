@@ -3,3 +3,5 @@
 ^LICENSE$
 ^README.*$
 ^logreg_table.$
+^Thumbs.db$
+

@@ -4,9 +4,9 @@
 \alias{sumsim}
 \title{Summarize Simulation Results}
 \usage{
-sumsim(estimates, ses = NULL, truth = NULL, statistics = c("mean_bias",
-  "sd", "mean_se", "mse", "coverage"), alpha = 0.05, digits = 3,
-  listwise_deletion = TRUE)
+sumsim(estimates, ses = NULL, truth = NULL, theta_0 = 0,
+  statistics = c("mean_bias", "sd", "mean_se", "mse", "coverage"),
+  alpha = 0.05, digits = 3, listwise_deletion = TRUE)
 }
 \arguments{
 \item{estimates}{Numeric matrix where each column gives the point estimates 
@@ -18,19 +18,25 @@ a particular method across multiple trials.}
 \item{truth}{Numeric value specifying the true value of the parameter 
 being estimated.}
 
+\item{theta_0}{Numeric value specifying null value for hypothesis test
+\code{H_0: theta = theta_0}. Only used for calculating empirical power.}
+
 \item{statistics}{Numeric vector specifying which performance metrics should 
 be calculated. Possible values are \code{"n"} for number of trials, 
 \code{"mean"}, \code{"median"}, \code{"mean_bias"}, \code{"median_bias"}, 
 \code{"sd"}, \code{"iqr"}, \code{"mean_se"} (for mean standard error), 
 \code{"mse"} (for mean squared error), \code{"coverage"} (for confidence 
-interval coverage), and \code{"ci_width"} for median confidence interval 
-width.}
+interval coverage), \code{"ci_width"} for median confidence interval width, 
+and \code{"power"} for empirical power.}
 
 \item{alpha}{Numeric value specifying alpha for confidence interval. Set to 
 \code{0.05} for the usual 95\% CI, \code{0.1} for a 90\% CI, and so forth.}
 
 \item{digits}{Numeric value or vector specifying the number of decimal places 
 to include.}
+
+\item{listwise_deletion}{Logical value for whether to remove trials in which 
+any of the estimators have missing values.}
 }
 \value{
 Numeric matrix.
