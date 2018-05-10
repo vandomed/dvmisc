@@ -9,7 +9,7 @@
 #' Package: \tab dvmisc \cr
 #' Type: \tab Package \cr
 #' Version: \tab 1.1.3 \cr
-#' Date: \tab 2018-04-30 \cr
+#' Date: \tab 2018-05-10 \cr
 #' License: \tab GPL-3 \cr
 #' }
 #' 
@@ -36,9 +36,11 @@
 #' 
 #' @docType package
 #' @importFrom crowdopt var2
-#' @importFrom ggplot2 ggplot
+#' @importFrom dplyr %>%
+#' @import ggplot2
 #' @import graphics
 #' @importFrom MASS fitdistr
+#' @importFrom mvtnorm dmvnorm
 #' @import Rcpp
 #' @importFrom Rcpp evalCpp
 #' @importFrom rbenchmark benchmark

@@ -56,7 +56,7 @@ sumsim <- function(estimates,
   if (class(estimates) != "matrix") {
     estimates <- as.matrix(estimates)
   }
-  if (class(ses) != "matrix") {
+  if (! is.null(ses) && class(ses) != "matrix") {
     ses <- as.matrix(ses)
   }
   

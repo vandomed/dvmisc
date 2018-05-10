@@ -104,36 +104,43 @@ plot_ll <- function(start,
     thetas <- matrix(param_values, byrow = TRUE, ncol = p, nrow = 1001)
     thetas[, xaxis_param] <- xvals
     yvals <- -apply(thetas, 1, objective)
-    df <- df %>% bind_rows(data.frame(curve = rep(2, 1001), x = xvals, y = yvals))
+    df <- df %>% 
+      dplyr::bind_rows(data.frame(curve = rep(2, 1001), x = xvals, y = yvals))
   }
   df$curve <- factor(df$curve,
                      levels = c(1, 2),
                      labels = c("Other parameters at MLEs", "Other parameters varied"))
   
   # Exclude points with likelihood ratio < 0.01
-  df <- df %>% dplyr::filter(y >= (log(0.01) + llval))
+  df <- df %>% 
+    dplyr::filter(y >= (log(0.01) + llval))
   
   # Create plot
   if (is.null(param_values)) {
     
     # Curve at MLEs for other parameters
-    q <- ggplot(df, aes(x, y)) +
+    q <- ggplot(df, aes(x = x, y = y)) +
       geom_line() +
       labs(title = "Log-likelihood function",
-           x = "Parameter values", y = "Log-likelihood") +
-      geom_hline(yintercept = llval - qchisq(p = 0.95, df = 1) / 2, linetype = 2)
+           x = "Parameter values", 
+           y = "Log-likelihood") +
+      geom_hline(yintercept = llval - qchisq(p = 0.95, df = 1) / 2, 
+                 linetype = 2)
     
   } else {
     
     # Two curves
-    q <- ggplot(df, aes(x, y, color = curve)) +
+    q <- ggplot(df, aes(x = x, y = y, color = curve)) +
       geom_line() +
-      theme(legend.justification = c(1, 0), legend.position = c(1, 0),
-            legend.background = element_rect(color = "black", linetype = "solid")) +
+      theme(legend.justification = c(1, 0), 
+            legend.position = c(1, 0),
+            legend.background = element_rect(color = "black", 
+                                             linetype = "solid")) +
       guides(color = guide_legend(title = NULL)) +
       labs(title = "Log-likelihood function",
            x = "Parameter value", y = "Log-likelihood") +
-      geom_hline(yintercept = llval - qchisq(p = 0.95, df = 1) / 2, linetype = 2)
+      geom_hline(yintercept = llval - qchisq(p = 0.95, df = 1) / 2, 
+                 linetype = 2)
   }
 
   # Plot

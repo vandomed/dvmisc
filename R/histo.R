@@ -121,7 +121,7 @@
 #' x <- rbinom(n = 10000, size = 5, prob = 0.25)
 #' par(mfrow = c(1, 1))
 #' histo(x, dis = "binom", size = 5, colors = "blue", 
-#'       points_list = list(type = "b")
+#'       points_list = list(type = "b"))
 #'
 #' @export
 histo <- function(x,

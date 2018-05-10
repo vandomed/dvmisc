@@ -25,7 +25,7 @@ much faster.
 # truerange vs. diff(range()) for integer vector
 x <- rpois(1000, lambda = 5)
 all.equal(diff(range(x)), truerange(x, TRUE))
-benchmark(diff(range(x)), truerange(x, TRUE)), replications = 2000)
+benchmark(diff(range(x)), truerange(x, TRUE), replications = 2000)
 
 # truerange vs. diff(range()) for numeric vector
 x <- rnorm(1000)
