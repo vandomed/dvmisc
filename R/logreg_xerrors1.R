@@ -1,13 +1,27 @@
 #' Logistic Regression with Normal Exposure Subject to Additive Normal Errors
 #'
 #' Assumes exposure measurements are subject to additive normal measurement
-#' error, and exposure given covariates is a normal-errors linear regression.
-#' Some replicates are required for identifiability.
+#' errors, and exposure given covariates is a normal-errors linear regression.
+#' Some replicates are required for identifiability. Parameters are estimated 
+#' using maximum likelihood. 
+#' 
+#' Disease model is:
+#' 
+#' logit[P(Y = 1|X, \strong{C})] = beta_0 + beta_x X + \strong{beta_c}^T 
+#' \strong{C}
+#' 
+#' Measurement error model is:
+#' 
+#' Xtilde|X ~ N(0, sigsq_m)
+#' 
+#' Exposure model is:
+#' 
+#' X|\strong{C} ~ N(alpha_0 + \strong{alpha_c}^T \strong{C}, sigsq_x.c)
 #'
 #'
-#' @param y Numeric vector of \code{Y} values.
-#' @param xtilde List of numeric vectors with \code{Xtilde} values.
-#' @param c Numeric matrix with \strong{\code{C}} values (if any), with
+#' @param y Numeric vector of Y values.
+#' @param xtilde List of numeric vectors with Xtilde values.
+#' @param c Numeric matrix with \strong{C} values (if any), with
 #' one row for each pool. Can be a vector if there is only 1 covariate.
 #' @param prev Numeric value specifying disease prevalence, allowing for valid
 #' estimation of the intercept with case-control sampling. Can specify
@@ -18,7 +32,7 @@
 #' @param merror Logical value for whether there is measurement error.
 #' @param approx_integral Logical value for whether to use the probit
 #' approximation for the logistic-normal integral, to avoid numerically
-#' integrating \code{X}'s out of the likelihood function.
+#' integrating X's out of the likelihood function.
 #' @param integrate_tol Numeric value specifying the \code{tol} input to
 #' \code{\link{hcubature}}. Only used if \code{approx_integral = FALSE}.
 #' @param integrate_tol_hessian Same as \code{integrate_tol}, but for use when
@@ -41,65 +55,29 @@
 #'
 #'
 #' @examples
-#' # Load dataset - dat1 has (Y, C) values and dat1_xtilde is list with 1 or 2
-#' # Xtilde measurements for each subject.
+#' # Load dataset - dat1 has (Y, X, C) values and dat1_xtilde is list with 1 or 
+#' # 2 Xtilde measurements for each subject. True log-OR (beta_x) is 0.2.
 #' data(dat1)
 #' data(dat1_xtilde)
-#'
-#' # Estimate log-OR for X and Y adjusted for C, ignoring measurement error
-#' fit1 <- logreg_xerrors1(y = dat1$y, xtilde = dat1_xtilde, c = dat1$c,
+#' 
+#' # Unobservable truth - use true X's
+#' fit1 <- logreg_xerrors1(y = dat1$y, xtilde = dat1$x, c = dat1$c, 
 #'                         merror = FALSE)
 #' fit1$theta.hat
-#'
-#' # Repeat, but accounting for measurement error. Closer to true log-OR of 0.5.
+#' 
+#' # Naive - use Xtilde's but ignore measurement error. Note that when merror is 
+#' # set to FALSE, first Xtilde value for each subject is used.
 #' fit2 <- logreg_xerrors1(y = dat1$y, xtilde = dat1_xtilde, c = dat1$c,
-#'                         merror = TRUE)
+#'                         merror = FALSE)
 #' fit2$theta.hat
+#'
+#' # Corrected - use probit approximation to avoid numerical integration.
+#' fit3 <- logreg_xerrors1(y = dat1$y, xtilde = dat1_xtilde, c = dat1$c,
+#'                         merror = TRUE)
+#' fit3$theta.hat
 #'
 #'
 #' @export
-# betas <- c(0.5, 0.25, 0.1)
-# alphas <- c(0.2, 0.1)
-# sigsq_x.c <- 0.5
-# sigsq_m <- 0.2
-#
-# n <- 100
-# k <- rep(1, n)
-# k[1: 10] <- 2
-# c <- rnorm(n)
-# x <- alphas[1] + alphas[2] * c + rnorm(n = n, sd = sqrt(sigsq_x.c))
-# y <- rbinom(n, size = 1, prob = (1 + exp(-betas[1] - betas[2] * x - betas[3] * c))^(-1))
-# xtilde <- list()
-# for (ii in 1: n) {
-#   xtilde[[ii]] <- x[ii] + rnorm(k[ii], sd = sqrt(sigsq_m))
-# }
-#
-# truth <- logreg_xerrors1(y = y,
-#                          xtilde = x,
-#                          c = c,
-#                          merror = FALSE,
-#                          control = list(trace = 1))
-# naive <- logreg_xerrors1(y = y,
-#                          xtilde = sapply(xtilde, function(x) x[1]),
-#                          c = c,
-#                          merror = FALSE,
-#                          control = list(trace = 1))
-# corrected.noreps <- logreg_xerrors1(y = y,
-#                                     xtilde = sapply(xtilde, function(x) x[1]),
-#                                     c = c,
-#                                     merror = TRUE,
-#                                     control = list(trace = 1))
-# corrected.reps <- logreg_xerrors1(y = y,
-#                                   xtilde = xtilde,
-#                                   c = c,
-#                                   merror = TRUE,
-#                                   control = list(trace = 1))
-# corrected.reps <- logreg_xerrors1(y = y,
-#                                   xtilde = xtilde,
-#                                   c = c,
-#                                   merror = TRUE,
-#                                   approx_integral = FALSE,
-#                                   control = list(trace = 1))
 logreg_xerrors1 <- function(y,
                             xtilde,
                             c = NULL,
@@ -235,75 +213,85 @@ logreg_xerrors1 <- function(y,
   }
 
   # Log-likelihood function for approximate ML
-  llf.approx <- function(k,
-                         y,
-                         xtilde,
-                         mu_x.c,
-                         sigsq_x.c,
-                         q,
-                         beta_x,
-                         cterm,
-                         sigsq_m) {
-
-    # E(X|Xtilde,C) and V(X|Xtilde,C)
-    Mu_xxtilde.c <- matrix(mu_x.c, nrow = k + 1)
-    Sigma_xxtilde.c_11 <- sigsq_x.c
-    Sigma_xxtilde.c_12 <- matrix(sigsq_x.c, ncol = k)
-    Sigma_xxtilde.c_21 <- t(Sigma_xxtilde.c_12)
-    Sigma_xxtilde.c_22 <- sigsq_x.c + sigsq_m * diag(k)
-
-    mu_x.xtildec <- Mu_xxtilde.c[1] + Sigma_xxtilde.c_12 %*%
-      solve(Sigma_xxtilde.c_22) %*% (xtilde - Mu_xxtilde.c[-1])
-    sigsq_x.xtildec <- Sigma_xxtilde.c_11 - Sigma_xxtilde.c_12 %*%
-      solve(Sigma_xxtilde.c_22) %*% Sigma_xxtilde.c_21
-
-    # Approximation of \int_X f(Y|X,C) f(X|Xtilde,C) dX
-    t <- (q + beta_x * mu_x.xtildec + cterm) /
-      sqrt(1 + sigsq_x.xtildec * beta_x^2 / 1.7^2)
-    p <- exp(t) / (1 + exp(t))
-    part1 <- dbinom(x = y, size = 1, prob = p, log = TRUE)
-
-    # log[f(Xtilde|C)]
-    part2 <- dmvnorm(x = xtilde, log = TRUE,
-                     mean = Mu_xxtilde.c[-1],
-                     sigma = Sigma_xxtilde.c_22)
-
-    return(part1 + part2)
-
+  if (some.r && approx_integral) {
+    llf.approx <- function(k,
+                           y,
+                           xtilde,
+                           mu_x.c,
+                           sigsq_x.c,
+                           q,
+                           beta_x,
+                           cterm,
+                           sigsq_m) {
+      
+      # E(X|Xtilde,C) and V(X|Xtilde,C)
+      Mu_xxtilde.c <- matrix(mu_x.c, nrow = k + 1)
+      Sigma_xxtilde.c_11 <- sigsq_x.c
+      Sigma_xxtilde.c_12 <- matrix(sigsq_x.c, ncol = k)
+      Sigma_xxtilde.c_21 <- t(Sigma_xxtilde.c_12)
+      Sigma_xxtilde.c_22 <- sigsq_x.c + sigsq_m * diag(k)
+      
+      mu_x.xtildec <- Mu_xxtilde.c[1] + Sigma_xxtilde.c_12 %*%
+        solve(Sigma_xxtilde.c_22) %*% (xtilde - Mu_xxtilde.c[-1])
+      sigsq_x.xtildec <- Sigma_xxtilde.c_11 - Sigma_xxtilde.c_12 %*%
+        solve(Sigma_xxtilde.c_22) %*% Sigma_xxtilde.c_21
+      
+      # Approximation of \int_X f(Y|X,C) f(X|Xtilde,C) dX
+      t <- (q + beta_x * mu_x.xtildec + cterm) /
+        sqrt(1 + sigsq_x.xtildec * beta_x^2 / 1.7^2)
+      p <- exp(t) / (1 + exp(t))
+      part1 <- dbinom(x = y, size = 1, prob = p, log = TRUE)
+      
+      # log[f(Xtilde|C)]
+      part2 <- dmvnorm(x = xtilde, log = TRUE,
+                       mean = Mu_xxtilde.c[-1],
+                       sigma = Sigma_xxtilde.c_22)
+      
+      return(part1 + part2)
+      
+    }
   }
 
   # Likelihood function for full ML
-  lf.full <- function(k,
-                      y,
-                      xtilde,
-                      x,
-                      mu_x.c,
-                      sigsq_x.c,
-                      q,
-                      beta_x,
-                      cterm,
-                      sigsq_m) {
-
-    x <- matrix(x, nrow = 1)
-    dens <- apply(x, 2, function(z) {
-
-      # Transformation
-      s <- z / (1 - z^2)
-
-      # P(Y|X,C)
-      p_y.xc <- (1 + exp(-q - beta_x * s - cterm))^(-1)
-
-      # f(Y,X,Xtilde|C) = f(Y|X,C) f(Xtilde1|Xtilde2,X) f(Xtilde2|X) f(X|C)
-      dbinom(x = y, size = 1, prob = p_y.xc) *
-        prod(dnorm(x = xtilde, mean = s, sd = sqrt(sigsq_m))) *
-        dnorm(x = s, mean = mu_x.c, sd = sqrt(sigsq_x.c))
-
-    })
-
-    # Back-transformation
-    out <- matrix(dens * (1 + x^2) / (1 - x^2)^2, ncol = ncol(x))
-    return(out)
-
+  if ((some.s | some.r) && ! approx_integral) {
+    lf.full <- function(k,
+                        y,
+                        xtilde,
+                        x,
+                        mu_x.c,
+                        sigsq_x.c,
+                        q,
+                        beta_x,
+                        cterm,
+                        sigsq_m) {
+      
+      x <- matrix(x, nrow = 1)
+      dens <- apply(x, 2, function(z) {
+        
+        # Transformation
+        s <- z / (1 - z^2)
+        
+        # P(Y|X,C)
+        p_y.xc <- (1 + exp(-q - beta_x * s - cterm))^(-1)
+        
+        # f(Y,X,Xtilde|C) = f(Y|X,C) f(Xtilde|X) f(X|C)
+        dbinom(y, 
+               size = 1, 
+               prob = p_y.xc) *
+          prod(dnorm(xtilde, 
+                     mean = s, 
+                     sd = sqrt(sigsq_m))) *
+          dnorm(s, 
+                mean = mu_x.c, 
+                sd = sqrt(sigsq_x.c))
+        
+      })
+      
+      # Back-transformation
+      out <- matrix(dens * (1 + x^2) / (1 - x^2)^2, ncol = ncol(x))
+      return(out)
+      
+    }
   }
 
   # Log-likelihood function
@@ -329,7 +317,7 @@ logreg_xerrors1 <- function(y,
 
     if (some.p) {
 
-      # Log-likelihood for precise Y
+      # Log-likelihood for precise X
       ll.p <- sum(
         dbinom(y.p, log = TRUE,
                size = 1, prob = (1 + exp(-q.p - onexc.p %*% f.betas))^(-1)) +
@@ -540,133 +528,3 @@ logreg_xerrors1 <- function(y,
   return(ret.list)
 
 }
-
-
-# # Prospective sampling
-# n <- 10000
-# n.reps <- n / 10
-# betas <- c(-2, 0.5)
-# alphas <- 0
-# sigsq_x.c <- 1
-# sigsq_m <- 0.25
-#
-# prev <- samp_y1y0 <- NULL
-# merror <- TRUE
-#
-# x <- rnorm(n, mean = alphas, sd = sqrt(sigsq_x.c))
-# y <- rbinom(n = n, size = 1, prob = (1 + exp(-betas[1] - betas[2] * x))^(-1))
-#
-# xtilde <- list()
-# locs.2 <- sample(1: n, n.reps, replace = FALSE)
-# for (ii in 1: length(x)) {
-#   xtilde[[ii]] <- x[ii] + rnorm(n = ifelse(ii %in% locs.rep, 2, 1))
-# }
-#
-# abc <- logreg_xerrors(y = y, xtilde = xtilde, control = list(trace = 1))
-#
-# # Try to get X very different in cases and controls
-# n <- 1000000
-# betas <- c(-10, 5)
-# alphas <- 0
-# sigsq_x.c <- 1
-# x <- rnorm(n, mean = alphas, sd = sqrt(sigsq_x.c))
-# y <- rbinom(n = n, size = 1, prob = (1 + exp(-betas[1] - betas[2] * x))^(-1))
-# mean(y)
-# par(mfrow = c(3, 1))
-# histo(x[y == 1], xlim = c(-4, 4), breaks = 25, dis = "norm")
-# histo(x[y == 0], xlim = c(-4, 4), breaks = 25, dis = "norm")
-# histo(c(x[which(y == 1)[1: 1000]], x[which(y == 0)[1: 1000]]), breaks = 25, dis = "norm")
-#
-# # Case-control sampling
-# n.pop <- 5000000
-# n.samp <- 50000
-# n.reps <- n.samp / 20
-# betas <- c(-10, 5)
-# alphas <- 0
-# sigsq_x.c <- 1
-# sigsq_m <- 0.1
-#
-# x <- rnorm(n = n.pop, mean = alphas, sd = sqrt(sigsq_x.c))
-# y <- rbinom(n = n.pop, size = 1, prob = (1 + exp(-betas[1] - betas[2] * x))^(-1))
-#
-# loc.cases <- which(y == 1)
-# loc.controls <- which(y == 0)
-# loc.sampled <- c(sample(loc.cases, n.samp, replace = FALSE), sample(loc.controls, n.samp, replace = FALSE))
-# x <- x[loc.sampled]
-# y <- y[loc.sampled]
-#
-# xtilde <- list()
-# locs.2 <- sample(1: (n.samp * 2), n.reps * 2, replace = FALSE)
-# for (ii in 1: length(x)) {
-#   xtilde[[ii]] <- x[ii] + rnorm(n = ifelse(ii %in% locs.2, 2, 1))
-# }
-#
-# summary(glm(y ~ x, family = "binomial"))
-# summary(glm(y ~ x, offset = rep(log(0.97/0.03), length(x)), family = "binomial"))
-# summary(glm(y ~ sapply(xtilde, function(x) x[1]), offset = rep(log(0.97/0.03), length(x)), family = "binomial"))
-# abc <- logreg_xerrors(y = y, xtilde = xtilde, prev = 0.03, control = list(trace = 1))
-#
-# x1 <- sapply(xtilde, function(x) x[1])
-# x2 <- sapply(xtilde, function(x) x[2])
-# plot(x1, x2)
-#
-# # Back to prospective sampling for this new scenario
-# n <- 10000
-# n.reps <- n / 10
-# betas <- c(-10, 5)
-# alphas <- 0
-# sigsq_x.c <- 1
-# sigsq_m <- 0.1
-#
-# x <- rnorm(n, mean = alphas, sd = sqrt(sigsq_x.c))
-# y <- rbinom(n = n, size = 1, prob = (1 + exp(-betas[1] - betas[2] * x))^(-1))
-#
-# xtilde <- list()
-# locs.2 <- sample(1: n, n.reps, replace = FALSE)
-# for (ii in 1: length(x)) {
-#   xtilde[[ii]] <- x[ii] + rnorm(n = ifelse(ii %in% locs.rep, 2, 1))
-# }
-#
-# abc <- logreg_xerrors(y = y, xtilde = xtilde, control = list(trace = 1))
-#
-# # Loop through sampling rates and record estimates for single large-n trial
-# betas <- c(-10, 5)
-# alphas <- 0
-# sigsq_x.c <- 1
-# sigsq_m <- 0.1
-#
-# n.pop <- 5000000
-# n.samp <- 100000
-# n.samp <- 100000
-# n.reps <- n.samp / 50
-# n.reps <- 500
-# vals <- c(seq(0.01, 0.1, 0.01), seq(0.2, 0.9, 0.1))
-#
-# estimates <- matrix(NA, nrow = length(vals), ncol = 5)
-# for (ii in 1: length(vals)) {
-#
-#   p_case <- vals[ii]
-#
-#   x <- rnorm(n = n.pop, mean = alphas, sd = sqrt(sigsq_x.c))
-#   y <- rbinom(n = n.pop, size = 1, prob = (1 + exp(-betas[1] - betas[2] * x))^(-1))
-#
-#   loc.cases <- which(y == 1)
-#   loc.controls <- which(y == 0)
-#   loc.sampled <- c(sample(loc.cases, n.samp * p_case, replace = FALSE),
-#                    sample(loc.controls, n.samp * (1 - p_case), replace = FALSE))
-#   x <- x[loc.sampled]
-#   y <- y[loc.sampled]
-#
-#   xtilde <- list()
-#   locs.2 <- sample(1: n.samp, n.reps, replace = FALSE)
-#   for (jj in 1: length(x)) {
-#     xtilde[[jj]] <- x[jj] + rnorm(n = ifelse(jj %in% locs.2, 2, 1), sd = sqrt(sigsq_m))
-#   }
-#
-#   #summary(glm(y ~ x, family = "binomial"))
-#   #summary(glm(y ~ x, offset = rep(log(0.97/0.03), length(x)), family = "binomial"))
-#   #summary(glm(y ~ sapply(xtilde, function(x) x[1]), offset = rep(log(0.97/0.03), length(x)), family = "binomial"))
-#   abc <- logreg_xerrors(y = y, xtilde = xtilde, prev = 0.03, control = list(trace = 1))
-#   estimates[ii, ] <- abc$theta.hat
-#
-# }

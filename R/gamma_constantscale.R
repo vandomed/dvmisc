@@ -160,7 +160,7 @@ gamma_constantscale <- function(y,
     theta.labels <- c(beta.labels, "b")
   }
   
-  # Log-likelihood function for single imprecise Y
+  # Likelihood function for single imprecise Y
   lf.s <- function(ytilde, y, shape, scale, sigsq_m) {
     
     # f(Ytilde|X)
@@ -189,7 +189,7 @@ gamma_constantscale <- function(y,
     
   }
   
-  # Log-likelihood function for replicate Y's
+  # Likelihood function for replicate Y
   lf.r <- function(ytilde, y, shape, scale, sigsq_m) {
     
     # f(Ytilde|X)
