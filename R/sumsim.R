@@ -83,20 +83,18 @@ sumsim <- function(estimates,
   
   # Remove statistics that can't be calculated from specified inputs
   if (is.null(truth)) {
-    statistics <- 
-      statistics[-which(statistics %in% 
-                          c("mean_bias", "median_bias", "mse", "coverage"))]
+    statistics <- statistics[! statistics %in% 
+                               c("mean-bias", "median_bias", "mse", "coverage")]
   }
   if (is.null(ses)) {
-    statistics <- statistics[-which(statistics %in% 
-                                      c("mean_se", "coverage", "power"))]
+    statistics <- statistics[! statistics %in% 
+                               c("mean_se", "coverage", "power")]
   }
   
-  # Create values for sprintf
+  # Convert digits to vector if necessary
   if (length(digits) == 1) {
     digits <- rep(digits, length(statistics))
   }
-  # sprs <- paste("%.", digits, "f", sep = "")
   
   # Initialize matrix
   mat <- matrix(NA, ncol = length(statistics), nrow = ncol(estimates))

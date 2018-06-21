@@ -16,7 +16,7 @@ mass/density function).
 Package: \tab dvmisc \cr
 Type: \tab Package \cr
 Version: \tab 1.1.3 \cr
-Date: \tab 2018-05-10 \cr
+Date: \tab 2018-06-21 \cr
 License: \tab GPL-3 \cr
 }
 

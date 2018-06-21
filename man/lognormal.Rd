@@ -7,10 +7,10 @@
 lognormal(y, x = NULL, merror = FALSE, estimate_var = TRUE, ...)
 }
 \arguments{
-\item{y}{Numeric vector.}
+\item{y}{Numeric vector or list.}
 
 \item{x}{Numeric vector or matrix. If \code{NULL}, model reduces to marginal
-Lognormal model Y ~ Lognormal(beta_0, sigsq).}
+lognormal model Y ~ Lognormal(beta_0, sigsq).}
 
 \item{merror}{Logical value for whether to model multiplicative lognormal 
 measurement errors in Y.}

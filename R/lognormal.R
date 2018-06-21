@@ -5,9 +5,9 @@
 #' Y precisely measured or subject to multiplicative mean-1 lognormal errors (in 
 #' which case replicates can be incorporated by specifying \code{y} as a list).
 #' 
-#' @param y Numeric vector.
+#' @param y Numeric vector or list.
 #' @param x Numeric vector or matrix. If \code{NULL}, model reduces to marginal
-#' Lognormal model Y ~ Lognormal(beta_0, sigsq).
+#' lognormal model Y ~ Lognormal(beta_0, sigsq).
 #' @param merror Logical value for whether to model multiplicative lognormal 
 #' measurement errors in Y.
 #' @param estimate_var Logical value for whether to return Hessian-based
@@ -124,6 +124,7 @@ lognormal <- function(y,
     some.r <- n.r > 0
     if (some.r) {
       y.r <- y[which.r]
+      k.r <- k[which.r]
       onex.r <- onex[which.r, , drop = FALSE]
     }
     
@@ -177,8 +178,8 @@ lognormal <- function(y,
         y.ii <- unlist(y.r[ii])
         ll.r <- ll.r - log(prod(y.ii)) + 
           dmvnorm(log(y.ii), log = TRUE, 
-                  mean = rep(means[ii], k[ii]),  
-                  sigma = f.sigsq + f.sigsq_m * diag(k[ii]))
+                  mean = rep(means[ii], k.r[ii]),  
+                  sigma = f.sigsq + f.sigsq_m * diag(k.r[ii]))
       }
       
     } else {

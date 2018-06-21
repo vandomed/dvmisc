@@ -33,12 +33,12 @@
 #' @param approx_integral Logical value for whether to use the probit
 #' approximation for the logistic-normal integral, to avoid numerically
 #' integrating X's out of the likelihood function.
-#' @param integrate_tol Numeric value specifying the \code{tol} input to
-#' \code{\link{hcubature}}. Only used if \code{approx_integral = FALSE}.
+#' @param integrate_tol Numeric value specifying \code{tol} input to
+#' \code{\link[cubature]{hcubature}} for numerical integration.
 #' @param integrate_tol_hessian Same as \code{integrate_tol}, but for use when
-#' estimating the Hessian matrix only. Sometimes more precise integration
-#' (i.e. smaller tolerance) than used for maximizing the likelihood helps
-#' prevent cases where the inverse Hessian is not positive definite.
+#' estimating the Hessian matrix only. Sometimes using a smaller value than for
+#' likelihood maximization helps prevent cases where the inverse Hessian is not
+#' positive definite.
 #' @param estimate_var Logical value for whether to return variance-covariance
 #' matrix for parameter estimates.
 #' @param ... Additional arguments to pass to \code{\link[stats]{nlminb}}.
@@ -361,11 +361,7 @@ logreg_xerrors1 <- function(y,
       } else {
 
         # Get integration tolerance
-        if (estimating.hessian) {
-          int.tol <- integrate_tol_hessian
-        } else {
-          int.tol <- integrate_tol
-        }
+        int.tol <- ifelse(estimating.hessian, integrate_tol_hessian, integrate_tol)
 
         mu_x.c <- onec.s %*% f.alphas
         cterms <- onec.s %*% f.betas[-2]
@@ -375,7 +371,7 @@ logreg_xerrors1 <- function(y,
 
           # Perform integration
           int.ii <- cubature::hcubature(f = lf.full,
-                                        tol = integrate_tol,
+                                        tol = int.tol,
                                         lowerLimit = -1,
                                         upperLimit = 1,
                                         vectorInterface = TRUE,

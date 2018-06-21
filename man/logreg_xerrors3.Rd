@@ -27,13 +27,13 @@ case-control sampling. Can specify \code{prev} instead if it's easier.}
 
 \item{merror}{Logical value for whether there is measurement error.}
 
-\item{integrate_tol}{Numeric value specifying the \code{tol} input to
-\code{\link{hcubature}}. Only used if \code{approx_integral = FALSE}.}
+\item{integrate_tol}{Numeric value specifying \code{tol} input to
+\code{\link[cubature]{hcubature}} for numerical integration.}
 
 \item{integrate_tol_hessian}{Same as \code{integrate_tol}, but for use when
-estimating the Hessian matrix only. Sometimes more precise integration
-(i.e. smaller tolerance) than used for maximizing the likelihood helps
-prevent cases where the inverse Hessian is not positive definite.}
+estimating the Hessian matrix only. Sometimes using a smaller value than for
+likelihood maximization helps prevent cases where the inverse Hessian is not
+positive definite.}
 
 \item{estimate_var}{Logical value for whether to return variance-covariance
 matrix for parameter estimates.}

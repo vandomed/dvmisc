@@ -269,11 +269,7 @@ logreg_xerrors3 <- function(y,
       # Log-likelihood for single imprecise Xtilde
       
       # Get integration tolerance
-      if (estimating.hessian) {
-        int.tol <- integrate_tol_hessian
-      } else {
-        int.tol <- integrate_tol
-      }
+      int.tol <- ifelse(estimating.hessian, integrate_tol_hessian, integrate_tol)
       
       meanlogs <- onec.s %*% f.alphas
       cterms <- onec.s %*% f.betas[-2]
@@ -283,7 +279,7 @@ logreg_xerrors3 <- function(y,
         
         # Perform integration
         int.ii <- cubature::hcubature(f = lf,
-                                      tol = integrate_tol,
+                                      tol = int.tol,
                                       lowerLimit = 0,
                                       upperLimit = 1,
                                       vectorInterface = TRUE,
