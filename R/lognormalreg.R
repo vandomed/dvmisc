@@ -1,4 +1,4 @@
-#' Linear Regression Model for log(Y) vs. Covariates
+#' Fit Linear Regression Model for log(Y) vs. Covariates
 #' 
 #' Uses maximum likelihood to fit
 #' Y|\strong{X} ~ Lognormal(beta_0 + \strong{beta_x}^T \strong{X}), sigsq), with 
@@ -12,6 +12,9 @@
 #' measurement errors in Y.
 #' @param estimate_var Logical value for whether to return Hessian-based
 #' variance-covariance matrix.
+#' @param fix_posdef Logical value for whether to repeatedly reduce
+#' \code{integrate_tol_hessian} by factor of 5 and re-estimate Hessian to try
+#' to avoid non-positive definite variance-covariance matrix.
 #' @param ... Additional arguments to pass to \code{\link[stats]{nlminb}}.
 #'
 #' @return List of parameter estimates, variance-covariance matrix (if
@@ -33,32 +36,33 @@
 #                                  meanlog = -sigsq_m / 2,
 #                                  sdlog = sqrt(sigsq_m))
 # }
-# truth <- lognormal(y = y,
-#                    x = x,
-#                    merror = FALSE,
-#                    estimate_var = FALSE,
-#                    control = list(trace = 1))
+# truth <- lognormalreg(y = y,
+#                       x = x,
+#                       merror = FALSE,
+#                       estimate_var = FALSE,
+#                       control = list(trace = 1))
 # 
-# naive <- lognormal(y = sapply(ytilde, function(x) x[1]),
-#                              x = x,
-#                              merror = FALSE,
-#                              estimate_var = FALSE,
-#                              control = list(trace = 1))
+# naive <- lognormalreg(y = sapply(ytilde, function(x) x[1]),
+#                       x = x,
+#                       merror = FALSE,
+#                       estimate_var = FALSE,
+#                       control = list(trace = 1))
 # 
-# corrected.noreps <- lognormal(y = sapply(ytilde, function(x) x[1]),
-#                               x = x,
-#                               merror = TRUE,
-#                               control = list(trace = 1))
+# corrected.noreps <- lognormalreg(y = sapply(ytilde, function(x) x[1]),
+#                                  x = x,
+#                                  merror = TRUE,
+#                                  control = list(trace = 1))
 # 
-# corrected.reps <- lognormal(y = ytilde,
-#                             x = x,
-#                             merror = TRUE,
-#                             control = list(trace = 1))
-lognormal <- function(y, 
-                      x = NULL, 
-                      merror = FALSE, 
-                      estimate_var = TRUE, 
-                      ...) {
+# corrected.reps <- lognormalreg(y = ytilde,
+#                                x = x,
+#                                merror = TRUE,
+#                                control = list(trace = 1))
+lognormalreg <- function(y, 
+                         x = NULL, 
+                         merror = FALSE, 
+                         estimate_var = TRUE, 
+                         fix_posdef = FALSE, 
+                         ...) {
   
   # Get information about covariates X
   if (is.null(x)) {
@@ -229,17 +233,43 @@ lognormal <- function(y,
   
   # If requested, add variance-covariance matrix to ret.list
   if (estimate_var) {
+    
+    # Estimate Hessian
     hessian.mat <- pracma::hessian(f = llf, estimating.hessian = TRUE,
                                    x0 = theta.hat)
     theta.variance <- try(solve(hessian.mat), silent = TRUE)
-    if (class(theta.variance) == "try-error") {
+    if (class(theta.variance) == "try-error" ||
+        ! all(eigen(x = theta.variance, only.values = TRUE)$values > 0)) {
+      
+      # Repeatedly divide integrate_tol_hessian by 5 and re-try
+      while (integrate_tol_hessian > 1e-15 & fix_posdef) {
+        integrate_tol_hessian <- integrate_tol_hessian / 5
+        message(paste("Trying integrate_tol_hessian =", integrate_tol_hessian))
+        hessian.mat <- pracma::hessian(f = llf, estimating.hessian = TRUE,
+                                       x0 = theta.hat)
+        theta.variance <- try(solve(hessian.mat), silent = TRUE)
+        if (class(theta.variance) != "try-error" &&
+            all(eigen(x = theta.variance, only.values = TRUE)$values > 0)) {
+          break
+        }
+        
+      }
+    }
+    
+    if (class(theta.variance) == "try-error" ||
+        ! all(eigen(x = theta.variance, only.values = TRUE)$values > 0)) {
+      
       print(hessian.mat)
       message("Estimated Hessian matrix is singular, so variance-covariance matrix cannot be obtained.")
       ret.list$theta.var <- NULL
+      
     } else {
+      
       colnames(theta.variance) <- rownames(theta.variance) <- theta.labels
       ret.list$theta.var <- theta.variance
+      
     }
+    
   }
   
   # Add nlminb object and AIC to ret.list

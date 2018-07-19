@@ -1,4 +1,4 @@
-#' Constant-Scale Gamma Model for Y vs. Covariates
+#' Fit Constant-Scale Gamma Model for Y vs. Covariates
 #' 
 #' Uses maximum likelihood to fit
 #' Y|\strong{X} ~ Gamma(exp(beta_0 + \strong{beta_x}^T \strong{X}), b), with the
@@ -12,14 +12,17 @@
 #' Gamma model Y ~ Gamma(exp(beta_0), b).
 #' @param merror Logical value for whether to model multiplicative lognormal 
 #' measurement errors in Y.
-#' @param estimate_var Logical value for whether to return Hessian-based
-#' variance-covariance matrix.
 #' @param integrate_tol Numeric value specifying the \code{tol} input to
 #' \code{\link{hcubature}}. Only used if \code{merror = TRUE}.
 #' @param integrate_tol_hessian Same as \code{integrate_tol}, but for use when
 #' estimating the Hessian matrix only. Sometimes more precise integration
 #' (i.e. smaller tolerance) than used for maximizing the likelihood helps
 #' prevent cases where the inverse Hessian is not positive definite.
+#' @param estimate_var Logical value for whether to return Hessian-based
+#' variance-covariance matrix.
+#' @param fix_posdef Logical value for whether to repeatedly reduce
+#' \code{integrate_tol_hessian} by factor of 5 and re-estimate Hessian to try
+#' to avoid non-positive definite variance-covariance matrix.
 #' @param ... Additional arguments to pass to \code{\link[stats]{nlminb}}.
 #'
 #' @return List of parameter estimates, variance-covariance matrix (if
@@ -68,13 +71,14 @@
 #                                       integrate_tol = 1e-4, 
 #                                       estimate_var = FALSE, 
 #                                       control = list(trace = 1))
-gamma_constantscale <- function(y, 
-                                x = NULL, 
-                                merror = FALSE, 
-                                estimate_var = TRUE, 
-                                integrate_tol = 1e-8, 
-                                integrate_tol_hessian = integrate_tol, 
-                                ...) {
+gammareg <- function(y, 
+                     x = NULL, 
+                     merror = FALSE, 
+                     integrate_tol = 1e-8, 
+                     integrate_tol_hessian = integrate_tol, 
+                     estimate_var = TRUE,
+                     fix_posdef = FALSE, 
+                     ...) {
   
   # Get information about covariates X
   if (is.null(x)) {
@@ -373,17 +377,42 @@ gamma_constantscale <- function(y,
   
   # If requested, add variance-covariance matrix to ret.list
   if (estimate_var) {
+    
+    # Estimate Hessian
     hessian.mat <- pracma::hessian(f = llf, estimating.hessian = TRUE,
                                    x0 = theta.hat)
     theta.variance <- try(solve(hessian.mat), silent = TRUE)
-    if (class(theta.variance) == "try-error") {
-      print(hessian.mat)
+    if (class(theta.variance) == "try-error" ||
+        ! all(eigen(x = theta.variance, only.values = TRUE)$values > 0)) {
+      
+      # Repeatedly divide integrate_tol_hessian by 5 and re-try
+      while (integrate_tol_hessian > 1e-15 & fix_posdef) {
+        integrate_tol_hessian <- integrate_tol_hessian / 5
+        message(paste("Trying integrate_tol_hessian =", integrate_tol_hessian))
+        hessian.mat <- pracma::hessian(f = llf, estimating.hessian = TRUE,
+                                       x0 = theta.hat)
+        theta.variance <- try(solve(hessian.mat), silent = TRUE)
+        if (class(theta.variance) != "try-error" &&
+            all(eigen(x = theta.variance, only.values = TRUE)$values > 0)) {
+          break
+        }
+        
+      }
+    }
+    
+    if (class(theta.variance) == "try-error" ||
+        ! all(eigen(x = theta.variance, only.values = TRUE)$values > 0)) {
+    
       message("Estimated Hessian matrix is singular, so variance-covariance matrix cannot be obtained.")
       ret.list$theta.var <- NULL
+      
     } else {
+      
       colnames(theta.variance) <- rownames(theta.variance) <- theta.labels
       ret.list$theta.var <- theta.variance
+      
     }
+    
   }
   
   # Add nlminb object and AIC to ret.list
