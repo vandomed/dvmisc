@@ -1,10 +1,11 @@
-#' Linear Regression of log(Y) vs. Covariates with Outcome Potentially Measured 
-#' with Error
+#' Linear Regression of log(Y) vs. Covariates with Y Potentially Subject to 
+#' Multiplicative Lognormal Errors
 #' 
 #' Uses maximum likelihood to fit
-#' Y|\strong{X} ~ Lognormal(beta_0 + \strong{beta_x}^T \strong{X}), sigsq), with 
-#' Y precisely measured or subject to multiplicative mean-1 lognormal errors (in 
-#' which case replicates can be incorporated by specifying \code{y} as a list).
+#' Y|\strong{X} ~ Lognormal(beta_0 + \strong{beta_x}^T \strong{X}, sigsq). Y 
+#' can be precisely measured or subject to multiplicative mean-1 lognormal 
+#' errors, in which case replicates can be incorporated by specifying \code{y} 
+#' as a list).
 #' 
 #' @param y Numeric vector or list.
 #' @param x Numeric vector or matrix. If \code{NULL}, model reduces to marginal
