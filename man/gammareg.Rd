@@ -2,7 +2,8 @@
 % Please edit documentation in R/gammareg.R
 \name{gammareg}
 \alias{gammareg}
-\title{Fit Constant-Scale Gamma Model for Y vs. Covariates}
+\title{Constant-Scale Gamma Model for Y vs. Covariates with Outcome Potentially 
+Measured with Error}
 \usage{
 gammareg(y, x = NULL, merror = FALSE, integrate_tol = 1e-08,
   integrate_tol_hessian = integrate_tol, estimate_var = TRUE,

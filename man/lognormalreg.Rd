@@ -2,7 +2,8 @@
 % Please edit documentation in R/lognormalreg.R
 \name{lognormalreg}
 \alias{lognormalreg}
-\title{Fit Linear Regression Model for log(Y) vs. Covariates}
+\title{Linear Regression of log(Y) vs. Covariates with Outcome Potentially Measured 
+with Error}
 \usage{
 lognormalreg(y, x = NULL, merror = FALSE, estimate_var = TRUE,
   fix_posdef = FALSE, ...)

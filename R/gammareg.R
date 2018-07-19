@@ -1,4 +1,5 @@
-#' Fit Constant-Scale Gamma Model for Y vs. Covariates
+#' Constant-Scale Gamma Model for Y vs. Covariates with Outcome Potentially 
+#' Measured with Error
 #' 
 #' Uses maximum likelihood to fit
 #' Y|\strong{X} ~ Gamma(exp(beta_0 + \strong{beta_x}^T \strong{X}), b), with the

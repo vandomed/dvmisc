@@ -1,4 +1,5 @@
-#' Fit Linear Regression Model for log(Y) vs. Covariates
+#' Linear Regression of log(Y) vs. Covariates with Outcome Potentially Measured 
+#' with Error
 #' 
 #' Uses maximum likelihood to fit
 #' Y|\strong{X} ~ Lognormal(beta_0 + \strong{beta_x}^T \strong{X}), sigsq), with 
