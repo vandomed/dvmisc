@@ -8,7 +8,7 @@ Maintainer: Dane R. Van Domelen <vandomed@gmail.com>
 Description: Contains functions that do something convenient (e.g. create BMI categories), functions for calculating moving-window statistics efficiently, and functions for generating various figures (e.g. histograms with fitted probability mass/density function).
 License: GPL-3
 Depends: rbenchmark
-Imports: crowdopt, cubature, dplyr, ggplot2, graphics, MASS, mvtnorm, pracma, Rcpp (>= 0.12.15), stats, utils
+Imports: cubature, dplyr, ggplot2, graphics, MASS, mvtnorm, pracma, Rcpp (>= 0.12.15), stats, utils
 LinkingTo: Rcpp
 RoxygenNote: 6.0.1
 Suggests: knitr,

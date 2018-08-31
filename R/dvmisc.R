@@ -35,7 +35,6 @@
 #' DGE-0940903.
 #' 
 #' @docType package
-#' @importFrom crowdopt var2
 #' @importFrom dplyr %>%
 #' @import ggplot2
 #' @import graphics

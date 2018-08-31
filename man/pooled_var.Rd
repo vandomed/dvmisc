@@ -16,7 +16,5 @@ vectors.}
 Numeric value.
 }
 \description{
-Calculates pooled sample variance used in equal variance two-sample t-test. 
-For optimal speed, use \code{integer = TRUE} if \code{x} is an integer vector and 
-\code{integer = FALSE} otherwise.
+Calculates pooled sample variance used in equal variance two-sample t-test.
 }
