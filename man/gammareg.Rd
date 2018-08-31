@@ -2,8 +2,8 @@
 % Please edit documentation in R/gammareg.R
 \name{gammareg}
 \alias{gammareg}
-\title{Constant-Scale Gamma Model for Y vs. Covariates with Outcome Potentially 
-Measured with Error}
+\title{Constant-Scale Gamma Model for Y vs. Covariates with Y Potentially Subject 
+to Multiplicative Lognormal Errors}
 \usage{
 gammareg(y, x = NULL, merror = FALSE, integrate_tol = 1e-08,
   integrate_tol_hessian = integrate_tol, estimate_var = TRUE,
@@ -36,14 +36,20 @@ to avoid non-positive definite variance-covariance matrix.}
 \item{...}{Additional arguments to pass to \code{\link[stats]{nlminb}}.}
 }
 \value{
-List of parameter estimates, variance-covariance matrix (if
-requested), AIC, and \code{\link[stats]{nlminb}} object.
+List containing:
+\enumerate{
+\item Numeric vector of parameter estimates.
+\item Variance-covariance matrix (if \code{estimate_var = TRUE}).
+\item Returned \code{\link[stats]{nlminb}} object from maximizing the
+log-likelihood function.
+\item Akaike information criterion (AIC).
+}
 }
 \description{
 Uses maximum likelihood to fit
 Y|\strong{X} ~ Gamma(exp(beta_0 + \strong{beta_x}^T \strong{X}), b), with the
 shape-scale (as opposed to shape-rate) parameterization described in
-\code{\link[stats]{GammaDist}}. Y can be perfectly measured or subject to 
-multiplicative mean-1 lognormal errors (in which case replicates can be 
-incorporated by specifying \code{y} as a list).
+\code{\link[stats]{GammaDist}}. Y can be precisely measured or subject to 
+multiplicative mean-1 lognormal errors, in which case replicates can be 
+incorporated by specifying \code{y} as a list.
 }

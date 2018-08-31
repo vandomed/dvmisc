@@ -2,8 +2,8 @@
 % Please edit documentation in R/lognormalreg.R
 \name{lognormalreg}
 \alias{lognormalreg}
-\title{Linear Regression of log(Y) vs. Covariates with Outcome Potentially Measured 
-with Error}
+\title{Linear Regression of log(Y) vs. Covariates with Y Potentially Subject to 
+Multiplicative Lognormal Errors}
 \usage{
 lognormalreg(y, x = NULL, merror = FALSE, estimate_var = TRUE,
   fix_posdef = FALSE, ...)
@@ -27,12 +27,19 @@ to avoid non-positive definite variance-covariance matrix.}
 \item{...}{Additional arguments to pass to \code{\link[stats]{nlminb}}.}
 }
 \value{
-List of parameter estimates, variance-covariance matrix (if
-requested), AIC, and \code{\link[stats]{nlminb}} object.
+List containing:
+\enumerate{
+\item Numeric vector of parameter estimates.
+\item Variance-covariance matrix (if \code{estimate_var = TRUE}).
+\item Returned \code{\link[stats]{nlminb}} object from maximizing the
+log-likelihood function.
+\item Akaike information criterion (AIC).
+}
 }
 \description{
 Uses maximum likelihood to fit
-Y|\strong{X} ~ Lognormal(beta_0 + \strong{beta_x}^T \strong{X}), sigsq), with 
-Y precisely measured or subject to multiplicative mean-1 lognormal errors (in 
-which case replicates can be incorporated by specifying \code{y} as a list).
+Y|\strong{X} ~ Lognormal(beta_0 + \strong{beta_x}^T \strong{X}, sigsq). Y 
+can be precisely measured or subject to multiplicative mean-1 lognormal 
+errors, in which case replicates can be incorporated by specifying \code{y} 
+as a list).
 }

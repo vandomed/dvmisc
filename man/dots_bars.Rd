@@ -5,9 +5,10 @@
 \title{Plot Points +/- Error Bars}
 \usage{
 dots_bars(y = NULL, bars = NULL, bars.lower = y - bars, bars.upper = y +
-  bars, group.labels = NULL, subgroup.labels = NULL, subgroup.pch = NULL,
-  subgroup.col = NULL, points.list = NULL, arrows.list = NULL,
-  axis.list = NULL, legend.list = NULL, ...)
+  bars, group.labels = NULL, group.dividers = TRUE, subgroup.spacing = 1,
+  subgroup.labels = NULL, subgroup.pch = NULL, subgroup.col = NULL,
+  points.list = NULL, arrows.list = NULL, axis.list = NULL,
+  abline.list = NULL, legend.list = NULL, ...)
 }
 \arguments{
 \item{y}{Numeric vector of y-values for different groups, or numeric matrix 
@@ -27,6 +28,12 @@ group/subgroup.}
 
 \item{group.labels}{Character vector giving labels for the groups.}
 
+\item{group.dividers}{Logical value for whether to add vertical lines to 
+distinguish the groups.}
+
+\item{subgroup.spacing}{Numeric value controlling the amount of spacing 
+between subgroups.}
+
 \item{subgroup.labels}{Character vector giving labels for the subgroups.}
 
 \item{subgroup.pch}{Plotting symbol for different subgroups within each 
@@ -35,16 +42,19 @@ group.}
 \item{subgroup.col}{Plotting color for different subgroups within each group.}
 
 \item{points.list}{Optional list of inputs to pass to 
-\code{\link[graphics]{points}} function.}
+\code{\link[graphics]{points}}.}
 
 \item{arrows.list}{Optional list of inputs to pass to 
-\code{\link[graphics]{arrows}} function.}
+\code{\link[graphics]{arrows}}.}
 
 \item{axis.list}{Optional list of inputs to pass to 
-\code{\link[graphics]{axis}} function.}
+\code{\link[graphics]{axis}}.}
+
+\item{abline.list}{Optional list of inputs to pass to 
+\code{\link[graphics]{abline}}. Only used if \code{group.dividers = TRUE}.}
 
 \item{legend.list}{Optional list of inputs to pass to 
-\code{\link[graphics]{legend}} function.}
+\code{\link[graphics]{legend}}.}
 
 \item{...}{Additional arguments to pass to \code{\link[graphics]{plot}} 
 function.}
@@ -67,7 +77,7 @@ fig1 <- dots_bars(y = means, bars = sds, main = "Mean +/- SD by Group",
                   ylab = "Mean +/- SD")
                   
 # Simulate BMI values for males and females in 3 different age groups, and 
-# graph mean +/- 95\\\% CI
+# graph mean +/- 95\% CI
 sex <- as.factor(c(rep("Male", 300), rep("Female", 300)))
 age <- as.factor(rep(c("Young", "Middle", "Old"), 2))
 bmi <- c(rnorm(100, 25, 4), rnorm(100, 26, 4.25), rnorm(100, 27, 4.5),

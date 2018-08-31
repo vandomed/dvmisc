@@ -16,18 +16,25 @@
 #' is) specifying the position of the upper end of the error bar for each 
 #' group/subgroup.
 #' @param group.labels Character vector giving labels for the groups.
+#' @param group.dividers Logical value for whether to add vertical lines to 
+#' distinguish the groups.
+#' @param subgroup.spacing Numeric value controlling the amount of spacing 
+#' between subgroups.
 #' @param subgroup.labels Character vector giving labels for the subgroups.
 #' @param subgroup.pch Plotting symbol for different subgroups within each 
 #' group.
 #' @param subgroup.col Plotting color for different subgroups within each group.
 #' @param points.list Optional list of inputs to pass to 
-#' \code{\link[graphics]{points}} function.
+#' \code{\link[graphics]{points}}.
 #' @param arrows.list Optional list of inputs to pass to 
-#' \code{\link[graphics]{arrows}} function.
+#' \code{\link[graphics]{arrows}}.
 #' @param axis.list Optional list of inputs to pass to 
-#' \code{\link[graphics]{axis}} function.
+#' \code{\link[graphics]{axis}}.
+#' @param abline.list Optional list of inputs to pass to 
+#' \code{\link[graphics]{abline}}. Only used if \code{group.dividers = TRUE}.
 #' @param legend.list Optional list of inputs to pass to 
-#' \code{\link[graphics]{legend}} function.
+#' \code{\link[graphics]{legend}}.
+#' 
 #' @param ... Additional arguments to pass to \code{\link[graphics]{plot}} 
 #' function.
 #' 
@@ -43,7 +50,7 @@
 #'                   ylab = "Mean +/- SD")
 #'                   
 #' # Simulate BMI values for males and females in 3 different age groups, and 
-#' # graph mean +/- 95\% CI
+#' # graph mean +/- 95% CI
 #' sex <- as.factor(c(rep("Male", 300), rep("Female", 300)))
 #' age <- as.factor(rep(c("Young", "Middle", "Old"), 2))
 #' bmi <- c(rnorm(100, 25, 4), rnorm(100, 26, 4.25), rnorm(100, 27, 4.5),
@@ -65,12 +72,15 @@ dots_bars <- function(y = NULL,
                       bars.lower = y - bars,
                       bars.upper = y + bars,
                       group.labels = NULL,
+                      group.dividers = TRUE, 
+                      subgroup.spacing = 1, 
                       subgroup.labels = NULL,
                       subgroup.pch = NULL,
                       subgroup.col = NULL,
                       points.list = NULL,
                       arrows.list = NULL,
                       axis.list = NULL,
+                      abline.list = NULL, 
                       legend.list = NULL,
                       ...) {
   
@@ -114,7 +124,8 @@ dots_bars <- function(y = NULL,
       }
     }
     if (is.null(extra.args$xlim)) {
-      extra.args$xlim <- c(min(xvals) - 0.75, max(xvals) + 0.75)
+      #extra.args$xlim <- c(min(xvals) - 0.75, max(xvals) + 0.75)
+      extra.args$xlim <- c(min(xvals) - 0.5, max(xvals) + 0.5)
     }
     
     # Create plot
@@ -135,6 +146,13 @@ dots_bars <- function(y = NULL,
                                             labels = group.labels),
                                list2 = axis.list)
     do.call(axis, axis.list)
+    
+    # Add dividers
+    if (group.dividers) {
+      abline.list <- list_override(list1 = list(v = (xvals + 0.5)[-length(xvals)]), 
+                                   list2 = abline.list)
+      do.call(abline, abline.list)
+    }
     
   } else {
     
@@ -198,7 +216,7 @@ dots_bars <- function(y = NULL,
       }
     }
     if (is.null(extra.args$xlim)) {
-      extra.args$xlim <- c(min(xvals) - 0.75, max(xvals) + 0.75)
+      extra.args$xlim <- c(min(xvals) - 0.5, max(xvals) + 0.5)
     }
     
     # Create plot
@@ -206,7 +224,8 @@ dots_bars <- function(y = NULL,
                     extra.args))
     
     # Create x.steps vector to offset subgroups
-    x.steps <- seq(-0.15, 0.15, 0.3 / (subgroup.n - 1))
+    x.steps <- seq(-0.15 * subgroup.spacing, 0.15 * subgroup.spacing,
+                   0.3 * subgroup.spacing / (subgroup.n - 1))
     
     # Loop through and add points and bars
     arrows.list <- list_override(list1 = list(length = 0.05, angle = 90,
@@ -226,9 +245,17 @@ dots_bars <- function(y = NULL,
                                             labels = group.labels),
                                list2 = axis.list)
     do.call(axis, axis.list)
+  
+    # Add dividers
+    if (group.dividers) {
+      abline.list <- list_override(list1 = list(v = (xvals + 0.5)[-length(xvals)]), 
+                                   list2 = abline.list)
+      do.call(abline, abline.list)
+    }
     
     # Add legend
     legend.list <- list_override(list1 = list(x = "bottomleft",
+                                              bg = "white",
                                               pch = subgroup.pch,
                                               legend = subgroup.labels),
                                  list2 = legend.list)

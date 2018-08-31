@@ -5,4 +5,5 @@
 ^logreg_table.$
 ^Thumbs.db$
 ^misc$
+^.travis.yml$
 

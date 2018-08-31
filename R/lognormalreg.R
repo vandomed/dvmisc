@@ -7,6 +7,7 @@
 #' errors, in which case replicates can be incorporated by specifying \code{y} 
 #' as a list).
 #' 
+#' 
 #' @param y Numeric vector or list.
 #' @param x Numeric vector or matrix. If \code{NULL}, model reduces to marginal
 #' lognormal model Y ~ Lognormal(beta_0, sigsq).
@@ -18,9 +19,18 @@
 #' \code{integrate_tol_hessian} by factor of 5 and re-estimate Hessian to try
 #' to avoid non-positive definite variance-covariance matrix.
 #' @param ... Additional arguments to pass to \code{\link[stats]{nlminb}}.
+#' 
+#' 
+#' @return
+#' List containing:
+#' \enumerate{
+#' \item Numeric vector of parameter estimates.
+#' \item Variance-covariance matrix (if \code{estimate_var = TRUE}).
+#' \item Returned \code{\link[stats]{nlminb}} object from maximizing the
+#' log-likelihood function.
+#' \item Akaike information criterion (AIC).
+#' }
 #'
-#' @return List of parameter estimates, variance-covariance matrix (if
-#' requested), AIC, and \code{\link[stats]{nlminb}} object.
 #' 
 #' @export
 # betas <- c(0.5, 0.25)
