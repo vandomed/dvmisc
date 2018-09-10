@@ -135,7 +135,6 @@ dots_bars <- function(y = NULL,
       }
     }
     if (is.null(extra.args$xlim)) {
-      #extra.args$xlim <- c(min(xvals) - 0.75, max(xvals) + 0.75)
       extra.args$xlim <- c(min(xvals) - 0.5, max(xvals) + 0.5)
     }
     
@@ -151,7 +150,6 @@ dots_bars <- function(y = NULL,
     }
     
     # Add points and error bars
-    do.call(points, c(list(x = xvals, y = y), points.list))
     arrows.list <- list_override(
       list1 = list(length = 0.05, angle = 90, code = 3),
       list2 = arrows.list
@@ -159,6 +157,10 @@ dots_bars <- function(y = NULL,
     do.call(arrows, c(list(x0 = xvals, y0 = bars.lower,
                            x1 = xvals, y1 = bars.upper),
                       arrows.list))
+    
+    points.list <- list_override(list1 = list(pch = 21, bg = "white"), 
+                                 list2 = points.list)
+    do.call(points, c(list(x = xvals, y = y), points.list))
     
     # Add y-axis
     if (! (! is.null(extra.args$yaxt) && extra.args$yaxt == "n")) {
@@ -212,7 +214,7 @@ dots_bars <- function(y = NULL,
     }
     if (is.null(subgroup.pch)) {
       if (subgroup.n <= 5) {
-        subgroup.pch <- c(1, 18, 8, 0, 4)[1: subgroup.n]
+        subgroup.pch <- c(21, 18, 8, 22, 4)[1: subgroup.n]
       } else {
         subgroup.pch <- 1: subgroup.n
       }
@@ -272,9 +274,11 @@ dots_bars <- function(y = NULL,
       do.call(arrows, c(list(x0 = xvals + x.steps[ii], y0 = bars.lower[ii, ],
                              x1 = xvals + x.steps[ii], y1 = bars.upper[ii, ]),
                         arrows.list))
-      do.call(points, c(list(x = xvals + x.steps[ii], y = y[ii, ],
-                             pch = subgroup.pch[ii], col = subgroup.col[ii]),
-                        points.list))
+      do.call(
+        points, 
+        c(list(x = xvals + x.steps[ii], y = y[ii, ], pch = subgroup.pch[ii], 
+               col = subgroup.col[ii], bg = "white"),
+          points.list))
     }
     
     # Add y-axis
