@@ -13,8 +13,8 @@ which_max_nv(x)
 Integer value.
 }
 \description{
-Written in C++, this function tends to run faster than 
-\code{\link[base]{which.max}} for large numeric vectors.
+Written in C++, this function tends to run faster than \code{which.max} for 
+large numeric vectors.
 }
 \details{
 For optimal speed, choose the version of this function that matches the 

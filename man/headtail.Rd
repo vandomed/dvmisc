@@ -9,15 +9,15 @@ headtail(x, ...)
 \arguments{
 \item{x}{Input object.}
 
-\item{...}{Additional arguments to pass to \code{\link[utils]{head}} and 
-\code{\link[utils]{tail}} functions.}
+\item{...}{Additional arguments to pass to \code{\link[utils:head]{head}} and 
+\code{\link[utils:head]{tail}} functions.}
 }
 \value{
 Same class as \code{x}.
 }
 \description{
-# Simply \code{\link[utils]{head}} and \code{\link[utils]{tail}} combined 
-into one function.
+Simply \code{\link[utils:head]{head}} and \code{\link[utils:head]{tail}} 
+combined.
 }
 \examples{
 # Generate data from N(0, 1), sort, and look at smallest and largest 3 values

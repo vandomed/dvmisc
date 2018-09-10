@@ -3,8 +3,8 @@
 
 #' Maximum of Numeric Values
 #' 
-#' Written in C++, this function tends to run faster than 
-#' \code{\link[base]{max}} for large numeric vectors/matrices.
+#' Written in C++, this function tends to run faster than \code{max} for large 
+#' numeric vectors/matrices.
 #' 
 #' @param x Numeric vector.
 #' 
@@ -53,8 +53,8 @@ mean_i <- function(x) {
 
 #' Minimum of Numeric Values
 #' 
-#' Written in C++, this function tends to run faster than 
-#' \code{\link[base]{min}} for large numeric vectors/matrices.
+#' Written in C++, this function tends to run faster than \code{min} for large 
+#' numeric vectors/matrices.
 #' 
 #' @param x Numeric vector.
 #' 
@@ -158,8 +158,8 @@ which_max_im <- function(x) {
 
 #' Return Index of (First) Maximum of an Integer Vector
 #' 
-#' Written in C++, this function tends to run faster than 
-#' \code{\link[base]{which.max}} for large integer vectors.
+#' Written in C++, this function tends to run faster than \code{which.max} for 
+#' large integer vectors.
 #' 
 #' For optimal speed, choose the version of this function that matches the 
 #' class of your \code{x}:
@@ -222,8 +222,8 @@ which_max_nm <- function(x) {
 
 #' Return Index of (First) Maximum of a Numeric Vector
 #' 
-#' Written in C++, this function tends to run faster than 
-#' \code{\link[base]{which.max}} for large numeric vectors.
+#' Written in C++, this function tends to run faster than \code{which.max} for 
+#' large numeric vectors.
 #' 
 #' For optimal speed, choose the version of this function that matches the 
 #' class of your \code{x}:

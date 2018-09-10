@@ -15,11 +15,13 @@
 #' @param bars.upper Numeric vector or matrix (matching whichever type \code{y} 
 #' is) specifying the position of the upper end of the error bar for each 
 #' group/subgroup.
-#' @param group.labels Character vector giving labels for the groups.
-#' @param group.dividers Logical value for whether to add vertical lines to 
-#' distinguish the groups.
+#' @param truth Numeric value specifying true value of parameter being 
+#' estimated. If specified, a horizontal reference line is added to the plot.
+#' @param group.labels Character vector of labels for the groups.
+#' @param group.dividers Logical value for whether to add vertical lines 
+#' distinguishing the groups.
 #' @param subgroup.spacing Numeric value controlling the amount of spacing 
-#' between subgroups.
+#' between subgroups, with values > 1 corresponding to more spacing.
 #' @param subgroup.labels Character vector giving labels for the subgroups.
 #' @param subgroup.pch Plotting symbol for different subgroups within each 
 #' group.
@@ -28,10 +30,16 @@
 #' \code{\link[graphics]{points}}.
 #' @param arrows.list Optional list of inputs to pass to 
 #' \code{\link[graphics]{arrows}}.
-#' @param axis.list Optional list of inputs to pass to 
-#' \code{\link[graphics]{axis}}.
-#' @param abline.list Optional list of inputs to pass to 
-#' \code{\link[graphics]{abline}}. Only used if \code{group.dividers = TRUE}.
+#' @param xaxis.list Optional list of inputs to pass to 
+#' \code{\link[graphics]{axis}} for x-axis.
+#' @param yaxis.list Optional list of inputs to pass to 
+#' \code{\link[graphics]{axis}} for y-axis.
+#' @param abline.dividers.list Optional list of inputs to pass to 
+#' \code{\link[graphics]{abline}} for group dividers. Only used if 
+#' \code{group.dividers = TRUE}.
+#' @param abline.truth.list Optional list of inputs to pass to 
+#' \code{\link[graphics]{abline}} for horizontal line at true value of 
+#' parameter. Only used if \code{truth} is specified.
 #' @param legend.list Optional list of inputs to pass to 
 #' \code{\link[graphics]{legend}}.
 #' 
@@ -71,6 +79,7 @@ dots_bars <- function(y = NULL,
                       bars = NULL,
                       bars.lower = y - bars,
                       bars.upper = y + bars,
+                      truth = NULL, 
                       group.labels = NULL,
                       group.dividers = TRUE, 
                       subgroup.spacing = 1, 
@@ -79,8 +88,10 @@ dots_bars <- function(y = NULL,
                       subgroup.col = NULL,
                       points.list = NULL,
                       arrows.list = NULL,
-                      axis.list = NULL,
-                      abline.list = NULL, 
+                      xaxis.list = NULL,
+                      yaxis.list = xaxis.list,
+                      abline.dividers.list = NULL, 
+                      abline.truth.list = NULL,
                       legend.list = NULL,
                       ...) {
   
@@ -129,29 +140,47 @@ dots_bars <- function(y = NULL,
     }
     
     # Create plot
-    do.call(plot, c(list(x = xvals, y = y, xaxt = "n", type = "n"),
+    do.call(plot, c(list(x = xvals, y = y, xaxt = "n", yaxt = "n", type = "n"),
                     extra.args))
+    
+    # Add line at true value
+    if (! is.null(truth)) {
+      abline.truth.list <- list_override(list1 = list(h = truth, lty = 2), 
+                                         list2 = abline.truth.list)
+      do.call(abline, abline.truth.list)
+    }
     
     # Add points and error bars
     do.call(points, c(list(x = xvals, y = y), points.list))
-    arrows.list <- list_override(list1 = list(length = 0.05, angle = 90,
-                                              code = 3),
-                                 list2 = arrows.list)
+    arrows.list <- list_override(
+      list1 = list(length = 0.05, angle = 90, code = 3),
+      list2 = arrows.list
+    )
     do.call(arrows, c(list(x0 = xvals, y0 = bars.lower,
                            x1 = xvals, y1 = bars.upper),
                       arrows.list))
     
+    # Add y-axis
+    if (! (! is.null(extra.args$yaxt) && extra.args$yaxt == "n")) {
+      yaxis.list <- list_override(list1 = list(side = 2), 
+                                  list2 = yaxis.list)
+      do.call(axis, yaxis.list)
+    }
+    
     # Add group labels on x-axis
-    axis.list <- list_override(list1 = list(side = 1, at = xvals,
-                                            labels = group.labels),
-                               list2 = axis.list)
-    do.call(axis, axis.list)
+    xaxis.list <- list_override(
+      list1 = list(side = 1, at = xvals, labels = group.labels, tick = FALSE),
+      list2 = xaxis.list
+    )
+    do.call(axis, xaxis.list)
     
     # Add dividers
     if (group.dividers) {
-      abline.list <- list_override(list1 = list(v = (xvals + 0.5)[-length(xvals)]), 
-                                   list2 = abline.list)
-      do.call(abline, abline.list)
+      abline.dividers.list <- list_override(
+        list1 = list(v = (xvals + 0.5)[-length(xvals)], col = "gray"), 
+        list2 = abline.dividers.list
+      )
+      do.call(abline, abline.dividers.list)
     }
     
   } else {
@@ -220,45 +249,63 @@ dots_bars <- function(y = NULL,
     }
     
     # Create plot
-    do.call(plot, c(list(cbind(xvals, t(y)), xaxt = "n", type = "n"),
+    do.call(plot, c(list(cbind(xvals, t(y)), xaxt = "n", yaxt = "n", type = "n"),
                     extra.args))
+    
+    # Add line at true value
+    if (! is.null(truth)) {
+      abline.truth.list <- list_override(list1 = list(h = truth, lty = 2), 
+                                         list2 = abline.truth.list)
+      do.call(abline, abline.truth.list)
+    }
     
     # Create x.steps vector to offset subgroups
     x.steps <- seq(-0.15 * subgroup.spacing, 0.15 * subgroup.spacing,
                    0.3 * subgroup.spacing / (subgroup.n - 1))
     
     # Loop through and add points and bars
-    arrows.list <- list_override(list1 = list(length = 0.05, angle = 90,
-                                              code = 3),
-                                 list2 = arrows.list)
+    arrows.list <- list_override(
+      list1 = list(length = 0.05, angle = 90, code = 3),
+      list2 = arrows.list
+    )
     for (ii in 1: subgroup.n) {
-      do.call(points, c(list(x = xvals + x.steps[ii], y = y[ii, ],
-                             pch = subgroup.pch[ii], col = subgroup.col[ii]),
-                        points.list))
       do.call(arrows, c(list(x0 = xvals + x.steps[ii], y0 = bars.lower[ii, ],
                              x1 = xvals + x.steps[ii], y1 = bars.upper[ii, ]),
                         arrows.list))
+      do.call(points, c(list(x = xvals + x.steps[ii], y = y[ii, ],
+                             pch = subgroup.pch[ii], col = subgroup.col[ii]),
+                        points.list))
+    }
+    
+    # Add y-axis
+    if (! (! is.null(extra.args$yaxt) && extra.args$yaxt == "n")) {
+      yaxis.list <- list_override(list1 = list(side = 2), 
+                                  list2 = yaxis.list)
+      do.call(axis, yaxis.list)
     }
     
     # Add group labels on x-axis
-    axis.list <- list_override(list1 = list(side = 1, at = xvals,
-                                            labels = group.labels),
-                               list2 = axis.list)
-    do.call(axis, axis.list)
+    xaxis.list <- list_override(
+      list1 = list(side = 1, at = xvals, labels = group.labels, tick = FALSE),
+      list2 = xaxis.list
+    )
+    do.call(axis, xaxis.list)
   
     # Add dividers
     if (group.dividers) {
-      abline.list <- list_override(list1 = list(v = (xvals + 0.5)[-length(xvals)]), 
-                                   list2 = abline.list)
-      do.call(abline, abline.list)
+      abline.dividers.list <- list_override(
+        list1 = list(v = (xvals + 0.5)[-length(xvals)], col = "gray"), 
+        list2 = abline.dividers.list
+      )
+      do.call(abline, abline.dividers.list)
     }
     
     # Add legend
-    legend.list <- list_override(list1 = list(x = "bottomleft",
-                                              bg = "white",
-                                              pch = subgroup.pch,
-                                              legend = subgroup.labels),
-                                 list2 = legend.list)
+    legend.list <- list_override(
+      list1 = list(x = "bottomleft", bg = "white", pch = subgroup.pch, 
+                   legend = subgroup.labels),
+      list2 = legend.list
+    )
     do.call(legend, legend.list)
     
   }

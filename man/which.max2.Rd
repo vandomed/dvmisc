@@ -21,7 +21,8 @@ Numeric value.
 Returns index of maximum for vectors and index or (row, column) position for 
 matrices. For optimal speed, use \code{integer = TRUE} if \code{x} is an 
 integer vector/matrix and \code{integer = FALSE} otherwise. Typically faster 
-than \code{\link[base]{which.max}} for matrices and for large vectors.
+than \code{\link[base:which.min]{which.max}} for matrices and for large 
+vectors.
 }
 \examples{
 # which.max2 vs. which.max for integer vector

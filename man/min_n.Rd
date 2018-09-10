@@ -13,8 +13,8 @@ min_n(x)
 Numeric value.
 }
 \description{
-Written in C++, this function tends to run faster than 
-\code{\link[base]{min}} for large numeric vectors/matrices.
+Written in C++, this function tends to run faster than \code{min} for large 
+numeric vectors/matrices.
 }
 \examples{
 # For large objects, min_n is faster than min

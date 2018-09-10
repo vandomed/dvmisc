@@ -3,8 +3,8 @@ using namespace Rcpp;
 
 //' Maximum of Numeric Values
 //' 
-//' Written in C++, this function tends to run faster than 
-//' \code{\link[base]{max}} for large numeric vectors/matrices.
+//' Written in C++, this function tends to run faster than \code{max} for large 
+//' numeric vectors/matrices.
 //' 
 //' @param x Numeric vector.
 //' 

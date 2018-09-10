@@ -1,7 +1,7 @@
 Convenience Functions, Moving Window Statistics, and Graphics
 ================
 Dane Van Domelen <br> <vandomed@gmail.com>
-2018-08-31
+2018-09-10
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 [![Build Status](https://travis-ci.org/vandomed/dvmisc.svg?branch=master)](https://travis-ci.org/vandomed/dvmisc)
@@ -30,15 +30,15 @@ all.equal(diff(range(x)), truerange(x))
 #> [1] TRUE
 as.data.frame(print(microbenchmark(diff(range(x)), truerange(x), times = 500)))
 #> Unit: microseconds
-#>            expr    min     lq      mean median     uq     max neval
-#>  diff(range(x)) 16.579 18.553 22.354212 21.710 22.501 116.841   500
-#>    truerange(x)  2.369  3.553  4.435122  4.342  4.738  26.843   500
+#>            expr    min     lq     mean median     uq    max neval
+#>  diff(range(x)) 17.763 19.737 22.94796 22.105 24.080 67.105   500
+#>    truerange(x)  2.763  3.554  4.68937  4.343  5.132 22.501   500
 ```
 
-| expr           |     min|      lq|       mean|  median|      uq|      max|  neval|
-|:---------------|-------:|-------:|----------:|-------:|-------:|--------:|------:|
-| diff(range(x)) |  16.579|  18.553|  22.354212|  21.710|  22.501|  116.841|    500|
-| truerange(x)   |   2.369|   3.553|   4.435122|   4.342|   4.738|   26.843|    500|
+| expr           |     min|      lq|      mean|  median|      uq|     max|  neval|
+|:---------------|-------:|-------:|---------:|-------:|-------:|-------:|------:|
+| diff(range(x)) |  17.763|  19.737|  22.94796|  22.105|  24.080|  67.105|    500|
+| truerange(x)   |   2.763|   3.554|   4.68937|   4.343|   5.132|  22.501|    500|
 
 ### bmi3, bmi4
 

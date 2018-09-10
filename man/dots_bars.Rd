@@ -5,10 +5,11 @@
 \title{Plot Points +/- Error Bars}
 \usage{
 dots_bars(y = NULL, bars = NULL, bars.lower = y - bars, bars.upper = y +
-  bars, group.labels = NULL, group.dividers = TRUE, subgroup.spacing = 1,
-  subgroup.labels = NULL, subgroup.pch = NULL, subgroup.col = NULL,
-  points.list = NULL, arrows.list = NULL, axis.list = NULL,
-  abline.list = NULL, legend.list = NULL, ...)
+  bars, truth = NULL, group.labels = NULL, group.dividers = TRUE,
+  subgroup.spacing = 1, subgroup.labels = NULL, subgroup.pch = NULL,
+  subgroup.col = NULL, points.list = NULL, arrows.list = NULL,
+  xaxis.list = NULL, yaxis.list = xaxis.list, abline.dividers.list = NULL,
+  abline.truth.list = NULL, legend.list = NULL, ...)
 }
 \arguments{
 \item{y}{Numeric vector of y-values for different groups, or numeric matrix 
@@ -26,13 +27,16 @@ group/subgroup.}
 is) specifying the position of the upper end of the error bar for each 
 group/subgroup.}
 
-\item{group.labels}{Character vector giving labels for the groups.}
+\item{truth}{Numeric value specifying true value of parameter being 
+estimated. If specified, a horizontal reference line is added to the plot.}
 
-\item{group.dividers}{Logical value for whether to add vertical lines to 
-distinguish the groups.}
+\item{group.labels}{Character vector of labels for the groups.}
+
+\item{group.dividers}{Logical value for whether to add vertical lines 
+distinguishing the groups.}
 
 \item{subgroup.spacing}{Numeric value controlling the amount of spacing 
-between subgroups.}
+between subgroups, with values > 1 corresponding to more spacing.}
 
 \item{subgroup.labels}{Character vector giving labels for the subgroups.}
 
@@ -47,11 +51,19 @@ group.}
 \item{arrows.list}{Optional list of inputs to pass to 
 \code{\link[graphics]{arrows}}.}
 
-\item{axis.list}{Optional list of inputs to pass to 
-\code{\link[graphics]{axis}}.}
+\item{xaxis.list}{Optional list of inputs to pass to 
+\code{\link[graphics]{axis}} for x-axis.}
 
-\item{abline.list}{Optional list of inputs to pass to 
-\code{\link[graphics]{abline}}. Only used if \code{group.dividers = TRUE}.}
+\item{yaxis.list}{Optional list of inputs to pass to 
+\code{\link[graphics]{axis}} for y-axis.}
+
+\item{abline.dividers.list}{Optional list of inputs to pass to 
+\code{\link[graphics]{abline}} for group dividers. Only used if 
+\code{group.dividers = TRUE}.}
+
+\item{abline.truth.list}{Optional list of inputs to pass to 
+\code{\link[graphics]{abline}} for horizontal line at true value of 
+parameter. Only used if \code{truth} is specified.}
 
 \item{legend.list}{Optional list of inputs to pass to 
 \code{\link[graphics]{legend}}.}

@@ -3,8 +3,8 @@ using namespace Rcpp;
 
 //' Minimum of Numeric Values
 //' 
-//' Written in C++, this function tends to run faster than 
-//' \code{\link[base]{min}} for large numeric vectors/matrices.
+//' Written in C++, this function tends to run faster than \code{min} for large 
+//' numeric vectors/matrices.
 //' 
 //' @param x Numeric vector.
 //' 

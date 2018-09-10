@@ -1,11 +1,11 @@
 #' Return the First and Last Part of an Object
 #' 
-#' # Simply \code{\link[utils]{head}} and \code{\link[utils]{tail}} combined 
-#' into one function.
+#' Simply \code{\link[utils:head]{head}} and \code{\link[utils:head]{tail}} 
+#' combined.
 #' 
 #' @param x Input object.
-#' @param ... Additional arguments to pass to \code{\link[utils]{head}} and 
-#' \code{\link[utils]{tail}} functions.
+#' @param ... Additional arguments to pass to \code{\link[utils:head]{head}} and 
+#' \code{\link[utils:head]{tail}} functions.
 #' 
 #' @return Same class as \code{x}.
 #' 

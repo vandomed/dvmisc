@@ -13,8 +13,8 @@ max_n(x)
 Numeric value.
 }
 \description{
-Written in C++, this function tends to run faster than 
-\code{\link[base]{max}} for large numeric vectors/matrices.
+Written in C++, this function tends to run faster than \code{max} for large 
+numeric vectors/matrices.
 }
 \examples{
 # For large objects, max_n is faster than max

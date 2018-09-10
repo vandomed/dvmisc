@@ -3,8 +3,8 @@ using namespace Rcpp;
 
 //' Return Index of (First) Maximum of a Numeric Vector
 //' 
-//' Written in C++, this function tends to run faster than 
-//' \code{\link[base]{which.max}} for large numeric vectors.
+//' Written in C++, this function tends to run faster than \code{which.max} for 
+//' large numeric vectors.
 //' 
 //' For optimal speed, choose the version of this function that matches the 
 //' class of your \code{x}:
