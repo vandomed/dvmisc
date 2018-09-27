@@ -34,8 +34,8 @@
 #' National Science Foundation Graduate Research Fellowship under Grant No. 
 #' DGE-0940903.
 #' 
-#' @docType package
 #' @importFrom dplyr %>%
+#' @docType package
 #' @import ggplot2
 #' @import graphics
 #' @importFrom MASS fitdistr
@@ -43,7 +43,7 @@
 #' @import Rcpp
 #' @importFrom Rcpp evalCpp
 #' @importFrom rbenchmark benchmark
-#' @import stats
+#' @importFrom stats IQR anova aov binom.test chisq.test dbeta dbinom dcauchy dchisq dexp df dgamma dgeom dhyper dlnorm dnbinom dnorm dpois dt dunif dweibull fisher.test median nlminb prop.test qchisq qnorm qt quantile sd t.test var
 #' @importFrom utils head tail
 #' @useDynLib dvmisc, .registration=TRUE
 #' @name dvmisc

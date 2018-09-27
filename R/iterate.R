@@ -25,8 +25,8 @@
 #' 
 #' # Run 100 trials for each scenario and calculate empirical power
 #' f %>% iterate(n = c(100, 500), mu = c(0.1, 0.25), trials = 100) %>%
-#'   dplyr::group_by(n, mu) %>%
-#'   dplyr::summarise(mean(p < 0.05))
+#'   group_by(n, mu) %>%
+#'   summarise(mean(p < 0.05))
 #'
 #' @export
 iterate <- function(f, ..., trials = 1) {
