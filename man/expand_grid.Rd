@@ -17,8 +17,7 @@ expand_grid(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
 Data frame.
 }
 \description{
-Loops over the last argument, then the second-last, and so on. Defined simply 
-as \code{rev(expand.grid(rev(list(...))))}.
+Loops over the last argument, then the second-last, and so on.
 }
 \examples{
 # Compare expand.grid to expand_grid

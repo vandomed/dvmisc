@@ -1,7 +1,6 @@
 #' Same as expand.grid but with Sequences Reversed
 #' 
-#' Loops over the last argument, then the second-last, and so on. Defined simply 
-#' as \code{rev(expand.grid(rev(list(...))))}. 
+#' Loops over the last argument, then the second-last, and so on.
 #' 
 #' @param ... See \code{\link[base]{expand.grid}}.
 #' @param KEEP.OUT.ATTRS See \code{\link[base]{expand.grid}}.

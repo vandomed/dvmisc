@@ -32,7 +32,7 @@
 iterate <- function(f, ..., trials = 1) {
   
   # Construct data frame with inputs to give to pmap
-  arg.combos <- expand_grid(list(...), stringsAsFactors = FALSE)
+  arg.combos <- expand_grid(..., stringsAsFactors = FALSE)
   if (trials > 1)
     arg.combos <- arg.combos[rep(1: nrow(arg.combos), each = trials), ]
   
