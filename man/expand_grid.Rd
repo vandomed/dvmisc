@@ -9,9 +9,9 @@ expand_grid(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
 \arguments{
 \item{...}{See \code{\link[base]{expand.grid}}.}
 
-\item{stringsAsFactors}{See \code{\link[base]{expand.grid}}.}
+\item{KEEP.OUT.ATTRS}{See \code{\link[base]{expand.grid}}.}
 
-\item{KEEP.OUT.ATTR}{See \code{\link[base]{expand.grid}}.}
+\item{stringsAsFactors}{See \code{\link[base]{expand.grid}}.}
 }
 \value{
 Data frame.

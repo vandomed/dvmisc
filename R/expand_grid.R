@@ -4,7 +4,7 @@
 #' as \code{rev(expand.grid(rev(list(...))))}. 
 #' 
 #' @param ... See \code{\link[base]{expand.grid}}.
-#' @param KEEP.OUT.ATTR See \code{\link[base]{expand.grid}}.
+#' @param KEEP.OUT.ATTRS See \code{\link[base]{expand.grid}}.
 #' @param stringsAsFactors See \code{\link[base]{expand.grid}}.
 #' 
 #' @return Data frame.
@@ -15,9 +15,7 @@
 #' expand_grid(x = c("a", "b", "c"), y = c(1, 2), z = c(TRUE, FALSE))
 #' 
 #' @export
-expand_grid <- function(..., 
-                        KEEP.OUT.ATTRS = TRUE, 
-                        stringsAsFactors = TRUE) {
+expand_grid <- function(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE) {
   rev(expand.grid(rev(list(...)), 
                   KEEP.OUT.ATTRS = KEEP.OUT.ATTRS, 
                   stringsAsFactors = stringsAsFactors))
