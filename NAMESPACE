@@ -3,6 +3,7 @@
 export(bmi3)
 export(bmi4)
 export(dots_bars)
+export(expand_grid)
 export(gammareg)
 export(get_mse)
 export(headtail)

@@ -32,13 +32,16 @@
 iterate <- function(f, ..., trials = 1) {
   
   # Construct data frame with inputs to give to pmap
-  arg.combos <- expand.grid(list(...))
-  arg.combos <- arg.combos[rep(1: nrow(arg.combos), each = trials), ]
+  arg.combos <- expand_grid(list(...), stringsAsFactors = FALSE)
+  if (trials > 1)
+    arg.combos <- arg.combos[rep(1: nrow(arg.combos), each = trials), ]
   
   # Use pmap to evaluate function for each combination of inputs
   vals <- purrr::pmap(.l = arg.combos, .f = f)
   
   # Create and return data frame
-  return(cbind(arg.combos, do.call(rbind, vals)))
+  df <- do.call(rbind, vals)
+  if (is.null(colnames(df))) colnames(df) <- paste("v", 1: ncol(df), sep = "")
+  return(cbind(arg.combos, df))
   
 }
