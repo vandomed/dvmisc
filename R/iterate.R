@@ -46,9 +46,26 @@ iterate <- function(f, ..., fix = NULL, trials = 1) {
     }
   }
   
+  # Prep for merge depending on what f returns
+  gl1 <- growing.list[[1]]
+  if (is.list(gl1)) {
+    if (is.null(names(gl1))) {
+      n.each <- length(gl1)
+      labels <- paste("V", 1: n.each, sep = "")
+      growing.list <- lapply(growing.list, function(x) {
+        y <- x
+        names(y) <- labels
+        return(y)
+      })
+    }
+    premerge <- bind_rows(growing.list)
+  } else {
+    premerge <- do.call(rbind, growing.list)
+  }
+  
   # Return data table with results
   ret <- cbind(as.data.table(arg.combos[rep(1: nrow(arg.combos), each = trials), ]), 
-               do.call(rbind, growing.list))
+               premerge)
   return(ret)
   
 }
