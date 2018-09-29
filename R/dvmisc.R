@@ -36,6 +36,7 @@
 #' 
 #' @importFrom dplyr %>%
 #' @docType package
+#' @import data.table
 #' @import ggplot2
 #' @import graphics
 #' @importFrom MASS fitdistr
