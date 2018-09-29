@@ -8,6 +8,8 @@
 #' 
 #' @param f A function.
 #' @param ... Arguments to \code{f}, any of which can be vector-valued.
+#' @param fix List of non-scalar arguments to hold fixed rather than loop over 
+#' (scalars can be passed through \code{...}).
 #' @param trials Numeric value.
 #' 
 #' @return Data frame.
@@ -29,19 +31,24 @@
 #'   summarise(mean(p < 0.05))
 #'
 #' @export
-iterate <- function(f, ..., trials = 1) {
+iterate <- function(f, ..., fix = NULL, trials = 1) {
   
   # Construct data frame with inputs to give to pmap
   arg.combos <- expand_grid(..., stringsAsFactors = FALSE)
-  if (trials > 1)
-    arg.combos <- arg.combos[rep(1: nrow(arg.combos), each = trials), ]
   
-  # Use pmap to evaluate function for each combination of inputs
-  vals <- purrr::pmap(.l = arg.combos, .f = f)
+  # Loop through combinations and run however many trials of each set
+  growing.list <- vector(mode = "list", length = nrow(arg.combos) * trials)
+  index <- 0
+  for (ii in 1: nrow(arg.combos)) {
+    for (jj in 1: trials) {
+      index <- index + 1
+      growing.list[[index]] <- do.call(f, c(arg.combos[ii, ], fix))
+    }
+  }
   
-  # Create and return data frame
-  df <- do.call(rbind, vals)
-  if (is.null(colnames(df))) colnames(df) <- paste("v", 1: ncol(df), sep = "")
-  return(cbind(arg.combos, df))
+  # Return data table with results
+  ret <- cbind(as.data.table(arg.combos[rep(1: nrow(arg.combos), each = trials), ]), 
+               do.call(rbind, growing.list))
+  return(ret)
   
 }

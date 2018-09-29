@@ -5,12 +5,15 @@
 \title{Iterate Function Over All Combinations of User-Specified Inputs, Potentially 
 Multiple Times}
 \usage{
-iterate(f, ..., trials = 1)
+iterate(f, ..., fix = NULL, trials = 1)
 }
 \arguments{
 \item{f}{A function.}
 
 \item{...}{Arguments to \code{f}, any of which can be vector-valued.}
+
+\item{fix}{List of non-scalar arguments to hold fixed rather than loop over 
+(scalars can be passed through \code{...}).}
 
 \item{trials}{Numeric value.}
 }
