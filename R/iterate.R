@@ -69,8 +69,8 @@ iterate <- function(f, ..., fix = NULL, trials = 1, varnames = NULL) {
   
   # Add variable names if specified
   if (! is.null(varnames)) {
-    names(premerge)[(ncol(premerge) - length(varnames) + 1): ncol(premerge)] <- 
-      varnames
+    colnames(premerge)[(ncol(premerge) - length(varnames) + 1): 
+                         ncol(premerge)] <- varnames
   }
   
   # Return data table with results
