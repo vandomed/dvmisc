@@ -119,7 +119,7 @@ plot_ll <- function(start,
   if (is.null(param_values)) {
     
     # Curve at MLEs for other parameters
-    q <- ggplot(df, aes_string(x = x, y = y)) +
+    q <- ggplot(df, aes(x = x, y = y)) +
       geom_line() +
       labs(title = "Log-likelihood function",
            x = "Parameter values", 
@@ -130,7 +130,7 @@ plot_ll <- function(start,
   } else {
     
     # Two curves
-    q <- ggplot(df, aes_string(x = x, y = y, color = curve)) +
+    q <- ggplot(df, aes(x = x, y = y, color = curve)) +
       geom_line() +
       theme(legend.justification = c(1, 0), 
             legend.position = c(1, 0),
