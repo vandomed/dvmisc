@@ -5,7 +5,7 @@
 \title{Iterate Function Over All Combinations of User-Specified Inputs, Potentially 
 Multiple Times}
 \usage{
-iterate(f, ..., fix = NULL, trials = 1)
+iterate(f, ..., fix = NULL, trials = 1, varnames = NULL)
 }
 \arguments{
 \item{f}{A function.}
@@ -16,15 +16,18 @@ iterate(f, ..., fix = NULL, trials = 1)
 (scalars can be passed through \code{...}).}
 
 \item{trials}{Numeric value.}
+
+\item{varnames}{Character vector of names for values that \code{f} returns, 
+to avoid generic labels (V1, V2, ...).}
 }
 \value{
 Data frame.
 }
 \description{
-Basically a wrapper for \code{\link[purrr:map2]{pmap}}, but with some 
-different functionality. It runs all combinations of inputs rather than the 
-1st set, 2nd set, and so forth, and multiple trials can be run for each 
-scenario, which might be useful for running simulations.
+Same idea as \code{\link[purrr:map2]{pmap}}, but with some different 
+functionality. It runs all combinations of inputs rather than the 1st set, 
+2nd set, and so forth, and multiple trials can be run for each scenario, 
+which can be useful for simulations.
 }
 \examples{
 # Define function to generate data from N(mu, sigsq) and perform t-test.

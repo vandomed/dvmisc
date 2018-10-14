@@ -9,7 +9,7 @@
 #' Package: \tab dvmisc \cr
 #' Type: \tab Package \cr
 #' Version: \tab 1.1.3 \cr
-#' Date: \tab 2018-09-29 \cr
+#' Date: \tab 2018-10-14 \cr
 #' License: \tab GPL-3 \cr
 #' }
 #' 
@@ -44,7 +44,7 @@
 #' @import Rcpp
 #' @importFrom Rcpp evalCpp
 #' @importFrom rbenchmark benchmark
-#' @importFrom stats IQR anova aov binom.test chisq.test dbeta dbinom dcauchy dchisq dexp df dgamma dgeom dhyper dlnorm dnbinom dnorm dpois dt dunif dweibull fisher.test median nlminb prop.test qchisq qnorm qt quantile sd t.test var
+#' @importFrom stats IQR anova aov binom.test chisq.test dbeta dbinom dcauchy dchisq dexp df dgamma dgeom dhyper dlnorm dnbinom dnorm dpois dt dunif dweibull fisher.test median nlminb prop.test pt qchisq qnorm qt quantile sd t.test var
 #' @importFrom utils head tail
 #' @useDynLib dvmisc, .registration=TRUE
 #' @name dvmisc

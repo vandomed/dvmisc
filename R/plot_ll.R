@@ -89,6 +89,7 @@ plot_ll <- function(start,
   thetas <- matrix(mles, byrow = TRUE, ncol = p, nrow = 1001)
   thetas[, xaxis_param] <- xvals
   yvals <- -apply(thetas, 1, objective)
+  x <- y <- NULL
   df <- data.frame(curve = rep(1, 1001), x = xvals, y = yvals)
 
   # # Figure out xvals corresponding to 95% CI
@@ -112,14 +113,13 @@ plot_ll <- function(start,
                      labels = c("Other parameters at MLEs", "Other parameters varied"))
   
   # Exclude points with likelihood ratio < 0.01
-  df <- df %>% 
-    dplyr::filter(y >= (log(0.01) + llval))
+  df <- df %>% dplyr::filter(y >= (log(0.01) + llval))
   
   # Create plot
   if (is.null(param_values)) {
     
     # Curve at MLEs for other parameters
-    q <- ggplot(df, aes(x = x, y = y)) +
+    q <- ggplot(df, aes_string(x = x, y = y)) +
       geom_line() +
       labs(title = "Log-likelihood function",
            x = "Parameter values", 
@@ -130,7 +130,7 @@ plot_ll <- function(start,
   } else {
     
     # Two curves
-    q <- ggplot(df, aes(x = x, y = y, color = curve)) +
+    q <- ggplot(df, aes_string(x = x, y = y, color = curve)) +
       geom_line() +
       theme(legend.justification = c(1, 0), 
             legend.position = c(1, 0),

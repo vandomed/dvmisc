@@ -1,16 +1,18 @@
 #' Iterate Function Over All Combinations of User-Specified Inputs, Potentially 
 #' Multiple Times
 #' 
-#' Basically a wrapper for \code{\link[purrr:map2]{pmap}}, but with some 
-#' different functionality. It runs all combinations of inputs rather than the 
-#' 1st set, 2nd set, and so forth, and multiple trials can be run for each 
-#' scenario, which might be useful for running simulations.
+#' Same idea as \code{\link[purrr:map2]{pmap}}, but with some different 
+#' functionality. It runs all combinations of inputs rather than the 1st set, 
+#' 2nd set, and so forth, and multiple trials can be run for each scenario, 
+#' which can be useful for simulations.
 #' 
 #' @param f A function.
 #' @param ... Arguments to \code{f}, any of which can be vector-valued.
 #' @param fix List of non-scalar arguments to hold fixed rather than loop over 
 #' (scalars can be passed through \code{...}).
 #' @param trials Numeric value.
+#' @param varnames Character vector of names for values that \code{f} returns, 
+#' to avoid generic labels (V1, V2, ...).
 #' 
 #' @return Data frame.
 #' 
@@ -31,9 +33,9 @@
 #'   summarise(mean(p < 0.05))
 #'
 #' @export
-iterate <- function(f, ..., fix = NULL, trials = 1) {
+iterate <- function(f, ..., fix = NULL, trials = 1, varnames = NULL) {
   
-  # Construct data frame with inputs to give to pmap
+  # Construct data frame where each row is 1 set of inputs
   arg.combos <- expand_grid(..., stringsAsFactors = FALSE)
   
   # Loop through combinations and run however many trials of each set
@@ -50,17 +52,25 @@ iterate <- function(f, ..., fix = NULL, trials = 1) {
   gl1 <- growing.list[[1]]
   if (is.list(gl1)) {
     if (is.null(names(gl1))) {
-      n.each <- length(gl1)
-      labels <- paste("V", 1: n.each, sep = "")
-      growing.list <- lapply(growing.list, function(x) {
-        y <- x
-        names(y) <- labels
-        return(y)
-      })
+      if (is.null(varnames)) {
+        n.each <- length(gl1)
+        labels <- paste("V", 1: n.each, sep = "")
+        growing.list <- lapply(growing.list, function(x) {
+          y <- x
+          names(y) <- labels
+          return(y)
+        })
+      }
     }
-    premerge <- bind_rows(growing.list)
+    premerge <- dplyr::bind_rows(growing.list)
   } else {
     premerge <- do.call(rbind, growing.list)
+  }
+  
+  # Add variable names if specified
+  if (! is.null(varnames)) {
+    names(premerge)[(ncol(premerge) - length(varnames) + 1): ncol(premerge)] <- 
+      varnames
   }
   
   # Return data table with results
