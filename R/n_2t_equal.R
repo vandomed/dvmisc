@@ -20,7 +20,7 @@
 #'
 #'
 #' @export
-n_2t_equal <- function(d = 0.25, sigsq = 1, alpha = 0.05, beta = 0.2) {
+n_2t_equal <- function(d, sigsq, alpha = 0.05, beta = 0.2) {
 
   # Get lower bound for n based on Z formula
   zstar <- qnorm(p = 1 - beta) + qnorm(p = 1 - alpha / 2)

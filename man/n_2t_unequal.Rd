@@ -4,8 +4,7 @@
 \alias{n_2t_unequal}
 \title{Calculate Per-Group Sample Size for Two-Sample Unequal Variance T-Test}
 \usage{
-n_2t_unequal(d = 0.25, sigsq1 = 1, sigsq2 = 1, alpha = 0.05,
-  beta = 0.2)
+n_2t_unequal(d, sigsq1, sigsq2, alpha = 0.05, beta = 0.2)
 }
 \arguments{
 \item{d}{Numeric value specifying true difference in group means.}

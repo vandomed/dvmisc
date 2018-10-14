@@ -4,7 +4,7 @@
 \alias{n_2t_equal}
 \title{Calculate Per-Group Sample Size for Two-Sample Equal Variance T-Test}
 \usage{
-n_2t_equal(d = 0.25, sigsq = 1, alpha = 0.05, beta = 0.2)
+n_2t_equal(d, sigsq, alpha = 0.05, beta = 0.2)
 }
 \arguments{
 \item{d}{Numeric value specifying true difference in group means.}

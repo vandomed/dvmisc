@@ -21,8 +21,7 @@
 #'
 #'
 #' @export
-n_2t_unequal <- function(d = 0.25, sigsq1 = 1, sigsq2 = 1, alpha = 0.05,
-                         beta = 0.2) {
+n_2t_unequal <- function(d, sigsq1, sigsq2, alpha = 0.05, beta = 0.2) {
 
   # Get lower bound for n based on Z formula
   zstar <- qnorm(p = 1 - beta) + qnorm(p = 1 - alpha / 2)

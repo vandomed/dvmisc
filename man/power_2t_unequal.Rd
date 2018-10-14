@@ -4,8 +4,7 @@
 \alias{power_2t_unequal}
 \title{Calculate Power for Two-Sample Unequal Variance T-Test}
 \usage{
-power_2t_unequal(n = 100, d = 0.5, sigsq1 = 1, sigsq2 = 1,
-  alpha = 0.05)
+power_2t_unequal(n = 100, d, sigsq1, sigsq2, alpha = 0.05)
 }
 \arguments{
 \item{n}{Numeric value specifying per-group sample size.}
