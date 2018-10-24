@@ -12,8 +12,7 @@ iterate(f, ..., fix = NULL, trials = 1, varnames = NULL)
 
 \item{...}{Arguments to \code{f}, any of which can be vector-valued.}
 
-\item{fix}{List of non-scalar arguments to hold fixed rather than loop over 
-(scalars can be passed through \code{...}).}
+\item{fix}{List of arguments to hold fixed rather than loop over.}
 
 \item{trials}{Numeric value.}
 

@@ -8,8 +8,7 @@
 #' 
 #' @param f A function.
 #' @param ... Arguments to \code{f}, any of which can be vector-valued.
-#' @param fix List of non-scalar arguments to hold fixed rather than loop over 
-#' (scalars can be passed through \code{...}).
+#' @param fix List of arguments to hold fixed rather than loop over.
 #' @param trials Numeric value.
 #' @param varnames Character vector of names for values that \code{f} returns, 
 #' to avoid generic labels (V1, V2, ...).
@@ -74,7 +73,7 @@ iterate <- function(f, ..., fix = NULL, trials = 1, varnames = NULL) {
   }
   
   # Return data table with results
-  ret <- cbind(as.data.table(arg.combos[rep(1: nrow(arg.combos), each = trials), ]), 
+  ret <- cbind(as.data.table(arg.combos[rep(1: nrow(arg.combos), each = trials), , drop = FALSE]), 
                premerge)
   return(ret)
   
