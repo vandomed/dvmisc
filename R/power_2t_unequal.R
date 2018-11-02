@@ -22,6 +22,15 @@
 #'
 #' @export
 power_2t_unequal <- function(n = 100, d, sigsq1, sigsq2, alpha = 0.05) {
+  
+  # Make sure d is positive
+  if (! (d > 0)) {
+    if (d == 0) {
+      stop("d cannot be 0")
+    } else {
+      d <- abs(d)
+    }
+  }
 
   # Degrees of freedom and non-centrality parameter
   df <- (n - 1) * (sigsq1 + sigsq2)^2 / (sigsq1^2 + sigsq2^2)

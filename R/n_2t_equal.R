@@ -21,6 +21,15 @@
 #'
 #' @export
 n_2t_equal <- function(d, sigsq, alpha = 0.05, beta = 0.2) {
+  
+  # Make sure d is positive
+  if (! (d > 0)) {
+    if (d == 0) {
+      stop("d cannot be 0")
+    } else {
+      d <- abs(d)
+    }
+  }
 
   # Get lower bound for n based on Z formula
   zstar <- qnorm(p = 1 - beta) + qnorm(p = 1 - alpha / 2)
