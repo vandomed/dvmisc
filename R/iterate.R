@@ -43,7 +43,7 @@ iterate <- function(f, ..., fix = NULL, trials = 1, varnames = NULL) {
   for (ii in 1: nrow(arg.combos)) {
     for (jj in 1: trials) {
       index <- index + 1
-      growing.list[[index]] <- do.call(f, c(arg.combos[ii, ], fix))
+      growing.list[[index]] <- do.call(f, c(arg.combos[ii, , drop = FALSE], fix))
     }
   }
   
