@@ -2,23 +2,31 @@
 % Please edit documentation in R/expand_grid.R
 \name{expand_grid}
 \alias{expand_grid}
-\title{Same as expand.grid but with Sequences Reversed}
+\title{Similar to expand.grid but with Sequences Reversed and Ability to Treat 
+Variables as Sets}
 \usage{
-expand_grid(...)
+expand_grid(..., together = NULL)
 }
 \arguments{
 \item{...}{Vectors you want all combinations of.}
+
+\item{together}{Data frame of vectors, where each row is a set of parameter 
+values that are always kept together.}
 }
 \value{
-Data frame.
+Data table.
 }
 \description{
 Loops over the last argument, then the second-last, and so on. Should be 
 faster than \code{\link[base]{expand.grid}}.
 }
 \examples{
-# Compare expand.grid to expand_grid
+# Simple example of expand.grid vs. expand_grid
 expand.grid(x = c("a", "b", "c"), y = c(1, 2), z = c(TRUE, FALSE))
 expand_grid(x = c("a", "b", "c"), y = c(1, 2), z = c(TRUE, FALSE))
+
+# How to keep certain variables together
+expand_grid(x = 1: 5, 
+            together = data.frame(y = c("1a", "2a"), z = c("1b", "2b")))
 
 }

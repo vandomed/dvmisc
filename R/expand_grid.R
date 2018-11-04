@@ -1,73 +1,73 @@
-#' Same as expand.grid but with Sequences Reversed
+#' Similar to expand.grid but with Sequences Reversed and Ability to Treat 
+#' Variables as Sets
 #' 
 #' Loops over the last argument, then the second-last, and so on. Should be 
 #' faster than \code{\link[base]{expand.grid}}.
 #' 
 #' @param ... Vectors you want all combinations of.
+#' @param together Data frame of vectors, where each row is a set of parameter 
+#' values that are always kept together.
 #' 
-#' @return Data frame.
+#' @return Data table.
 #' 
 #' @examples
-#' # Compare expand.grid to expand_grid
+#' # Simple example of expand.grid vs. expand_grid
 #' expand.grid(x = c("a", "b", "c"), y = c(1, 2), z = c(TRUE, FALSE))
 #' expand_grid(x = c("a", "b", "c"), y = c(1, 2), z = c(TRUE, FALSE))
 #' 
+#' # How to keep certain variables together
+#' expand_grid(x = 1: 5, 
+#'             together = data.frame(y = c("1a", "2a"), z = c("1b", "2b")))
+#' 
 #' @export
-expand_grid <- function(...) {
-  inputs.list <- list(...)
-  levels <- vapply(inputs.list, length, integer(1))
-  nrows <- prod(levels)
-  nreps <- nrows / cumprod(levels)
-  df <- mapply(
-    FUN = function(x, y, z) {
-      rep(rep(x, each = y), z)
-    },  
-    x = inputs.list, 
-    y = nreps, 
-    z = rev(nreps), 
-    SIMPLIFY = FALSE
-  )
-  setattr(df, "class", "data.table")
-  return(df)
-}
-
-inputs.list <- list(v1 = c(1, 2), 
-                    v2 = c("a", "b", "c"), 
-                    v3 = matrix(1:6, ncol = 2, byrow = TRUE))
-
-
-expand_grid2 <- function(...) {
-  inputs.list <- list(...)
-  inputs.list <- list(v1 = c(1, 2), 
-                      v2 = c("a", "b", "c"), 
-                      v3 = data.table(v3 = c("3a", "4a"), v4 = c("3b", "4b")))
-  levels <- vapply(inputs.list, length, integer(1))
-  nrows <- prod(levels)
-  nreps <- nrows / cumprod(levels)
-  df <- mapply(
-    FUN = function(x, y, z) {
-      rep(rep(x, each = y), z)
-    },  
-    x = inputs.list, 
-    y = nreps, 
-    z = rev(nreps), 
-    SIMPLIFY = FALSE
-  )
-  df <- as.data.table(df)
+expand_grid <- function(..., together = NULL) {
   
+  if (is.null(together)) {
+    
+    inputs.list <- list(...)
+    n.levels <- vapply(inputs.list, length, integer(1))
+    n.rows <- prod(n.levels)
+    n.each <- n.rows / cumprod(n.levels)
+    n.times <- n.rows / n.each / n.levels
+    df <- mapply(
+      FUN = function(x, y, z) {
+        rep(rep(x, each = y), z)
+      },  
+      x = inputs.list, 
+      y = n.each, 
+      z = n.times, 
+      SIMPLIFY = FALSE
+    )
+    setattr(df, "class", "data.table")
+    return(df)
+    
+  } else {
+    
+    # Do expansion for vectors in ...
+    inputs.list <- list(...)
+    n.inputs <- length(inputs.list)
+    nrow_together <- nrow(together)
+    n.levels <- c(vapply(inputs.list, length, integer(1)), nrow_together)
+    n.rows <- prod(n.levels)
+    n.each <- n.rows / cumprod(n.levels)
+    n.times <- n.rows / n.each / n.levels
+    df <- mapply(
+      FUN = function(x, y, z) {
+        rep(rep(x, each = y), z)
+      },  
+      x = inputs.list, 
+      y = n.each[-(n.inputs + 1)], 
+      z = n.times[-(n.inputs + 1)], 
+      SIMPLIFY = FALSE
+    )
+    setattr(df, "class", "data.table")
+    
+    # Add columns for variables in together data frame
+    locs <- rep(seq_len(nrow_together), n.times[length(n.times)])
+    df <- cbind(df, together[locs, ])
+    setnames(df, c(names(inputs.list), names(together)))
+    return(df)
+    
+  }
   
-  df[, (c("v3", "v4")) := df$v3]
-  
-  df[, (c("v3", "v4")) := list(1: 12, 1: 12)]
-  
-  a <- df$v3
-  setattr(df$v3, "class", "data.table")
-  setattr(a, "class", "data.table")
-  
-  df2 <- setattr(df, "class", "data.table")
-  df2[, (names(input.lists)[3]) := df2[, 3]]
-  split(df2, by = "v3")
-  
-  df3 <- setattr(df, )
-  return(df)
 }
