@@ -35,7 +35,7 @@
 iterate <- function(f, ..., fix = NULL, trials = 1, varnames = NULL) {
   
   # Construct data frame where each row is 1 set of inputs
-  arg.combos <- expand_grid(..., stringsAsFactors = FALSE)
+  arg.combos <- expand_grid(...)
   
   # Loop through combinations and run however many trials of each set
   growing.list <- vector(mode = "list", length = nrow(arg.combos) * trials)

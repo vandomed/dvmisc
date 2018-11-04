@@ -30,3 +30,44 @@ expand_grid <- function(...) {
   setattr(df, "class", "data.table")
   return(df)
 }
+
+inputs.list <- list(v1 = c(1, 2), 
+                    v2 = c("a", "b", "c"), 
+                    v3 = matrix(1:6, ncol = 2, byrow = TRUE))
+
+
+expand_grid2 <- function(...) {
+  inputs.list <- list(...)
+  inputs.list <- list(v1 = c(1, 2), 
+                      v2 = c("a", "b", "c"), 
+                      v3 = data.table(v3 = c("3a", "4a"), v4 = c("3b", "4b")))
+  levels <- vapply(inputs.list, length, integer(1))
+  nrows <- prod(levels)
+  nreps <- nrows / cumprod(levels)
+  df <- mapply(
+    FUN = function(x, y, z) {
+      rep(rep(x, each = y), z)
+    },  
+    x = inputs.list, 
+    y = nreps, 
+    z = rev(nreps), 
+    SIMPLIFY = FALSE
+  )
+  df <- as.data.table(df)
+  
+  
+  df[, (c("v3", "v4")) := df$v3]
+  
+  df[, (c("v3", "v4")) := list(1: 12, 1: 12)]
+  
+  a <- df$v3
+  setattr(df$v3, "class", "data.table")
+  setattr(a, "class", "data.table")
+  
+  df2 <- setattr(df, "class", "data.table")
+  df2[, (names(input.lists)[3]) := df2[, 3]]
+  split(df2, by = "v3")
+  
+  df3 <- setattr(df, )
+  return(df)
+}
