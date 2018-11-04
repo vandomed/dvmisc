@@ -4,20 +4,17 @@
 \alias{expand_grid}
 \title{Same as expand.grid but with Sequences Reversed}
 \usage{
-expand_grid(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
+expand_grid(...)
 }
 \arguments{
-\item{...}{See \code{\link[base]{expand.grid}}.}
-
-\item{KEEP.OUT.ATTRS}{See \code{\link[base]{expand.grid}}.}
-
-\item{stringsAsFactors}{See \code{\link[base]{expand.grid}}.}
+\item{...}{Vectors you want all combinations of.}
 }
 \value{
 Data frame.
 }
 \description{
-Loops over the last argument, then the second-last, and so on.
+Loops over the last argument, then the second-last, and so on. Should be 
+faster than \code{\link[base]{expand.grid}}.
 }
 \examples{
 # Compare expand.grid to expand_grid
