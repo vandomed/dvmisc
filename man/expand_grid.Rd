@@ -17,7 +17,7 @@ values that are always kept together.}
 Data table.
 }
 \description{
-Loops over the last argument, then the second-last, and so on. Should be 
+Loops over the last argument, then the second-last, and so on. It should be 
 faster than \code{\link[base]{expand.grid}}.
 }
 \examples{

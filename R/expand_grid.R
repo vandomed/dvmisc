@@ -1,7 +1,7 @@
 #' Similar to expand.grid but with Sequences Reversed and Ability to Treat 
 #' Variables as Sets
 #' 
-#' Loops over the last argument, then the second-last, and so on. Should be 
+#' Loops over the last argument, then the second-last, and so on. It should be 
 #' faster than \code{\link[base]{expand.grid}}.
 #' 
 #' @param ... Vectors you want all combinations of.
