@@ -14,7 +14,7 @@
 #' @param merror Logical value for whether to model multiplicative lognormal 
 #' measurement errors in Y.
 #' @param integrate_tol Numeric value specifying the \code{tol} input to
-#' \code{\link{hcubature}}. Only used if \code{merror = TRUE}.
+#' \code{\link[cubature]{hcubature}}. Only used if \code{merror = TRUE}.
 #' @param integrate_tol_hessian Same as \code{integrate_tol}, but for use when
 #' estimating the Hessian matrix only. Sometimes more precise integration
 #' (i.e. smaller tolerance) than used for maximizing the likelihood helps

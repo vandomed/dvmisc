@@ -19,7 +19,7 @@ Gamma model Y ~ Gamma(exp(beta_0), b).}
 measurement errors in Y.}
 
 \item{integrate_tol}{Numeric value specifying the \code{tol} input to
-\code{\link{hcubature}}. Only used if \code{merror = TRUE}.}
+\code{\link[cubature]{hcubature}}. Only used if \code{merror = TRUE}.}
 
 \item{integrate_tol_hessian}{Same as \code{integrate_tol}, but for use when
 estimating the Hessian matrix only. Sometimes more precise integration

@@ -33,6 +33,11 @@
 #' @export
 list_override <- function(list1, list2) {
   
+  # If list2 is length 0, just return list1
+  if (length(list2) == 0) {
+    return(list1)
+  }
+  
   # Get names of elements of list1 and list2
   names.list1 <- names(list1)
   names.list2 <- names(list2)
