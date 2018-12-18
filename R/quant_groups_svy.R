@@ -33,7 +33,8 @@ quant_groups_svy <- function(x, by = NULL, groups = 4, probs = NULL, design) {
 
     quantiles <- svyby(x, by = by, FUN = svyquantile, design = design, 
                        quantiles = probs, keep.var = FALSE, na.rm = TRUE)
-    quantiles[, c(2, ncol(quantiles))] <- c(-Inf, Inf)
+    quantiles[, 2] <- -Inf
+    quantiles[, ncol(quantiles)] <- Inf
     
     xname <- rownames(svyquantile(x, design = design, quantiles = 0.5, na.rm = TRUE))
     x.values <- design$variables[, xname]
