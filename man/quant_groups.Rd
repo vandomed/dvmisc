@@ -4,15 +4,19 @@
 \alias{quant_groups}
 \title{Split Continuous Variable into Quantile Groups}
 \usage{
-quant_groups(x, groups = 5, ...)
+quant_groups(x, groups = 4, probs = NULL, quantile.list = NULL,
+  cut.list = NULL)
 }
 \arguments{
 \item{x}{Numeric vector.}
 
-\item{groups}{Numeric value indicating how many quantile groups should be 
-created.}
+\item{groups}{Numeric value specifying number of quantile groups.}
 
-\item{...}{Further arguments to pass to \code{\link[stats]{quantile}} or \code{\link{cut}}.}
+\item{probs}{Numeric vector specifying probabilities.}
+
+\item{quantile.list}{Arguments to pass to \code{\link[stats]{quantile}}.}
+
+\item{cut.list}{Arguments to pass to \code{\link{cut}}.}
 }
 \value{
 Factor variable.

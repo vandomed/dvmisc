@@ -5,9 +5,10 @@
 #' function.
 #' 
 #' @param x Numeric vector.
-#' @param groups Numeric value indicating how many quantile groups should be 
-#' created.
-#' @param ... Further arguments to pass to \code{\link[stats]{quantile}} or \code{\link{cut}}.
+#' @param groups Numeric value specifying number of quantile groups.
+#' @param probs Numeric vector specifying probabilities.
+#' @param quantile.list Arguments to pass to \code{\link[stats]{quantile}}.
+#' @param cut.list Arguments to pass to \code{\link{cut}}. 
 #' 
 #' @return Factor variable.
 #' 
@@ -18,13 +19,21 @@
 #' table(groups)
 #' 
 #' @export
-quant_groups <- function(x, groups = 5, ...) {
+quant_groups <- function(x, groups = 4, probs = NULL, 
+                         quantile.list = NULL, cut.list = NULL) {
+  
+  # If probs unspecified, create from groups
+  if (is.null(probs)) {
+    probs <- seq(0, 1, 1 / groups)
+  }
   
   # Calculate quantiles
-  quantiles <- quantile(x, probs = seq(0, 1, 1 / groups), na.rm = TRUE, ...)
+  quantile.list <- list_override(list1 = list(na.rm = TRUE), list2 = quantile.list)
+  quantiles <- do.call(quantile, c(list(x = x, probs = probs), quantile.list))
   
   # Create quantile groups
-  groups <- cut(x, breaks = quantiles, include.lowest = TRUE, ...)
+  cut.list <- list_override(list1 = list(include.lowest = TRUE), list2 = cut.list)
+  groups <- do.call(cut, c(list(x = x, breaks = quantiles), cut.list))
   
   # Print message and return groups
   num.missing <- sum(is.na(groups))

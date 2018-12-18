@@ -9,9 +9,9 @@ interval_groups(x, groups = 5, ...)
 \arguments{
 \item{x}{Numeric vector.}
 
-\item{groups}{Numeric value indicating how many groups should be created.}
+\item{groups}{Numeric value specifying number of groups to create.}
 
-\item{...}{Further arguments to pass to \code{\link[base]{cut}}.}
+\item{...}{Arguments to pass to \code{\link[base]{cut}}.}
 }
 \value{
 Factor variable.

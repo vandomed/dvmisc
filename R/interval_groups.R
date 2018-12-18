@@ -4,8 +4,8 @@
 #' linearity in regression models.
 #' 
 #' @param x Numeric vector.
-#' @param groups Numeric value indicating how many groups should be created.
-#' @param ... Further arguments to pass to \code{\link[base]{cut}}.
+#' @param groups Numeric value specifying number of groups to create.
+#' @param ... Arguments to pass to \code{\link[base]{cut}}.
 #' 
 #' @return Factor variable.
 #' 
