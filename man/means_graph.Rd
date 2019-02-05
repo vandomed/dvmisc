@@ -4,9 +4,9 @@
 \alias{means_graph}
 \title{Graph Means Across a Grouping Variable}
 \usage{
-means_graph(y, group, error.bars = "t.ci", alpha = 0.05, p.legend = TRUE,
-  plot.list = NULL, lines.list = NULL, axis.list = NULL,
-  legend.list = NULL, ...)
+means_graph(y, group, error.bars = "t.ci", alpha = 0.05,
+  p.legend = TRUE, plot.list = NULL, lines.list = NULL,
+  axis.list = NULL, legend.list = NULL, ...)
 }
 \arguments{
 \item{y}{Numeric vector of values for the continuous variable.}

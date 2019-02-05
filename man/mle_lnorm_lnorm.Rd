@@ -5,7 +5,8 @@
 \title{Maximum Likelihood Estimation for X[1], ..., X[n] ~ Lognormal(mu1, sigsq1) 
 Lognormal(mu2, sigsq2)}
 \usage{
-mle_lnorm_lnorm(x, mu2 = NULL, sigsq2 = NULL, estimate_var = FALSE, ...)
+mle_lnorm_lnorm(x, mu2 = NULL, sigsq2 = NULL, estimate_var = FALSE,
+  ...)
 }
 \arguments{
 \item{x}{Numeric vector.}

@@ -4,11 +4,12 @@
 \alias{dots_bars}
 \title{Plot Points +/- Error Bars}
 \usage{
-dots_bars(y = NULL, bars = NULL, bars.lower = y - bars, bars.upper = y +
-  bars, truth = NULL, group.labels = NULL, group.dividers = TRUE,
-  subgroup.spacing = 1, subgroup.labels = NULL, subgroup.pch = NULL,
-  subgroup.col = NULL, points.list = NULL, arrows.list = NULL,
-  xaxis.list = NULL, yaxis.list = xaxis.list, abline.dividers.list = NULL,
+dots_bars(y = NULL, bars = NULL, bars.lower = y - bars,
+  bars.upper = y + bars, truth = NULL, group.labels = NULL,
+  group.dividers = TRUE, subgroup.spacing = 1,
+  subgroup.labels = NULL, subgroup.pch = NULL, subgroup.col = NULL,
+  points.list = NULL, arrows.list = NULL, xaxis.list = NULL,
+  yaxis.list = xaxis.list, abline.dividers.list = NULL,
   abline.truth.list = NULL, legend.list = NULL, ...)
 }
 \arguments{

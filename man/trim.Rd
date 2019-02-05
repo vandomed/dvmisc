@@ -4,7 +4,8 @@
 \alias{trim}
 \title{Trim Tail Values off of a Vector}
 \usage{
-trim(x, p = NULL, tails = "both", cutpoints = NULL, keep.edge = TRUE)
+trim(x, p = NULL, tails = "both", cutpoints = NULL,
+  keep.edge = TRUE)
 }
 \arguments{
 \item{x}{Numeric vector.}

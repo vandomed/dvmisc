@@ -109,7 +109,6 @@ The function *moving_mean* is one of dozens of moving average functions availabl
 
 ```{r, fig.height = 4.25, fig.width = 7.75}
 library("RcppRoll")
-
 lengths <- c(10, 100, 1000, 10000)
 multiples1 <- multiples2 <- c()
 for (ii in 1: 4) {

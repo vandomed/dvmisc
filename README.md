@@ -1,7 +1,7 @@
 Convenience Functions, Moving Window Statistics, and Graphics
 ================
 Dane Van Domelen <br> <vandomed@gmail.com>
-2018-09-10
+2019-02-05
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 [![Build Status](https://travis-ci.org/vandomed/dvmisc.svg?branch=master)](https://travis-ci.org/vandomed/dvmisc)
@@ -30,15 +30,15 @@ all.equal(diff(range(x)), truerange(x))
 #> [1] TRUE
 as.data.frame(print(microbenchmark(diff(range(x)), truerange(x), times = 500)))
 #> Unit: microseconds
-#>            expr    min     lq     mean median     uq    max neval
-#>  diff(range(x)) 17.763 19.737 22.94796 22.105 24.080 67.105   500
-#>    truerange(x)  2.763  3.554  4.68937  4.343  5.132 22.501   500
+#>            expr    min     lq      mean median     uq    max neval
+#>  diff(range(x)) 16.579 17.764 18.717348 18.159 18.948 73.027   500
+#>    truerange(x)  2.369  3.158  3.734108  3.948  4.343 28.027   500
 ```
 
-| expr           |     min|      lq|      mean|  median|      uq|     max|  neval|
-|:---------------|-------:|-------:|---------:|-------:|-------:|-------:|------:|
-| diff(range(x)) |  17.763|  19.737|  22.94796|  22.105|  24.080|  67.105|    500|
-| truerange(x)   |   2.763|   3.554|   4.68937|   4.343|   5.132|  22.501|    500|
+| expr           |     min|      lq|       mean|  median|      uq|     max|  neval|
+|:---------------|-------:|-------:|----------:|-------:|-------:|-------:|------:|
+| diff(range(x)) |  16.579|  17.764|  18.717348|  18.159|  18.948|  73.027|    500|
+| truerange(x)   |   2.369|   3.158|   3.734108|   3.948|   4.343|  28.027|    500|
 
 ### bmi3, bmi4
 
@@ -103,7 +103,6 @@ The function *moving\_mean* is one of dozens of moving average functions availab
 
 ``` r
 library("RcppRoll")
-
 lengths <- c(10, 100, 1000, 10000)
 multiples1 <- multiples2 <- c()
 for (ii in 1: 4) {
