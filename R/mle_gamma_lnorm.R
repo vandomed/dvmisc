@@ -8,8 +8,8 @@
 #' \code{\link[stats]{Lognormal}}.
 #' 
 #' @param x Numeric vector.
-#' @param mu Numeric value specifying known mu.
-#' @param sigsq Numeric value specifying known sigsq.
+#' @param gamma_mean1 Whether to use restriction that E(X) = 1.
+#' @param lnorm_mean1 Whether to use restriction that E(Y) = 1.
 #' @param integrate_tol Numeric value specifying the \code{tol} input to
 #' \code{\link[cubature]{hcubature}}.
 #' @param estimate_var Logical value for whether to return Hessian-based
@@ -29,20 +29,26 @@
 #' 
 #' 
 #' @examples
-#' # Generate 1,000 values from Gamma(0.5, 1) x Lognormal(0.75, 1.5) and 
+#' # Generate 1,000 values from Gamma(0.5, 1) x Lognormal(-1.5/2, 1.5) and 
 #' # estimate parameters
 #' \dontrun{
 #' set.seed(123)
-#' x <- rgamma(1000, 0.5, 1) * rlnorm(1000, 0.75, sqrt(1.5))
+#' x <- rgamma(1000, 0.5, 1) * rlnorm(1000, -1.5/2, sqrt(1.5))
 #' mle_gamma_lnorm(x, control = list(trace = 1))
 #' }
 #' 
 #' 
 #' @export
 mle_gamma_lnorm <- function(x, 
-                            mu = NULL, sigsq = NULL, 
+                            gamma_mean1 = FALSE, 
+                            lnorm_mean1 = TRUE,  
                             integrate_tol = 1e-8, 
                             estimate_var = FALSE, ...) {
+  
+  # Check that at least one of gamma_mean1 and lnorm_mean1 is TRUE
+  if (! gamma_mean1 & ! lnorm_mean1) {
+    stop("For identifiability, either 'gamma_mean1' or 'lnorm_mean1' (or both) has to be TRUE.")
+  }
   
   # Sample size
   n <- length(x)
@@ -73,96 +79,16 @@ mle_gamma_lnorm <- function(x,
   # Log-likelihood function
   extra.args <- list(...)
   
-  if (is.null(mu) & is.null(sigsq)) {
+  if (gamma_mean1 & ! lnorm_mean1) {
     
-    theta.labels <- c("alpha", "beta", "mu", "sigsq")
+    theta.labels <- c("beta", "mu", "sigsq")
     extra.args <- list_override(
-      list1 = list(start = c(1, 1, 0, 1), lower = c(0, 0, -Inf, 0), 
+      list1 = list(start = c(1, 0, 1), lower = c(0, -Inf, 0), 
                    control = list(rel.tol = 1e-6, eval.max = 1000, iter.max = 750)), 
       list2 = extra.args
     )
     
-    llf <- function(f.theta) {
-      
-      # Extract parameters
-      f.alpha <- f.theta[1]
-      f.beta <- f.theta[2]
-      f.mu <- f.theta[3]
-      f.sigsq <- f.theta[4]
-      
-      int.vals <- c()
-      for (ii in 1: n) {
-      
-          # Perform integration
-          int.ii <- cubature::hcubature(f = lf,
-                                        tol = integrate_tol,
-                                        lowerLimit = 0,
-                                        upperLimit = 1,
-                                        vectorInterface = TRUE,
-                                        x = x[ii], 
-                                        alpha = f.alpha, 
-                                        beta = f.beta, 
-                                        mu = f.mu, 
-                                        sigsq = f.sigsq)
-          int.vals[ii] <- int.ii$integral
-          if (int.ii$integral == 0) {
-            print(paste("Integral is 0 for ii = ", ii, sep = ""))
-            print(f.theta)
-            skip.rest <- TRUE
-            break
-          }
-          
-      }
-      
-      return(-sum(log(int.vals)))
-      
-    }
-    
-  } else if (is.null(mu) & ! is.null(sigsq)) {
-    
-    theta.labels <- c("alpha", "beta", "mu")
-    extra.args <- list_override(
-      list1 = list(start = c(1, 1, 0), lower = c(0, 0, -Inf), 
-                   control = list(rel.tol = 1e-6, eval.max = 1000, iter.max = 750)), 
-      list2 = extra.args
-    )
-    
-    llf <- function(f.theta) {
-      
-      # Extract parameters
-      f.alpha <- f.theta[1]
-      f.beta <- f.theta[2]
-      f.mu <- f.theta[3]
-      
-      int.vals <- c()
-      for (ii in 1: n) {
-        
-        # Perform integration
-        int.ii <- cubature::hcubature(f = lf,
-                                      tol = integrate_tol,
-                                      lowerLimit = 0,
-                                      upperLimit = 1,
-                                      vectorInterface = TRUE,
-                                      x = x[ii], 
-                                      alpha = f.alpha, 
-                                      beta = f.beta, 
-                                      mu = f.mu, 
-                                      sigsq = sigsq)
-        int.vals[ii] <- int.ii$integral
-        if (int.ii$integral == 0) {
-          print(paste("Integral is 0 for ii = ", ii, sep = ""))
-          print(f.theta)
-          skip.rest <- TRUE
-          break
-        }
-        
-      }
-      
-      return(-sum(log(int.vals)))
-      
-    }
-    
-  } else if (! is.null(mu) & is.null(sigsq)) {
+  } else if (! gamma_mean1 & lnorm_mean1) {
     
     theta.labels <- c("alpha", "beta", "sigsq")
     extra.args <- list_override(
@@ -171,83 +97,62 @@ mle_gamma_lnorm <- function(x,
       list2 = extra.args
     )
     
-    llf <- function(f.theta) {
-      
-      # Extract parameters
-      f.alpha <- f.theta[1]
-      f.beta <- f.theta[2]
-      f.sigsq <- f.theta[3]
-      
-      int.vals <- c()
-      for (ii in 1: n) {
-        
-        # Perform integration
-        int.ii <- cubature::hcubature(f = lf,
-                                      tol = integrate_tol,
-                                      lowerLimit = 0,
-                                      upperLimit = 1,
-                                      vectorInterface = TRUE,
-                                      x = x[ii], 
-                                      alpha = f.alpha, 
-                                      beta = f.beta, 
-                                      mu = mu, 
-                                      sigsq = f.sigsq)
-        int.vals[ii] <- int.ii$integral
-        if (int.ii$integral == 0) {
-          print(paste("Integral is 0 for ii = ", ii, sep = ""))
-          print(f.theta)
-          skip.rest <- TRUE
-          break
-        }
-        
-      }
-      
-      return(-sum(log(int.vals)))
-      
-    }
+  } else if (gamma_mean1 & lnorm_mean1) {
     
-  } else if (! is.null(mu) & ! is.null(sigsq)) {
-    
-    theta.labels <- c("alpha", "beta")
+    theta.labels <- c("beta", "sigsq")
     extra.args <- list_override(
       list1 = list(start = c(1, 1), lower = c(0, 0), 
                    control = list(rel.tol = 1e-6, eval.max = 1000, iter.max = 750)), 
       list2 = extra.args
     )
     
-    llf <- function(f.theta) {
-      
-      # Extract parameters
+  }
+  
+  llf <- function(f.theta) {
+    
+    # Extract parameters
+    if (gamma_mean1 & ! lnorm_mean1) {
+      f.beta <- f.theta[1]
+      f.mu <- f.theta[2]
+      f.sigsq <- f.theta[3]
+      f.alpha <- 1 / f.beta
+    } else if (! gamma_mean1 & lnorm_mean1) {
       f.alpha <- f.theta[1]
       f.beta <- f.theta[2]
+      f.sigsq <- f.theta[3]
+      f.mu <- -1/2 * f.sigsq
+    } else if (gamma_mean1 & lnorm_mean1) {
+      f.beta <- f.theta[1]
+      f.sigsq <- f.theta[2]
+      f.alpha <- 1 / f.beta
+      f.mu <- -1/2 * f.sigsq
+    }
+    
+    int.vals <- c()
+    for (ii in 1: n) {
       
-      int.vals <- c()
-      for (ii in 1: n) {
-        
-        # Perform integration
-        int.ii <- cubature::hcubature(f = lf,
-                                      tol = integrate_tol,
-                                      lowerLimit = 0,
-                                      upperLimit = 1,
-                                      vectorInterface = TRUE,
-                                      x = x[ii], 
-                                      alpha = f.alpha, 
-                                      beta = f.beta, 
-                                      mu = mu, 
-                                      sigsq = sigsq)
-        int.vals[ii] <- int.ii$integral
-        if (int.ii$integral == 0) {
-          print(paste("Integral is 0 for ii = ", ii, sep = ""))
-          print(f.theta)
-          skip.rest <- TRUE
-          break
-        }
-        
+      # Perform integration
+      int.ii <- cubature::hcubature(f = lf,
+                                    tol = integrate_tol,
+                                    lowerLimit = 0,
+                                    upperLimit = 1,
+                                    vectorInterface = TRUE,
+                                    x = x[ii], 
+                                    alpha = f.alpha, 
+                                    beta = f.beta, 
+                                    mu = f.mu, 
+                                    sigsq = f.sigsq)
+      int.vals[ii] <- int.ii$integral
+      if (int.ii$integral == 0) {
+        print(paste("Integral is 0 for ii = ", ii, sep = ""))
+        print(f.theta)
+        skip.rest <- TRUE
+        break
       }
       
-      return(-sum(log(int.vals)))
-      
     }
+    
+    return(-sum(log(int.vals)))
     
   }
   

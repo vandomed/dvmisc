@@ -4,15 +4,15 @@
 \alias{mle_gamma_lnorm}
 \title{Maximum Likelihood Estimation for X[1], ..., X[n] ~ Gamma(alpha, beta) Lognormal(mu, sigsq)}
 \usage{
-mle_gamma_lnorm(x, mu = NULL, sigsq = NULL, integrate_tol = 1e-08,
-  estimate_var = FALSE, ...)
+mle_gamma_lnorm(x, gamma_mean1 = FALSE, lnorm_mean1 = TRUE,
+  integrate_tol = 1e-08, estimate_var = FALSE, ...)
 }
 \arguments{
 \item{x}{Numeric vector.}
 
-\item{mu}{Numeric value specifying known mu.}
+\item{gamma_mean1}{Whether to use restriction that E(X) = 1.}
 
-\item{sigsq}{Numeric value specifying known sigsq.}
+\item{lnorm_mean1}{Whether to use restriction that E(Y) = 1.}
 
 \item{integrate_tol}{Numeric value specifying the \code{tol} input to
 \code{\link[cubature]{hcubature}}.}
@@ -41,11 +41,11 @@ and mu and sigsq correspond to meanlog and sdlog^2 in
 \code{\link[stats]{Lognormal}}.
 }
 \examples{
-# Generate 1,000 values from Gamma(0.5, 1) x Lognormal(0.75, 1.5) and 
+# Generate 1,000 values from Gamma(0.5, 1) x Lognormal(-1.5/2, 1.5) and 
 # estimate parameters
 \dontrun{
 set.seed(123)
-x <- rgamma(1000, 0.5, 1) * rlnorm(1000, 0.75, sqrt(1.5))
+x <- rgamma(1000, 0.5, 1) * rlnorm(1000, -1.5/2, sqrt(1.5))
 mle_gamma_lnorm(x, control = list(trace = 1))
 }
 
