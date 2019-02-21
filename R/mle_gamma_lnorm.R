@@ -8,8 +8,10 @@
 #' \code{\link[stats]{Lognormal}}.
 #' 
 #' @param x Numeric vector.
-#' @param gamma_mean1 Whether to use restriction that E(X) = 1.
-#' @param lnorm_mean1 Whether to use restriction that E(Y) = 1.
+#' @param gamma_mean1 Whether to use restriction that the Gamma variable is 
+#' mean-1.
+#' @param lnorm_mean1 Whether to use restriction that the lognormal variable is 
+#' mean-1.
 #' @param integrate_tol Numeric value specifying the \code{tol} input to
 #' \code{\link[cubature]{hcubature}}.
 #' @param estimate_var Logical value for whether to return Hessian-based

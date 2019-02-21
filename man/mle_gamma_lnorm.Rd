@@ -10,9 +10,11 @@ mle_gamma_lnorm(x, gamma_mean1 = FALSE, lnorm_mean1 = TRUE,
 \arguments{
 \item{x}{Numeric vector.}
 
-\item{gamma_mean1}{Whether to use restriction that E(X) = 1.}
+\item{gamma_mean1}{Whether to use restriction that the Gamma variable is 
+mean-1.}
 
-\item{lnorm_mean1}{Whether to use restriction that E(Y) = 1.}
+\item{lnorm_mean1}{Whether to use restriction that the lognormal variable is 
+mean-1.}
 
 \item{integrate_tol}{Numeric value specifying the \code{tol} input to
 \code{\link[cubature]{hcubature}}.}
