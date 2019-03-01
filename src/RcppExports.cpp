@@ -86,6 +86,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// sliding_cov_c
+NumericVector sliding_cov_c(NumericVector shortvec, NumericVector longvec);
+RcppExport SEXP _dvmisc_sliding_cov_c(SEXP shortvecSEXP, SEXP longvecSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type shortvec(shortvecSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type longvec(longvecSEXP);
+    rcpp_result_gen = Rcpp::wrap(sliding_cov_c(shortvec, longvec));
+    return rcpp_result_gen;
+END_RCPP
+}
 // sum_i
 int sum_i(IntegerVector x);
 RcppExport SEXP _dvmisc_sum_i(SEXP xSEXP) {
@@ -216,6 +228,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_dvmisc_moving_mean_i_max", (DL_FUNC) &_dvmisc_moving_mean_i_max, 2},
     {"_dvmisc_moving_mean_n", (DL_FUNC) &_dvmisc_moving_mean_n, 2},
     {"_dvmisc_moving_mean_n_max", (DL_FUNC) &_dvmisc_moving_mean_n_max, 2},
+    {"_dvmisc_sliding_cov_c", (DL_FUNC) &_dvmisc_sliding_cov_c, 2},
     {"_dvmisc_sum_i", (DL_FUNC) &_dvmisc_sum_i, 1},
     {"_dvmisc_truerange_i", (DL_FUNC) &_dvmisc_truerange_i, 1},
     {"_dvmisc_truerange_n", (DL_FUNC) &_dvmisc_truerange_n, 1},

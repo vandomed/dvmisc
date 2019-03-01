@@ -92,6 +92,10 @@ moving_mean_n_max <- function(x, window) {
     .Call(`_dvmisc_moving_mean_n_max`, x, window)
 }
 
+sliding_cov_c <- function(shortvec, longvec) {
+    .Call(`_dvmisc_sliding_cov_c`, shortvec, longvec)
+}
+
 #' Sum of Integer Values
 #' 
 #' Written in C++, this function runs faster than \code{\link[base]{sum}} for 
