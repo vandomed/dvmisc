@@ -92,6 +92,10 @@ moving_mean_n_max <- function(x, window) {
     .Call(`_dvmisc_moving_mean_n_max`, x, window)
 }
 
+sliding_cor_c <- function(shortvec, longvec, sd_shortvec) {
+    .Call(`_dvmisc_sliding_cor_c`, shortvec, longvec, sd_shortvec)
+}
+
 sliding_cov_c <- function(shortvec, longvec) {
     .Call(`_dvmisc_sliding_cov_c`, shortvec, longvec)
 }
