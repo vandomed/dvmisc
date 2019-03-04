@@ -19,5 +19,5 @@
 #' 
 #' @export
 sliding_cov <- function(short, long) {
-  .Call(`_dvmisc_sliding_cov_c`, short, long)
+  return(.Call(`_dvmisc_sliding_cov_c`, short, long))
 }
