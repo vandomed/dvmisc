@@ -48,12 +48,12 @@ iterate <- function(
   }
   
   # Loop through combinations and run however many trials of each set
-  growing.list <- vector(mode = "list", length = nrow(arg.combos) * trials)
+  growing.list <- vector(mode = "list", length = nrow(arg.sets) * trials)
   index <- 0
-  for (ii in 1: nrow(arg.combos)) {
+  for (ii in 1: nrow(arg.sets)) {
     for (jj in 1: trials) {
       index <- index + 1
-      growing.list[[index]] <- do.call(f, c(arg.combos[ii, , drop = FALSE], fix))
+      growing.list[[index]] <- do.call(f, c(arg.sets[ii, , drop = FALSE], fix))
     }
   }
   
@@ -83,7 +83,7 @@ iterate <- function(
   }
   
   # Return data table with results
-  ret <- cbind(as.data.table(arg.combos[rep(1: nrow(arg.combos), each = trials), , drop = FALSE]), 
+  ret <- cbind(as.data.table(arg.sets[rep(1: nrow(arg.sets), each = trials), , drop = FALSE]), 
                premerge)
   return(ret)
   
