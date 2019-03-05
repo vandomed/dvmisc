@@ -2,13 +2,16 @@
 #' Multiple Times
 #' 
 #' Same idea as \code{\link[purrr:map2]{pmap}}, but with some different 
-#' functionality. It runs all combinations of inputs rather than the 1st set, 
-#' 2nd set, and so forth, and multiple trials can be run for each scenario, 
-#' which can be useful for simulations.
+#' functionality. It can runs all combinations of vector-valued arguments in 
+#' \code{...} or the 1st set, 2nd set, and so forth, and multiple trials can be 
+#' run for each scenario, which can be useful for simulations.
 #' 
 #' @param f A function.
 #' @param ... Arguments to \code{f}, any of which can be vector-valued.
-#' @param fix List of arguments to hold fixed rather than loop over.
+#' @param all_combinations Logical value for whether to iterate over all 
+#' combinations of arguments in \code{...}, or just run it for the first element
+#' of each input, the second element, and so on.
+#' @param fix List of arguments to \code{f} to hold fixed rather than loop over.
 #' @param trials Numeric value.
 #' @param varnames Character vector of names for values that \code{f} returns, 
 #' to avoid generic labels (V1, V2, ...).
@@ -32,10 +35,17 @@
 #'   summarise(mean(p < 0.05))
 #'
 #' @export
-iterate <- function(f, ..., fix = NULL, trials = 1, varnames = NULL) {
+#' 
+#' 
+iterate <- function(
+  f, ..., all_combinations = TRUE, fix = NULL, trials = 1, varnames = NULL) {
   
   # Construct data frame where each row is 1 set of inputs
-  arg.combos <- expand_grid(...)
+  if (all_combinations) {
+    arg.sets <- expand_grid(...)
+  } else {
+    arg.sets <- as.data.frame(..., stringsAsFactors = FALSE)
+  }
   
   # Loop through combinations and run however many trials of each set
   growing.list <- vector(mode = "list", length = nrow(arg.combos) * trials)
