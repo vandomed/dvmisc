@@ -1,7 +1,7 @@
 #' Iterate Function Over All Combinations of User-Specified Inputs, Potentially 
 #' Multiple Times
 #' 
-#' Same idea as \code{\link[purrr:map2]{pmap}}, but with some different 
+#' Same idea as \strong{purrr}::\emph{pmap}, but with some different 
 #' functionality. It can runs all combinations of vector-valued arguments in 
 #' \code{...} or the 1st set, 2nd set, and so forth, and multiple trials can be 
 #' run for each scenario, which can be useful for simulations.
@@ -9,8 +9,8 @@
 #' @param f A function.
 #' @param ... Arguments to \code{f}, any of which can be vector-valued.
 #' @param all_combinations Logical value for whether to iterate over all 
-#' combinations of arguments in \code{...}, or just run it for the first element
-#' of each input, the second element, and so on.
+#' combinations of arguments in \code{...}, or just use the first set of 
+#' elements, then the second, and so on.
 #' @param fix List of arguments to \code{f} to hold fixed rather than loop over.
 #' @param trials Numeric value.
 #' @param varnames Character vector of names for values that \code{f} returns, 
@@ -35,8 +35,6 @@
 #'   summarise(mean(p < 0.05))
 #'
 #' @export
-#' 
-#' 
 iterate <- function(
   f, ..., all_combinations = TRUE, fix = NULL, trials = 1, varnames = NULL) {
   
