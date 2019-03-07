@@ -42,7 +42,7 @@ iterate <- function(
   if (all_combinations) {
     arg.sets <- expand_grid(...)
   } else {
-    arg.sets <- as.data.frame(..., stringsAsFactors = FALSE)
+    arg.sets <- as.data.frame(list(...), stringsAsFactors = FALSE)
   }
   
   # Loop through combinations and run however many trials of each set
