@@ -29,7 +29,7 @@
 #' @examples
 #' fit <- glm(mpg ~ wt + as.factor(cyl) + hp, data = mtcars)
 #' clean_glm(fit)
-#' fit %>% clean_glm(prep_kable = TRUE) %>% kable()
+#' fit %>% clean_glm(prep_kable = TRUE) %>% knitr::kable()
 #'
 #' @export
 clean_glm <- function(
