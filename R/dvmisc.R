@@ -9,7 +9,7 @@
 #' Package: \tab dvmisc \cr
 #' Type: \tab Package \cr
 #' Version: \tab 1.1.4 \cr
-#' Date: \tab 2019-04-04 \cr
+#' Date: \tab 2019-04-05 \cr
 #' License: \tab GPL-3 \cr
 #' }
 #' 
@@ -39,15 +39,16 @@
 #' @import data.table
 #' @import ggplot2
 #' @import graphics
+#' @importFrom knitr kable
 #' @importFrom MASS fitdistr
 #' @importFrom mvtnorm dmvnorm
 #' @import Rcpp
 #' @importFrom Rcpp evalCpp
 #' @importFrom rbenchmark benchmark
-#' @importFrom stats IQR anova aov binom.test chisq.test dbeta dbinom dcauchy dchisq dexp df dgamma dgeom dhyper dlnorm dnbinom dnorm dpois dt dunif dweibull fisher.test median nlminb prop.test pt qchisq qnorm qt quantile sd t.test var
+#' @importFrom stats IQR anova aov binom.test chisq.test confint dbeta dbinom dcauchy dchisq dexp df dgamma dgeom dhyper dlnorm dnbinom dnorm dpois dt dunif dweibull fisher.test median nlminb prop.test pt qchisq qnorm qt quantile sd t.test var
 #' @importFrom survey svyquantile svyby
 #' @importFrom tab formatp
-#' @importFrom utils head tail
+#' @importFrom utils head tail capture.output
 #' @useDynLib dvmisc, .registration=TRUE
 #' @name dvmisc
 NULL
