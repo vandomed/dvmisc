@@ -5,7 +5,7 @@
 \title{Create a Clean Summary Table from a glm Object}
 \usage{
 clean_glm(fit, columns = NULL, expand_factors = TRUE,
-  variable_labels = NULL, kable = FALSE, decimals = 2,
+  variable_labels = NULL, prep_kable = FALSE, decimals = 2,
   formatp_list = NULL)
 }
 \arguments{
@@ -23,7 +23,7 @@ factor variables (name of variable and reference group).}
 \item{variable_labels}{Character vector in case you want labels other than
 the variable names.}
 
-\item{kable}{Logical value for whether to prepare for
+\item{prep_kable}{Logical value for whether to prepare for
 printing via \code{\link[knitr]{kable}}. Right now, it just adds forward
 slashes so factor levels are indented, which only applies if there are factor
 variables and \code{expand_factors = TRUE}.}
@@ -43,6 +43,6 @@ inputting to \code{\link[knitr]{kable}}.
 \examples{
 fit <- glm(mpg ~ wt + as.factor(cyl) + hp, data = mtcars)
 clean_glm(fit)
-fit \%>\% clean_glm() \%>\% kable()
+fit \%>\% clean_glm(prep_kable = TRUE) \%>\% kable()
 
 }
