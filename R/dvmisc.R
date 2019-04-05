@@ -39,7 +39,6 @@
 #' @import data.table
 #' @import ggplot2
 #' @import graphics
-#' @importFrom knitr kable
 #' @importFrom MASS fitdistr
 #' @importFrom mvtnorm dmvnorm
 #' @import Rcpp

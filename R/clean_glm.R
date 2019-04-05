@@ -82,7 +82,7 @@ clean_glm <- function(
   spf <- paste("%0.", decimals, "f", sep = "")
   
   # Initialize data frame
-  df <- tibble(Variable = rownames(coef.mat))
+  df <- dplyr::tibble(Variable = rownames(coef.mat))
   
   # Loop through and add columns requested
   for (column in columns) {
@@ -158,8 +158,8 @@ clean_glm <- function(
     for (ii in 1: length(variable.classes)) {
       if (variable.classes[ii] == "factor") {
         loc <- which(substr(df$Variable, 1, nchar(variable.names[ii])) == variable.names[ii])[1]
-        df <- add_row(df, .before = loc)
-        df <- add_row(df, .before = loc)
+        df <- dplyr::add_row(df, .before = loc)
+        df <- dplyr::add_row(df, .before = loc)
         df[loc, -1] <- ""
         df[loc + 1, -1] <- "-"
         row.labels <- c(row.labels, variable_labels[ii],

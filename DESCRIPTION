@@ -12,7 +12,8 @@ Imports: cubature, data.table, ggplot2, graphics, knitr, MASS, mvtnorm, pracma, 
 LinkingTo: Rcpp
 Encoding: UTF-8
 RoxygenNote: 6.1.1
-Suggests: microbenchmark,
+Suggests: knitr, 
+    microbenchmark,
     printr,
     rmarkdown,
     RcppRoll
