@@ -24,7 +24,8 @@ Factor variable.
 \description{
 Splits a continuous variable into quantiles groups. Basically combines 
 \code{\link[stats]{quantile}} and \code{\link[base]{cut}} into a single 
-function.
+function. Note that \code{\link{create_qgroups}} will likely supersede this 
+function in future versions of \strong{dvmisc}.
 }
 \examples{
 # Convert values from N(0, 1) into quintiles (i.e. 5 groups)

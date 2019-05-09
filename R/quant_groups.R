@@ -2,7 +2,8 @@
 #' 
 #' Splits a continuous variable into quantiles groups. Basically combines 
 #' \code{\link[stats]{quantile}} and \code{\link[base]{cut}} into a single 
-#' function.
+#' function. Note that \code{\link{create_qgroups}} will likely supersede this 
+#' function in future versions of \strong{dvmisc}. 
 #' 
 #' @param x Numeric vector.
 #' @param groups Numeric value specifying number of quantile groups.
