@@ -3,7 +3,7 @@
 #' Combines \code{\link[stats]{quantile}} and \code{\link[base]{cut}} into a 
 #' single function, with strata-specific quantiles possible. For example, you 
 #' could create sex-specific height tertiles with 
-#' \code{quantile_groups(height, groups = 3, strata = sex)}. Compatible with 
+#' \code{create_qgroups(height, groups = 3, strata = sex)}. Compatible with 
 #' \strong{dplyr} functions like \code{\link[dplyr]{mutate}} and 
 #' \code{\link[dplyr:mutate]{transmute}}.
 #' 
@@ -18,20 +18,20 @@
 #' 
 #' @examples 
 #' # In mtcars dataset, create tertiles for mpg
-#' mtcars$mpg_tertiles <- quantile_groups(mtcars$mpg, groups = 3)
+#' mtcars$mpg_tertiles <- create_qgroups(mtcars$mpg, groups = 3)
 #' table(mtcars$mpg_tertiles)
 #' 
 #' # Define tertile cutpoints separately for 4-, 6-, and 8-cylinder vehicles
-#' mtcars$mpg_tertiles <- quantile_groups(mtcars$mpg, groups = 3, strata = mtcars$cyl)
+#' mtcars$mpg_tertiles <- create_qgroups(mtcars$mpg, groups = 3, strata = mtcars$cyl)
 #' table(mtcars$mpg_tertiles)
 #' 
 #' # Works with dplyr functions like mutate
 #' mtcars <- mtcars %>% 
-#'   dplyr::mutate(mpg_tertiles = quantile_groups(mpg, groups = 3, strata = cyl))
+#'   dplyr::mutate(mpg_tertiles = create_qgroups(mpg, groups = 3, strata = cyl))
 #' table(mtcars$mpg_tertiles)
 #' 
 #' # Can embed in lm, glm, etc.
-#' summary(lm(mpg ~ quantile_groups(wt), data = mtcars))
+#' summary(lm(mpg ~ create_qgroups(wt), data = mtcars))
 #' 
 #' @export
 # x <- mtcars$mpg
@@ -39,17 +39,16 @@
 # strata <- as.factor(mtcars$cyl)
 # quantile_list <- list(na.rm = TRUE)
 # cut_list <- list(include.lowest = TRUE)
-# quantile_groups(mtcars$mpg)
-# quantile_groups(mtcars$mpg, strata = mtcars$cyl)
+# create_qgroups(mtcars$mpg)
+# create_qgroups(mtcars$mpg, strata = mtcars$cyl)
 # x <- rnorm(1000)
-# groups <- quantile_groups(x, 5)
+# groups <- create_qgroups(x, 5)
 # table(groups)
-quantile_groups <- function(x, 
-                            groups = 4, 
-                            strata = NULL, 
-                            labels = NULL, 
-                            quantile_list = list(na.rm = TRUE), 
-                            cut_list = list(include.lowest = TRUE)) {
+create_qgroups <- function(x, 
+                           groups = 4, 
+                           strata = NULL, 
+                           quantile_list = list(na.rm = TRUE), 
+                           cut_list = list(include.lowest = TRUE)) {
   
   if (is.null(strata)) {
     cutpoints <- do.call(quantile, c(list(x = x, probs = seq(0, 1, 1 / groups)), quantile_list))
