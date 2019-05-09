@@ -2,7 +2,7 @@ Package: dvmisc
 Type: Package
 Title: Convenience Functions, Moving Window Statistics, and Graphics
 Version: 1.1.4
-Date: 2019-04-05
+Date: 2019-05-09
 Author: Dane R. Van Domelen
 Maintainer: Dane R. Van Domelen <vandomed@gmail.com>
 Description: Contains functions that do something convenient (e.g. create BMI categories), functions for calculating moving-window statistics efficiently, and functions for generating various figures (e.g. histograms with fitted probability mass/density function).

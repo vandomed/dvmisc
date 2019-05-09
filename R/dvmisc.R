@@ -9,7 +9,7 @@
 #' Package: \tab dvmisc \cr
 #' Type: \tab Package \cr
 #' Version: \tab 1.1.4 \cr
-#' Date: \tab 2019-04-05 \cr
+#' Date: \tab 2019-05-09 \cr
 #' License: \tab GPL-3 \cr
 #' }
 #' 
