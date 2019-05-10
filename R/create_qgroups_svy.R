@@ -25,7 +25,7 @@
 #' @export
 create_qgroups_svy <- function(x, 
                                groups = 4, 
-                               probs = seq(0, 1, 1 / groups), 
+                               probs = seq(1/groups, 1 - 1/groups, 1/groups), 
                                strata = NULL, 
                                design, 
                                svyquantile_list = list(na.rm = TRUE), 
@@ -37,21 +37,27 @@ create_qgroups_svy <- function(x,
       c(list(x = ~x, design = design, quantiles = probs), 
         svyquantile_list)
     )
-    return(do.call(cut, c(list(x = x, breaks = cutpoints), cut_list)))
+    return(do.call(cut, c(list(x = x, breaks = c(-Inf, cutpoints, Inf)), 
+                          cut_list)))
   }
   
-  if (class(strata) != "factor") strata <- as.factor(strata)
-  if (is.null(cut_list$labels)) cut_list$labels <- paste("Q", 1: groups, sep = "")
+  if (class(strata) != "factor") {
+    strata <- as.factor(strata)
+  }
+  if (is.null(cut_list$labels)) {
+    cut_list$labels <- paste("Q", 1: (length(probs) + 1), sep = "")
+  }
   y <- rep(NA, length(x))
   for (ii in levels(strata)) {
     locs <- which(strata == ii)
     x_ii <- x[locs]
     cutpoints <- do.call(
       svyquantile, 
-      c(list(x = ~x_ii, design = design[locs, ], strata, quantiles = probs), 
-        quantile_list)
+      c(list(x = ~x_ii, design = design[locs, ], quantiles = probs), 
+        svyquantile_list)
     )
-    y[locs] <- as.vector(do.call(cut, c(list(x = x_ii, breaks = cutpoints), cut_list)))
+    y[locs] <- as.vector(do.call(cut, c(list(x = x_ii, breaks = c(-Inf, cutpoints, Inf)), 
+                                        cut_list)))
   }
   as.factor(y)
   

@@ -4,8 +4,8 @@
 \alias{create_qgroups}
 \title{Create Quantile Groups}
 \usage{
-create_qgroups(x, groups = 4, probs = seq(0, 1, 1/groups),
-  strata = NULL, quantile_list = list(na.rm = TRUE),
+create_qgroups(x, groups = 4, probs = seq(1/groups, 1 - 1/groups,
+  1/groups), strata = NULL, quantile_list = list(na.rm = TRUE),
   cut_list = list(include.lowest = TRUE))
 }
 \arguments{
