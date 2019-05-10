@@ -4,14 +4,16 @@
 \alias{create_qgroups}
 \title{Create Quantile Groups}
 \usage{
-create_qgroups(x, groups = 4, strata = NULL,
-  quantile_list = list(na.rm = TRUE), cut_list = list(include.lowest =
-  TRUE))
+create_qgroups(x, groups = 4, probs = seq(0, 1, 1/groups),
+  strata = NULL, quantile_list = list(na.rm = TRUE),
+  cut_list = list(include.lowest = TRUE))
 }
 \arguments{
 \item{x}{Numeric vector.}
 
 \item{groups}{Numeric value, e.g. 3 for tertiles, 4 for quartiles, etc.}
+
+\item{probs}{Numeric vector.}
 
 \item{strata}{Factor specifying subgroups to calculate quantiles within. For 
 multivariable subgroups, you can use \code{\link{interaction}}.}

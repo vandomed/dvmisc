@@ -4,14 +4,16 @@
 \alias{create_qgroups_svy}
 \title{Create Quantile Groups (Complex Survey Data)}
 \usage{
-create_qgroups_svy(x, groups = 4, strata = NULL, design,
-  svyquantile_list = list(na.rm = TRUE), cut_list = list(include.lowest
-  = TRUE))
+create_qgroups_svy(x, groups = 4, probs = seq(0, 1, 1/groups),
+  strata = NULL, design, svyquantile_list = list(na.rm = TRUE),
+  cut_list = list(include.lowest = TRUE))
 }
 \arguments{
 \item{x}{Numeric vector.}
 
 \item{groups}{Numeric value, e.g. 3 for tertiles, 4 for quartiles, etc.}
+
+\item{probs}{Numeric vector.}
 
 \item{strata}{Factor specifying subgroups to calculate quantiles within. For 
 multivariable subgroups, you can use \code{\link{interaction}}.}

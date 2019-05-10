@@ -5,6 +5,7 @@
 #' 
 #' @param x Numeric vector.
 #' @param groups Numeric value, e.g. 3 for tertiles, 4 for quartiles, etc.
+#' @param probs Numeric vector.
 #' @param strata Factor specifying subgroups to calculate quantiles within. For 
 #' multivariable subgroups, you can use \code{\link{interaction}}.
 #' @param design Survey design object.
@@ -24,6 +25,7 @@
 #' @export
 create_qgroups_svy <- function(x, 
                                groups = 4, 
+                               probs = seq(0, 1, 1 / groups), 
                                strata = NULL, 
                                design, 
                                svyquantile_list = list(na.rm = TRUE), 
@@ -32,7 +34,7 @@ create_qgroups_svy <- function(x,
   if (is.null(strata)) {
     cutpoints <- do.call(
       svyquantile, 
-      c(list(x = ~x, design = design, quantiles = seq(0, 1, 1 / groups)), 
+      c(list(x = ~x, design = design, quantiles = probs), 
         svyquantile_list)
     )
     return(do.call(cut, c(list(x = x, breaks = cutpoints), cut_list)))
@@ -40,7 +42,6 @@ create_qgroups_svy <- function(x,
   
   if (class(strata) != "factor") strata <- as.factor(strata)
   if (is.null(cut_list$labels)) cut_list$labels <- paste("Q", 1: groups, sep = "")
-  probs <- seq(0, 1, 1 / groups)
   y <- rep(NA, length(x))
   for (ii in levels(strata)) {
     locs <- which(strata == ii)

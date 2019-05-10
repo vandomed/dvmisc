@@ -9,6 +9,7 @@
 #' 
 #' @param x Numeric vector.
 #' @param groups Numeric value, e.g. 3 for tertiles, 4 for quartiles, etc.
+#' @param probs Numeric vector.
 #' @param strata Factor specifying subgroups to calculate quantiles within. For 
 #' multivariable subgroups, you can use \code{\link{interaction}}.
 #' @param quantile_list Arguments to pass to \code{\link[stats]{quantile}}.
@@ -46,18 +47,18 @@
 # table(groups)
 create_qgroups <- function(x, 
                            groups = 4, 
+                           probs = seq(0, 1, 1 / groups), 
                            strata = NULL, 
                            quantile_list = list(na.rm = TRUE), 
                            cut_list = list(include.lowest = TRUE)) {
   
   if (is.null(strata)) {
-    cutpoints <- do.call(quantile, c(list(x = x, probs = seq(0, 1, 1 / groups)), quantile_list))
+    cutpoints <- do.call(quantile, c(list(x = x, probs = probs), quantile_list))
     return(do.call(cut, c(list(x = x, breaks = cutpoints), cut_list)))
   }
   
   if (class(strata) != "factor") strata <- as.factor(strata)
   if (is.null(cut_list$labels)) cut_list$labels <- paste("Q", 1: groups, sep = "")
-  probs <- seq(0, 1, 1 / groups)
   y <- rep(NA, length(x))
   for (ii in levels(strata)) {
     locs <- which(strata == ii)
