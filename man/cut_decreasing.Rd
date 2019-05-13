@@ -24,8 +24,9 @@ than number of desired intervals.
 # In mtcars dataset, create 3 mpg groups
 table(cut(mtcars$mpg, breaks = c(-Inf, 15, 20, Inf)))
 
-# Repeat with reverse_cut to get factor levels ordered from high to low
-table(cut_decreasing(mtcars$mpg, breaks = c(Inf, 20, 15, -Inf)))
+# Repeat with cut_decreasing to get factor levels ordered from high to low. 
+# To match cut here, need to specify right = FALSE
+table(cut_decreasing(mtcars$mpg, breaks = c(Inf, 20, 15, -Inf), right = FALSE))
 
 # You can specify breaks from low to high, but then include.lowest and right 
 # arguments get confusing
