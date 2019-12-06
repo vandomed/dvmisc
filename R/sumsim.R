@@ -53,10 +53,10 @@ sumsim <- function(estimates,
                    listwise_deletion = TRUE) {
   
   # Convert estimates and ses to matrices if necessary
-  if (class(estimates) != "matrix") {
+  if (! is.matrix(estimates)) {
     estimates <- as.matrix(estimates)
   }
-  if (! is.null(ses) && class(ses) != "matrix") {
+  if (! is.null(ses) && ! is.matrix(ses)) {
     ses <- as.matrix(ses)
   }
   
