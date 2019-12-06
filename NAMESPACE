@@ -3,6 +3,7 @@
 export(bmi3)
 export(bmi4)
 export(clean_glm)
+export(cleancut)
 export(create_qgroups)
 export(create_qgroups_svy)
 export(cut_decreasing)
