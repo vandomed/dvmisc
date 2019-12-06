@@ -28,9 +28,9 @@ cleancut <- function(x, breaks, labels = NULL) {
   # Split into lower and upper bounds
   lowers <- split_x[seq(1, length(split_x), 2)]
   uppers <- split_x[seq(2, length(split_x), 2)]
-  if (is.null(labels) || labels) {
+  if (is.null(labels)) {
     labels <- paste(lowers, uppers, sep = ", ")
-  } else {
+  } else if (is.logical(labels) && ! labels) {
     labels <- 1: length(lowers)
   }
   
