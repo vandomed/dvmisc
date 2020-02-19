@@ -8,8 +8,8 @@
 #' \tabular{ll}{
 #' Package: \tab dvmisc \cr
 #' Type: \tab Package \cr
-#' Version: \tab 1.1.4 \cr
-#' Date: \tab 2019-12-15 \cr
+#' Version: \tab 1.1.5 \cr
+#' Date: \tab 2020-02-18 \cr
 #' License: \tab GPL-3 \cr
 #' }
 #' 
@@ -45,6 +45,7 @@
 #' @importFrom Rcpp evalCpp
 #' @importFrom rbenchmark benchmark
 #' @importFrom stats IQR anova aov binom.test chisq.test confint dbeta dbinom dcauchy dchisq dexp df dgamma dgeom dhyper dlnorm dnbinom dnorm dpois dt dunif dweibull fisher.test median nlminb prop.test pt qchisq qnorm qt quantile sd t.test var
+#' @importFrom sjlabelled remove_all_labels
 #' @importFrom survey svyquantile svyby
 #' @importFrom tab formatp
 #' @importFrom utils head tail capture.output

@@ -15,8 +15,8 @@ mass/density function).
 \tabular{ll}{
 Package: \tab dvmisc \cr
 Type: \tab Package \cr
-Version: \tab 1.1.4 \cr
-Date: \tab 2019-12-15 \cr
+Version: \tab 1.1.5 \cr
+Date: \tab 2020-02-18 \cr
 License: \tab GPL-3 \cr
 }
 
