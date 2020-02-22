@@ -1,7 +1,7 @@
 Convenience Functions, Moving Window Statistics, and Graphics
 ================
 Dane Van Domelen <br> <vandomed@gmail.com>
-2019-12-15
+2020-02-22
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -10,77 +10,22 @@ Status](https://travis-ci.org/vandomed/dvmisc.svg?branch=master)](https://travis
 
 ## Introduction
 
-This package contains:
+This package contains miscellaneous functions that I think are useful
+for various purposes, e.g. for:
 
-1.  Functions that do something convenient.
+1.  Running and summarizing statistical simulation studies (`sumsim`,
+    `iterate`)
 
-2.  Functions for calculating moving-window statistics.
+2.  Visualizing data (`histo`, `cart_app`)
 
-3.  Functions for generating graphs.
+3.  Calculating moving/sliding statistics (`sliding_cov`, `sliding_cor`,
+    `moving_mean`)
 
-## Convenience functions
+4.  Doing something convenient (`bmi3`, `cleancut` `ral`)
 
-### truerange
+In this README, I’ll showcase a few functions.
 
-The base R function *range* returns the minimum and maximum of a vector,
-but the “range” is actually defined as the difference between the
-minimum and maximum. This function calculates the actual range. It is
-equivalent to the base R code `diff(range(x))`, but a bit simpler and
-much faster.
-
-``` r
-x <- rnorm(1000)
-all.equal(diff(range(x)), truerange(x))
-#> [1] TRUE
-as.data.frame(print(microbenchmark(diff(range(x)), truerange(x), times = 500)))
-#> Unit: microseconds
-#>            expr  min   lq    mean median   uq  max neval
-#>  diff(range(x)) 11.3 11.7 12.3290   11.9 12.3 58.6   500
-#>    truerange(x)  2.8  3.0  3.3614    3.3  3.5 11.6   500
-```
-
-| expr           |  min |   lq |    mean | median |   uq |  max | neval |
-| :------------- | ---: | ---: | ------: | -----: | ---: | ---: | ----: |
-| diff(range(x)) | 11.3 | 11.7 | 12.3290 |   11.9 | 12.3 | 58.6 |   500 |
-| truerange(x)   |  2.8 |  3.0 |  3.3614 |    3.3 |  3.5 | 11.6 |   500 |
-
-### bmi3, bmi4
-
-It isn’t hard to create body mass index (BMI) groups from continuous BMI
-values, but it is hard to remember how BMI values on the cutpoints get
-classified. The cutpoints according to the
-[CDC](https://www.cdc.gov/healthyweight/assessing/bmi/adult_bmi/index.html)
-are:
-
-| BMI values  | Classification |
-| ----------- | -------------- |
-| \< 18.5     | Underweight    |
-| \[18.5, 25) | Normal weight  |
-| \[25, 30)   | Overweight     |
-| \>= 30      | Obese          |
-
-The function *bmi3* creates 3 groups (lumping the first two above into
-“Normal weight”), while *bmi4* creates 4 groups. Both return factor
-variables, with or without labels depending on `labels`.
-
-``` r
-bmi <- round(runif(100, min = 15, max = 45), 1)
-table(bmi3(bmi))
-```
-
-| Normal weight | Overweight | Obese |
-| ------------: | ---------: | ----: |
-|            32 |         21 |    47 |
-
-``` r
-table(bmi4(bmi, labels = FALSE))
-```
-
-| \[-Inf,18.5) | \[18.5,25) | \[25,30) | \[30, Inf) |
-| -----------: | ---------: | -------: | ---------: |
-|            8 |         24 |       21 |         47 |
-
-### sumsim
+## sumsim
 
 This function creates tables summarizing results of statistical
 simulations, providing common metrics of performance like mean bias,
@@ -104,16 +49,46 @@ kable(sumsim(estimates = cbind(MLE, s2), truth = 1))
 
 |     | Mean bias |    SD |   MSE |
 | --- | --------: | ----: | ----: |
-| MLE |   \-0.053 | 0.280 | 0.081 |
-| s2  |   \-0.013 | 0.292 | 0.085 |
+| MLE |   \-0.036 | 0.275 | 0.077 |
+| s2  |     0.004 | 0.286 | 0.082 |
 
 You can request different performance metrics through the `statistics`
 input; some of them, like confidence interval coverage, require
 specifying `ses` with standard errors.
 
-## Moving window statistics
+## histo
 
-### moving\_mean
+This function is similar to the base R function `hist`, but with two
+added features:
+
+1.  Can overlay one or more fitted probability density/mass functions
+    (PDFs/PMFs) for any univariate distribution supported in R (see
+    `?Distributions`).
+
+2.  Can generate more of a barplot type histogram, where each possible
+    value gets its own bin centered over its value (useful for discrete
+    variables with not too many possible values).
+
+Here are two examples:
+
+``` r
+# Histogram for 1,000 values from Bin(8, 0.25)
+x <- rbinom(n = 1000, size = 5, prob = 0.25)
+histo(x, dis = "binom", size = 5, colors = "blue", points_list = list(type = "b"))
+```
+
+![](README-unnamed-chunk-2-1.png)<!-- -->
+
+``` r
+
+# Histogram for 10,000 values from lognormal(0, 0.35) and various fitted PDFs.
+x <- rlnorm(n = 10000, meanlog = 0, sdlog = 0.35)
+histo(x, c("lnorm", "norm", "gamma"), main = "X ~ Lognormal(0, 0.35)")
+```
+
+![](README-unnamed-chunk-2-2.png)<!-- -->
+
+## moving\_mean
 
 The function *moving\_mean* is one of dozens of moving average functions
 available in R. I’m not sure it’s the absolute fastest, but it is much
@@ -146,41 +121,76 @@ axis(side = 1, at = 1: 4, labels = lengths)
 abline(h = 1)
 ```
 
-![](README-unnamed-chunk-4-1.png)<!-- -->
+![](README-unnamed-chunk-3-1.png)<!-- -->
 
-## Graphics
+## cleancut
 
-### histo
+Whenever I try to use `cut` to categorize a continuous variable, I find
+myself taking a suboptimal approach: (1) Call `cut` without specifying
+`labels`, and with arguments I think will create the groups I want
+\(\Rightarrow\) (2) Run `table` to see if it worked \(\Rightarrow\) (3)
+Return to (1) if necessary \(Rightarrow\) (4) Call `cut` once again with
+`labels` specified.
 
-This function is similar to the base R function `hist`, but with two
-added features:
-
-1.  Can overlay one or more fitted probability density/mass functions
-    (PDFs/PMFs) for any univariate distribution supported in R (see
-    `?Distributions`).
-
-2.  Can generate more of a barplot type histogram, where each possible
-    value gets its own bin centered over its value (useful for discrete
-    variables with not too many possible values).
-
-Here are two examples:
+The idea of `cleancut` is to provide a simple character string-based
+alternative. To illustrate, here’s how you break a continuous variable
+into “low” (\< -1), “medium” (-1 to 1, inclusive), and “high” (\> 1).
+I’ll do it two ways, once without and once with labels:
 
 ``` r
-# Histogram for 1,000 values from Bin(8, 0.25)
-x <- rbinom(n = 1000, size = 5, prob = 0.25)
-histo(x, dis = "binom", size = 5, colors = "blue", points_list = list(type = "b"))
+x <- rnorm(100)
+y.nolabels <- cleancut(x, "(-Inf, -1), [-1, 1], [1, Inf)")
+y.labels <- cleancut(x, "(-Inf, -1), [-1, 1], [1, Inf)", labels = c("low", "medium", "high"))
+table(y.nolabels, y.labels)
 ```
 
-![](README-unnamed-chunk-5-1.png)<!-- -->
+| y.nolabels/y.labels | low | medium | high |
+| :------------------ | --: | -----: | ---: |
+| (-Inf, -1)          |  20 |      0 |    0 |
+| \[-1, 1\]           |   0 |     64 |    0 |
+| \[1, Inf)           |   0 |      0 |   16 |
 
-``` r
+<!-- ### truerange -->
 
-# Histogram for 10,000 values from lognormal(0, 0.35) and various fitted PDFs.
-x <- rlnorm(n = 10000, meanlog = 0, sdlog = 0.35)
-histo(x, c("lnorm", "norm", "gamma"), main = "X ~ Lognormal(0, 0.35)")
-```
+<!-- The base R function *range* returns the minimum and maximum of a vector, but the "range" is actually defined as the difference between the minimum and maximum. This function calculates the actual range. It is equivalent to the base R code `diff(range(x))`, but a bit simpler and much faster. -->
 
-![](README-unnamed-chunk-5-2.png)<!-- -->
+<!-- ```{r} -->
+
+<!-- x <- rnorm(1000) -->
+
+<!-- all.equal(diff(range(x)), truerange(x)) -->
+
+<!-- as.data.frame(print(microbenchmark(diff(range(x)), truerange(x), times = 500))) -->
+
+<!-- ``` -->
+
+<!-- ### bmi3, bmi4 -->
+
+<!-- It isn't hard to create body mass index (BMI) groups from continuous BMI values, but it is hard to remember how BMI values on the cutpoints get classified. The cutpoints according to the [CDC](https://www.cdc.gov/healthyweight/assessing/bmi/adult_bmi/index.html) are: -->
+
+<!-- BMI values     | Classification -->
+
+<!-- ---------------|---------------- -->
+
+<!-- < 18.5         | Underweight -->
+
+<!-- [18.5, 25)     | Normal weight -->
+
+<!-- [25, 30)       | Overweight -->
+
+<!-- >= 30          | Obese -->
+
+<!-- The function *bmi3* creates 3 groups (lumping the first two above into "Normal weight"), while *bmi4* creates 4 groups. Both return factor variables, with or without labels depending on `labels`. -->
+
+<!-- ```{r} -->
+
+<!-- bmi <- round(runif(100, min = 15, max = 45), 1) -->
+
+<!-- table(bmi3(bmi)) -->
+
+<!-- table(bmi4(bmi, labels = FALSE)) -->
+
+<!-- ``` -->
 
 ## References
 

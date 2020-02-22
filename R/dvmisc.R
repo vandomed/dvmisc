@@ -1,9 +1,10 @@
 #' Convenience Functions, Moving Window Statistics, and Graphics
 #' 
-#' Contains functions that do something convenient (e.g. create BMI categories), 
-#' functions for calculating moving-window statistics efficiently, and functions 
-#' for generating various figures (e.g. histograms with fitted probability 
-#' mass/density function).
+#' Collection of functions for running and summarizing statistical simulation 
+#' studies, creating visualizations (e.g. CART Shiny app, histograms with fitted 
+#' probability mass/density functions), calculating moving-window statistics 
+#' efficiently, and performing common computations.
+#' 
 #' 
 #' \tabular{ll}{
 #' Package: \tab dvmisc \cr
