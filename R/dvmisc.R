@@ -10,7 +10,7 @@
 #' Package: \tab dvmisc \cr
 #' Type: \tab Package \cr
 #' Version: \tab 1.1.5 \cr
-#' Date: \tab 2020-02-22 \cr
+#' Date: \tab 2020-03-14 \cr
 #' License: \tab GPL-3 \cr
 #' }
 #' 
@@ -41,6 +41,8 @@
 #' @import data.table
 #' @import ggplot2
 #' @import graphics
+#' @importFrom kableExtra add_header_above collapse_rows column_spec kable_styling
+#' @importFrom knitr kable
 #' @importFrom MASS fitdistr
 #' @importFrom mvtnorm dmvnorm
 #' @importFrom rattle fancyRpartPlot

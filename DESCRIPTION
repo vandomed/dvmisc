@@ -2,7 +2,7 @@ Package: dvmisc
 Type: Package
 Title: Convenience Functions, Moving Window Statistics, and Graphics
 Version: 1.1.5
-Date: 2020-02-22
+Date: 2020-03-14
 Author: Dane R. Van Domelen
 Maintainer: Dane R. Van Domelen <vandomed@gmail.com>
 Description: Collection of functions for running and summarizing statistical 
@@ -11,7 +11,7 @@ Description: Collection of functions for running and summarizing statistical
     statistics efficiently, and performing common computations.
 License: GPL-3
 Depends: rbenchmark, dplyr
-Imports: cubature, data.table, datasets, ggplot2, graphics, MASS, mvtnorm, pracma, Rcpp (>= 0.12.15), rattle, rpart, shiny, sjlabelled, stats, survey, tab, utils
+Imports: cubature, data.table, datasets, ggplot2, graphics, kableExtra, knitr, MASS, mvtnorm, pracma, Rcpp (>= 0.12.15), rattle, rpart, shiny, sjlabelled, stats, survey, tab, utils
 LinkingTo: Rcpp
 Encoding: UTF-8
 RoxygenNote: 6.1.1

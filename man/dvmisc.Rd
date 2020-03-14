@@ -16,7 +16,7 @@ efficiently, and performing common computations.
 Package: \tab dvmisc \cr
 Type: \tab Package \cr
 Version: \tab 1.1.5 \cr
-Date: \tab 2020-02-22 \cr
+Date: \tab 2020-03-14 \cr
 License: \tab GPL-3 \cr
 }
 
