@@ -6,6 +6,7 @@
 #'
 #' @param filename Character string
 #' @param path Character string
+#' @param plot \code{\link[ggplot2]{ggplot}}
 #' @param resize_labels Logical value
 #' @param title_size,axis_size Numeric value
 #' @param height,width Numeric value
