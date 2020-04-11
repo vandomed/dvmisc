@@ -8,8 +8,6 @@ snip(x, ...)
 }
 \arguments{
 \item{x}{Object to snip}
-
-\item{...}{Arguments to pass to \code{\link[kableExtra]{kable_styling}}.}
 }
 \description{
 Calls \code{\link[knitr]{kable}} and \code{\link[kableExtra]{kable_styling}} 
@@ -18,11 +16,13 @@ snip or copy/paste out of R. Currently works for data frames, matrices, and
 tables.
 }
 \examples{
+# Print 4-cylinder cars
+mtcars \%>\%
+  dplyr::filter(cyl == 4) \%>\%
+  snip()
+
 # Crosstab of gears and cylinder using mtcars dataset
 snip(table(mtcars$cyl, mtcars$gear))
-
-# Piping works, but you lose the group labels
-table(mtcars$cyl, mtcars$gear) \%>\% snip()
 
 
 }

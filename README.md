@@ -1,7 +1,7 @@
 Convenience Functions, Moving Window Statistics, and Graphics
 ================
 Dane Van Domelen <br> <vandomed@gmail.com>
-2020-02-22
+2020-04-11
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -47,10 +47,99 @@ for (ii in 1: 1000) {
 kable(sumsim(estimates = cbind(MLE, s2), truth = 1))
 ```
 
-|     | Mean bias |    SD |   MSE |
-| --- | --------: | ----: | ----: |
-| MLE |   \-0.036 | 0.275 | 0.077 |
-| s2  |     0.004 | 0.286 | 0.082 |
+<table>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+</th>
+
+<th style="text-align:right;">
+
+Mean bias
+
+</th>
+
+<th style="text-align:right;">
+
+SD
+
+</th>
+
+<th style="text-align:right;">
+
+MSE
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+MLE
+
+</td>
+
+<td style="text-align:right;">
+
+\-0.036
+
+</td>
+
+<td style="text-align:right;">
+
+0.275
+
+</td>
+
+<td style="text-align:right;">
+
+0.077
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+s2
+
+</td>
+
+<td style="text-align:right;">
+
+0.004
+
+</td>
+
+<td style="text-align:right;">
+
+0.286
+
+</td>
+
+<td style="text-align:right;">
+
+0.082
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
 
 You can request different performance metrics through the `statistics`
 input; some of them, like confidence interval coverage, require
@@ -144,11 +233,127 @@ y.labels <- cleancut(x, "(-Inf, -1), [-1, 1], [1, Inf)", labels = c("low", "medi
 table(y.nolabels, y.labels)
 ```
 
-| y.nolabels/y.labels | low | medium | high |
-| :------------------ | --: | -----: | ---: |
-| (-Inf, -1)          |  20 |      0 |    0 |
-| \[-1, 1\]           |   0 |     64 |    0 |
-| \[1, Inf)           |   0 |      0 |   16 |
+<table>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+</th>
+
+<th style="text-align:right;">
+
+low
+
+</th>
+
+<th style="text-align:right;">
+
+medium
+
+</th>
+
+<th style="text-align:right;">
+
+high
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+(-Inf, -1)
+
+</td>
+
+<td style="text-align:right;">
+
+20
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+\[-1, 1\]
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+<td style="text-align:right;">
+
+64
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+\[1, Inf)
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+<td style="text-align:right;">
+
+16
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
 
 <!-- ### truerange -->
 

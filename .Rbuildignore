@@ -6,4 +6,5 @@
 ^Thumbs.db$
 ^misc$
 ^.travis.yml$
+^\.R\archived$
 

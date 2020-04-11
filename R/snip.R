@@ -6,15 +6,16 @@
 #' tables.
 #' 
 #' @param x Object to snip
-#' @param ... Arguments to pass to \code{\link[kableExtra]{kable_styling}}.
 #' 
 #' 
 #' @examples 
+#' # Print 4-cylinder cars
+#' mtcars %>%
+#'   dplyr::filter(cyl == 4) %>%
+#'   snip()
+#' 
 #' # Crosstab of gears and cylinder using mtcars dataset
 #' snip(table(mtcars$cyl, mtcars$gear))
-#' 
-#' # Piping works, but you lose the group labels
-#' table(mtcars$cyl, mtcars$gear) %>% snip()
 #' 
 #' 
 #' @export
@@ -22,7 +23,7 @@ snip <- function(x, ...) {
   
   classx <- class(x)
   if ("data.frame" %in% classx | "matrix" %in% classx) {
-    return(x %>% kable() %>% kable_styling(...))
+    return(x %>% kable() %>% kable_styling(full_width = FALSE))
   }
   
   if ("table" %in% classx) {
@@ -61,7 +62,7 @@ snip <- function(x, ...) {
       # Output
       return(y %>%
                kable() %>%
-               kable_styling(...) %>%
+               kable_styling(full_width = FALSE) %>%
                column_spec(column = 1: 2, bold = TRUE) %>%
                collapse_rows(1) %>%
                add_header_above(header = header))
@@ -69,7 +70,7 @@ snip <- function(x, ...) {
     }
     
     # Just directly call kable and kable_styling
-    return(x %>% kable() %>% kable_styling(...))
+    return(x %>% kable() %>% kable_styling(full_width = FALSE))
     
   }
   
