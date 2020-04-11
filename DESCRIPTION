@@ -11,12 +11,11 @@ Description: Collection of functions for running and summarizing statistical
     statistics efficiently, and performing common computations.
 License: GPL-3
 Depends: rbenchmark, dplyr
-Imports: cubature, data.table, datasets, ggplot2, graphics, kableExtra, MASS, mvtnorm, pracma, Rcpp (>= 0.12.15), rattle, rpart, shiny, sjlabelled, stats, survey, tab, utils
+Imports: cubature, data.table, datasets, ggplot2, graphics, kableExtra, knitr, MASS, mvtnorm, pracma, Rcpp (>= 0.12.15), rattle, rpart, shiny, sjlabelled, stats, survey, tab, utils
 LinkingTo: Rcpp
 Encoding: UTF-8
 RoxygenNote: 6.1.1
-Suggests: knitr, 
-    microbenchmark,
+Suggests: microbenchmark,
     printr,
     rmarkdown,
     RcppRoll
