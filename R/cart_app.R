@@ -10,7 +10,7 @@
 #' @return Shiny app.
 #'
 #' @export
-cart_app <- function(data = mtcars) {
+cart_app <- function(data) {
   
   ui <- fluidPage(
     

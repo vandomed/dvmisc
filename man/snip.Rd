@@ -4,7 +4,7 @@
 \alias{snip}
 \title{Prep for Snipping or Copy/Pasting out of R}
 \usage{
-snip(x, ...)
+snip(x)
 }
 \arguments{
 \item{x}{Object to snip}
@@ -17,6 +17,7 @@ tables.
 }
 \examples{
 # Print 4-cylinder cars
+data(mtcars)
 mtcars \%>\%
   dplyr::filter(cyl == 4) \%>\%
   snip()

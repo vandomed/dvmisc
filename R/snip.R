@@ -10,6 +10,7 @@
 #' 
 #' @examples 
 #' # Print 4-cylinder cars
+#' data(mtcars)
 #' mtcars %>%
 #'   dplyr::filter(cyl == 4) %>%
 #'   snip()
@@ -19,7 +20,7 @@
 #' 
 #' 
 #' @export
-snip <- function(x, ...) {
+snip <- function(x) {
   
   classx <- class(x)
   if ("data.frame" %in% classx | "matrix" %in% classx) {

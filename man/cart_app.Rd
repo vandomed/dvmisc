@@ -4,7 +4,7 @@
 \alias{cart_app}
 \title{Shiny App Interface with rpart::rpart}
 \usage{
-cart_app(data = mtcars)
+cart_app(data)
 }
 \arguments{
 \item{data}{Data frame.}
