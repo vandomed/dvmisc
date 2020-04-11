@@ -6,8 +6,8 @@
 \usage{
 gg_quicksave(filename = paste("fig1-", Sys.Date(), ".png", sep = ""),
   path = getwd(), plot = last_plot(), resize_labels = TRUE,
-  title_size = 16, axis_size = 13, height = 6, width = height/0.75,
-  dpi = 1000)
+  title_size = 16, axistitle_size = 13, axistext_size = 9,
+  height = 6, width = height/0.75, dpi = 1000)
 }
 \arguments{
 \item{filename}{Character string}
@@ -18,9 +18,15 @@ gg_quicksave(filename = paste("fig1-", Sys.Date(), ".png", sep = ""),
 
 \item{resize_labels}{Logical value}
 
-\item{title_size, axis_size}{Numeric value}
+\item{title_size}{Numeric value}
 
-\item{height, width}{Numeric value}
+\item{axistitle_size}{Numeric value}
+
+\item{axistext_size}{Numeric value}
+
+\item{height}{Numeric value}
+
+\item{width}{Numeric value}
 
 \item{dpi}{Numeric value}
 }

@@ -4,6 +4,7 @@
 ^README.*$
 ^logreg_table.$
 ^Thumbs.db$
+^marketing$
 ^misc$
 ^.travis.yml$
 ^\.R\archived$

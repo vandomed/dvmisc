@@ -8,8 +8,11 @@
 #' @param path Character string
 #' @param plot \code{\link[ggplot2]{ggplot}} object
 #' @param resize_labels Logical value
-#' @param title_size,axis_size Numeric value
-#' @param height,width Numeric value
+#' @param title_size Numeric value
+#' @param axistitle_size Numeric value
+#' @param axistext_size Numeric value
+#' @param height Numeric value
+#' @param width Numeric value
 #' @param dpi Numeric value
 #'
 #'
@@ -19,7 +22,8 @@ gg_twitter <- function(filename = paste("fig1-", Sys.Date(), ".png", sep = ""),
                        plot = last_plot(),
                        resize_labels = TRUE,
                        title_size = 16,
-                       axis_size = 13,
+                       axistitle_size = 13,
+                       axistext_size = 9,
                        height = 5,
                        width = height / 0.5625,
                        dpi = 600) {
@@ -28,7 +32,8 @@ gg_twitter <- function(filename = paste("fig1-", Sys.Date(), ".png", sep = ""),
     plot <- plot +
       theme(
         plot.title = element_text(size = title_size),
-        axis.title = element_text(size = axis_size)
+        axis.title = element_text(size = axistitle_size),
+        axis.text = element_text(size = axistext_size)
       )
   }
 
