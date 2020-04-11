@@ -14,8 +14,6 @@ gg_facebook(filename = paste("fig1-", Sys.Date(), ".png", sep = ""),
 
 \item{path}{Character string}
 
-\item{plot}{\code{\link[ggplot2]{ggplot}} object}
-
 \item{resize_labels}{Logical value}
 
 \item{title_size, axis_size}{Numeric value}

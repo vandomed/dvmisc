@@ -1,6 +1,6 @@
 #' Quickly Format and Save a ggplot Object for Posting to Twitter
 #'
-#' Optionally resizes title and axis labels and saves a 1000 dpi png 5 inches
+#' Optionally resizes title and axis labels and saves a 600 dpi png 5 inches
 #' tall and ~8.9 inches wide via \code{\link[ggplot2]{ggsave}}. Values are
 #' adjustable.
 #'
@@ -22,7 +22,7 @@ gg_twitter <- function(filename = paste("fig1-", Sys.Date(), ".png", sep = ""),
                        axis_size = 13,
                        height = 5,
                        width = height / 0.5625,
-                       dpi = 1000) {
+                       dpi = 600) {
 
   if (resize_labels) {
     plot <- plot +

@@ -7,7 +7,7 @@
 gg_twitter(filename = paste("fig1-", Sys.Date(), ".png", sep = ""),
   path = getwd(), plot = last_plot(), resize_labels = TRUE,
   title_size = 16, axis_size = 13, height = 5,
-  width = height/0.5625, dpi = 1000)
+  width = height/0.5625, dpi = 600)
 }
 \arguments{
 \item{filename}{Character string}
@@ -25,7 +25,7 @@ gg_twitter(filename = paste("fig1-", Sys.Date(), ".png", sep = ""),
 \item{dpi}{Numeric value}
 }
 \description{
-Optionally resizes title and axis labels and saves a 1000 dpi png 5 inches
+Optionally resizes title and axis labels and saves a 600 dpi png 5 inches
 tall and ~8.9 inches wide via \code{\link[ggplot2]{ggsave}}. Values are
 adjustable.
 }
