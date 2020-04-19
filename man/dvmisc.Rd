@@ -6,9 +6,9 @@
 \alias{dvmisc-package}
 \title{Convenience Functions, Moving Window Statistics, and Graphics}
 \description{
-Collection of functions for running and summarizing statistical simulation 
-studies, creating visualizations (e.g. CART Shiny app, histograms with fitted 
-probability mass/density functions), calculating moving-window statistics 
+Collection of functions for running and summarizing statistical simulation
+studies, creating visualizations (e.g. CART Shiny app, histograms with fitted
+probability mass/density functions), calculating moving-window statistics
 efficiently, and performing common computations.
 }
 \details{
@@ -16,27 +16,27 @@ efficiently, and performing common computations.
 Package: \tab dvmisc \cr
 Type: \tab Package \cr
 Version: \tab 1.1.5 \cr
-Date: \tab 2020-04-11 \cr
+Date: \tab 2020-04-19 \cr
 License: \tab GPL-3 \cr
 }
 
-See \href{https://cran.r-project.org/package=dvmisc}{CRAN documentation} for 
+See \href{https://cran.r-project.org/package=dvmisc}{CRAN documentation} for
 full list of functions.
 }
 \references{
-Eddelbuettel, D. and Francois, R. (2011) Rcpp: Seamless R and C++ 
-Integration. Journal of Statistical Software, 40(8), 1-18. 
+Eddelbuettel, D. and Francois, R. (2011) Rcpp: Seamless R and C++
+Integration. Journal of Statistical Software, 40(8), 1-18.
 \url{http://www.jstatsoft.org/v40/i08/}.
 
-Eddelbuettel, D. (2013) Seamless R and C++ Integration with Rcpp. Springer, 
+Eddelbuettel, D. (2013) Seamless R and C++ Integration with Rcpp. Springer,
 New York. ISBN 978-1-4614-6867-7.
 
-Eddelbuettel, D. and Balamuta, J.J. (2017). Extending R with C++: A Brief 
-Introduction to Rcpp. PeerJ Preprints 5:e3188v1. 
+Eddelbuettel, D. and Balamuta, J.J. (2017). Extending R with C++: A Brief
+Introduction to Rcpp. PeerJ Preprints 5:e3188v1.
 \url{https://doi.org/10.7287/peerj.preprints.3188v1}.
 
-Acknowledgment: This material is based upon work supported by the 
-National Science Foundation Graduate Research Fellowship under Grant No. 
+Acknowledgment: This material is based upon work supported by the
+National Science Foundation Graduate Research Fellowship under Grant No.
 DGE-0940903.
 }
 \author{

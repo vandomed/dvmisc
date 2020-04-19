@@ -2,7 +2,7 @@ Package: dvmisc
 Type: Package
 Title: Convenience Functions, Moving Window Statistics, and Graphics
 Version: 1.1.5
-Date: 2020-04-11
+Date: 2020-04-19
 Author: Dane R. Van Domelen
 Maintainer: Dane R. Van Domelen <vandomed@gmail.com>
 Description: Collection of functions for running and summarizing statistical 
