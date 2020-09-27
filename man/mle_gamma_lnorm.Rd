@@ -4,8 +4,14 @@
 \alias{mle_gamma_lnorm}
 \title{Maximum Likelihood Estimation for X[1], ..., X[n] ~ Gamma(alpha, beta) Lognormal(mu, sigsq)}
 \usage{
-mle_gamma_lnorm(x, gamma_mean1 = FALSE, lnorm_mean1 = TRUE,
-  integrate_tol = 1e-08, estimate_var = FALSE, ...)
+mle_gamma_lnorm(
+  x,
+  gamma_mean1 = FALSE,
+  lnorm_mean1 = TRUE,
+  integrate_tol = 1e-08,
+  estimate_var = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{Numeric vector.}

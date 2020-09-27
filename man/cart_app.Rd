@@ -13,8 +13,8 @@ cart_app(data)
 Shiny app.
 }
 \description{
-User selects response variable and predictors, app displays optimal tree in 
-terms of cross-validation error along with a summary table and importance 
-plot. Relies on \code{\link[rpart]{rpart}} for fitting and 
+User selects response variable and predictors, app displays optimal tree in
+terms of cross-validation error along with a summary table and importance
+plot. Relies on \code{\link[rpart]{rpart}} for fitting and
 \code{\link[rattle]{fancyRpartPlot}} for plotting.
 }

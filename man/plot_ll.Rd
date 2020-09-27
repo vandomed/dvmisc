@@ -4,9 +4,17 @@
 \alias{plot_ll}
 \title{Plot Log-Likelihood vs. Values of One Parameter}
 \usage{
-plot_ll(start, objective, lower = -Inf, upper = Inf, xaxis_param = 1,
-  xaxis_range = NULL, param_values = NULL, mles = NULL,
-  return_info = FALSE)
+plot_ll(
+  start,
+  objective,
+  lower = -Inf,
+  upper = Inf,
+  xaxis_param = 1,
+  xaxis_range = NULL,
+  param_values = NULL,
+  mles = NULL,
+  return_info = FALSE
+)
 }
 \arguments{
 \item{start}{See \code{\link[stats]{nlminb}}.}

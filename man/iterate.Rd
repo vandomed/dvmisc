@@ -5,8 +5,14 @@
 \title{Iterate Function Over All Combinations of User-Specified Inputs, Potentially 
 Multiple Times}
 \usage{
-iterate(f, ..., all_combinations = TRUE, fix = NULL, trials = 1,
-  varnames = NULL)
+iterate(
+  f,
+  ...,
+  all_combinations = TRUE,
+  fix = NULL,
+  trials = 1,
+  varnames = NULL
+)
 }
 \arguments{
 \item{f}{A function.}

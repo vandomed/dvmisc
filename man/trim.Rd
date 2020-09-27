@@ -4,8 +4,7 @@
 \alias{trim}
 \title{Trim Tail Values off of a Vector}
 \usage{
-trim(x, p = NULL, tails = "both", cutpoints = NULL,
-  keep.edge = TRUE)
+trim(x, p = NULL, tails = "both", cutpoints = NULL, keep.edge = TRUE)
 }
 \arguments{
 \item{x}{Numeric vector.}
@@ -32,7 +31,7 @@ Returns input vector with tail values trimmed off of it. User can specify
 tail probability to trim or lower and upper cutpoints for values to retain.
 }
 \examples{
-# Generate data from N(0, 1) and then trim the lower and upper 1\\\%
+# Generate data from N(0, 1) and then trim the lower and upper 1\\%
 x <- rnorm(1000)
 y <- trim(x, p = 0.01)
 

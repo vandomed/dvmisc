@@ -4,9 +4,15 @@
 \alias{create_qgroups_svy}
 \title{Create Quantile Groups (Complex Survey Data)}
 \usage{
-create_qgroups_svy(x, groups = 4, probs = seq(1/groups, 1 - 1/groups,
-  1/groups), strata = NULL, design, svyquantile_list = list(na.rm =
-  TRUE), cut_list = list(include.lowest = TRUE))
+create_qgroups_svy(
+  x,
+  groups = 4,
+  probs = seq(1/groups, 1 - 1/groups, 1/groups),
+  strata = NULL,
+  design,
+  svyquantile_list = list(na.rm = TRUE),
+  cut_list = list(include.lowest = TRUE)
+)
 }
 \arguments{
 \item{x}{Numeric vector.}

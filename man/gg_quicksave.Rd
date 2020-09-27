@@ -4,10 +4,18 @@
 \alias{gg_quicksave}
 \title{Quickly Format and Save a ggplot Object with Reasonable Defaults}
 \usage{
-gg_quicksave(filename = paste("fig1-", Sys.Date(), ".png", sep = ""),
-  path = getwd(), plot = last_plot(), resize_labels = TRUE,
-  title_size = 16, axistitle_size = 13, axistext_size = 9,
-  height = 6, width = height/0.75, dpi = 1000)
+gg_quicksave(
+  filename = paste("fig1-", Sys.Date(), ".png", sep = ""),
+  path = getwd(),
+  plot = last_plot(),
+  resize_labels = TRUE,
+  title_size = 16,
+  axistitle_size = 13,
+  axistext_size = 9,
+  height = 6,
+  width = height/0.75,
+  dpi = 1000
+)
 }
 \arguments{
 \item{filename}{Character string}

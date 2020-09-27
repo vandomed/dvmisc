@@ -4,9 +4,18 @@
 \alias{logodds_graph}
 \title{Graph Log-Odds of Binary Variable Across A Grouping Variable}
 \usage{
-logodds_graph(y, group, error.bars = "none", alpha = 0.05,
-  p.legend = "chi", plot.list = NULL, lines.list = NULL,
-  axis.list = NULL, legend.list = NULL, ...)
+logodds_graph(
+  y,
+  group,
+  error.bars = "none",
+  alpha = 0.05,
+  p.legend = "chi",
+  plot.list = NULL,
+  lines.list = NULL,
+  axis.list = NULL,
+  legend.list = NULL,
+  ...
+)
 }
 \arguments{
 \item{y}{Vector of values for binary response variable. Must take on 2 

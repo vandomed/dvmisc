@@ -4,9 +4,16 @@
 \alias{sumsim}
 \title{Summarize Simulation Results}
 \usage{
-sumsim(estimates, ses = NULL, truth = NULL, theta_0 = 0,
+sumsim(
+  estimates,
+  ses = NULL,
+  truth = NULL,
+  theta_0 = 0,
   statistics = c("mean_bias", "sd", "mean_se", "mse", "coverage"),
-  alpha = 0.05, digits = 3, listwise_deletion = TRUE)
+  alpha = 0.05,
+  digits = 3,
+  listwise_deletion = TRUE
+)
 }
 \arguments{
 \item{estimates}{Numeric matrix where each column gives the point estimates 

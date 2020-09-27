@@ -2,7 +2,7 @@ Package: dvmisc
 Type: Package
 Title: Convenience Functions, Moving Window Statistics, and Graphics
 Version: 1.1.5
-Date: 2020-04-19
+Date: 2020-09-27
 Author: Dane R. Van Domelen
 Maintainer: Dane R. Van Domelen <vandomed@gmail.com>
 Description: Collection of functions for running and summarizing statistical 
@@ -32,7 +32,7 @@ Imports: cubature,
     utils
 LinkingTo: Rcpp
 Encoding: UTF-8
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Suggests: microbenchmark,
     printr,
     rmarkdown,

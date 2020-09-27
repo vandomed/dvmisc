@@ -5,8 +5,14 @@
 \title{Linear Regression of log(Y) vs. Covariates with Y Potentially Subject to 
 Multiplicative Lognormal Errors}
 \usage{
-lognormalreg(y, x = NULL, merror = FALSE, estimate_var = TRUE,
-  fix_posdef = FALSE, ...)
+lognormalreg(
+  y,
+  x = NULL,
+  merror = FALSE,
+  estimate_var = TRUE,
+  fix_posdef = FALSE,
+  ...
+)
 }
 \arguments{
 \item{y}{Numeric vector or list.}

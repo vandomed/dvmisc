@@ -5,9 +5,16 @@
 \title{Constant-Scale Gamma Model for Y vs. Covariates with Y Potentially Subject 
 to Multiplicative Lognormal Errors}
 \usage{
-gammareg(y, x = NULL, merror = FALSE, integrate_tol = 1e-08,
-  integrate_tol_hessian = integrate_tol, estimate_var = TRUE,
-  fix_posdef = FALSE, ...)
+gammareg(
+  y,
+  x = NULL,
+  merror = FALSE,
+  integrate_tol = 1e-08,
+  integrate_tol_hessian = integrate_tol,
+  estimate_var = TRUE,
+  fix_posdef = FALSE,
+  ...
+)
 }
 \arguments{
 \item{y}{Numeric vector.}

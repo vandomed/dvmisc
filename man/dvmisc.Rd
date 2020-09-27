@@ -3,7 +3,6 @@
 \docType{package}
 \name{dvmisc}
 \alias{dvmisc}
-\alias{dvmisc-package}
 \title{Convenience Functions, Moving Window Statistics, and Graphics}
 \description{
 Collection of functions for running and summarizing statistical simulation
@@ -16,7 +15,7 @@ efficiently, and performing common computations.
 Package: \tab dvmisc \cr
 Type: \tab Package \cr
 Version: \tab 1.1.5 \cr
-Date: \tab 2020-04-19 \cr
+Date: \tab 2020-09-27 \cr
 License: \tab GPL-3 \cr
 }
 

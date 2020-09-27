@@ -4,9 +4,15 @@
 \alias{clean_glm}
 \title{Create a Clean Summary Table from a glm Object}
 \usage{
-clean_glm(fit, columns = NULL, expand_factors = TRUE,
-  variable_labels = NULL, prep_kable = FALSE, decimals = 2,
-  formatp_list = NULL)
+clean_glm(
+  fit,
+  columns = NULL,
+  expand_factors = TRUE,
+  variable_labels = NULL,
+  prep_kable = FALSE,
+  decimals = 2,
+  formatp_list = NULL
+)
 }
 \arguments{
 \item{fit}{Object returned from \code{\link[stats]{glm}}.}

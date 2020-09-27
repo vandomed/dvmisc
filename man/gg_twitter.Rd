@@ -4,10 +4,18 @@
 \alias{gg_twitter}
 \title{Quickly Format and Save a ggplot Object for Posting to Twitter}
 \usage{
-gg_twitter(filename = paste("fig1-", Sys.Date(), ".png", sep = ""),
-  path = getwd(), plot = last_plot(), resize_labels = TRUE,
-  title_size = 16, axistitle_size = 13, axistext_size = 9,
-  height = 5, width = height/0.5625, dpi = 600)
+gg_twitter(
+  filename = paste("fig1-", Sys.Date(), ".png", sep = ""),
+  path = getwd(),
+  plot = last_plot(),
+  resize_labels = TRUE,
+  title_size = 16,
+  axistitle_size = 13,
+  axistext_size = 9,
+  height = 5,
+  width = height/0.5625,
+  dpi = 600
+)
 }
 \arguments{
 \item{filename}{Character string}
