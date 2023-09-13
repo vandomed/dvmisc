@@ -9,6 +9,10 @@ NumericVector sliding_cor_c(NumericVector shortvec, NumericVector longvec, doubl
   int n = shortvec.size();
   int n_minus1 = n - 1;
   int out_length = length_longvec - n_minus1;
+  if (sd_shortvec < sqrt(DBL_EPSILON)) {
+    NumericVector out(out_length, NA_REAL);
+    return(out);
+  }
   NumericVector out(out_length);
   
   // Calculate constant term to multiply all 
@@ -37,7 +41,11 @@ NumericVector sliding_cor_c(NumericVector shortvec, NumericVector longvec, doubl
       ss_longvec_current += pow(longvec_current_b - mean_longvec_current, 2);
     }
     double sd_longvec_current = sqrt(ss_longvec_current / n_minus1);
-    out[a] = (sum_products / n_minus1 - sum_longvec_current * term2) / sd_shortvec / sd_longvec_current;
+    if (sd_longvec_current < sqrt(DBL_EPSILON)) {
+      out[a] = NA_REAL;
+    } else {
+      out[a] = (sum_products / n_minus1 - sum_longvec_current * term2) / sd_shortvec / sd_longvec_current;
+    }
   }
   return out;
 }
