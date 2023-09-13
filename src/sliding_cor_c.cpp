@@ -11,7 +11,7 @@ NumericVector sliding_cor_c(NumericVector shortvec, NumericVector longvec, doubl
   int out_length = length_longvec - n_minus1;
   if (sd_shortvec < sqrt(DBL_EPSILON)) {
     NumericVector out(out_length, NA_REAL);
-    return(out);
+    return out;
   }
   NumericVector out(out_length);
   
